@@ -168,53 +168,6 @@ for s in sf:
 		"max_loation": [X.max(), Y.max()],
 	}
 
-def add_population(states):
-	with open(pjoin('data', 'us_census.tsv'), 'r') as f:
-		reader = csv.reader(f, delimiter='\t', quotechar='"')
-		rows = [row for row in reader]
-	header = rows[0]
-	rows = rows[1:]
-	for row in rows:
-		county = ', '.join(row[0].split(', ')[:-1]).lower()
-		state = row[0].split(', ')[-1]
-		if state in not_states:
-			continue
-		if county not in states[state]:
-			if county[-17:] == ' city and borough':
-				county = county[:-17]
-			if county[-7:] == ' county':
-				county = county[:-7]
-			if county[-5:] == ' city':
-				county = county[:-5]
-			if county[-7:] == ' parish':
-				county = county[:-7]
-			if county[-8:] == ' borough':
-				county = county[:-8]
-			if county[-12:] == ' census area':
-				county = county[:-12]
-			if county[-13:] == ' municipality':
-				county = county[:-13]
-		assert 'population' not in states[state][county]
-		states[state][county]['population'] = {
-			"2010": int(re.sub(r",", "", row[-10])),
-			# "2011": int(re.sub(r",", "", row[-9])),
-			# "2012": int(re.sub(r",", "", row[-8])),
-			# "2013": int(re.sub(r",", "", row[-7])),
-			# "2014": int(re.sub(r",", "", row[-6])),
-			"2015": int(re.sub(r",", "", row[-5])),
-			# "2016": int(re.sub(r",", "", row[-4])),
-			# "2017": int(re.sub(r",", "", row[-3])),
-			# "2018": int(re.sub(r",", "", row[-2])),
-			"2019": int(re.sub(r",", "", row[-1]))
-		}
-
-	# Make sure we didn't miss any counties.
-	for state in states:
-		for county in states[state]:
-			assert 'population' in states[state][county]
-
-add_population(states)
-
 def add_demographics(states):
 	age_code_to_group = {
 	  0: "all",
@@ -252,9 +205,6 @@ def add_demographics(states):
 		"10": "7/1/2017",
 		"11": "7/1/2018",
 	}
-	county_totals = {}
-	for state in states:
-		county_totals[state] = {}
 	# After downloading this file you should open it with a text editor (
 	# I use Sublime) and re-encode it as utf8.
 	with open(pjoin('data', 'cc-est2018-alldata.csv'), 'r') as f:
@@ -288,8 +238,7 @@ def add_demographics(states):
 				states[state][county]['female'] = int(row[9])
 
 				total = int(row[7])
-				# Save for age demographics
-				county_totals[state][county] = total
+				states[state][county]['population'] = total
 
 				states[state][county]['race_demographics']['non_hispanic_white_alone_male'] = int(row[34]) / total
 				states[state][county]['race_demographics']['non_hispanic_white_alone_female'] = int(row[35]) / total
@@ -304,7 +253,7 @@ def add_demographics(states):
 				states[state][county]['race_demographics']['hispanic_female'] = int(row[57]) / total
 
 			else:
-				states[state][county]['age_demographics'][age_code_to_group[int(row[6])]] = int(row[7]) / county_totals[state][county]
+				states[state][county]['age_demographics'][age_code_to_group[int(row[6])]] = int(row[7]) / states[state][county]['population']
 
 			assert county in states[state]
 
@@ -356,7 +305,7 @@ def add_cdc_deaths(states):
 			"bedford city": "bedford county",
 		}
 	}
-	for varname, fn in zip(['deaths', 'suicides', 'firearm suicides'], ["Compressed Mortality, 1999-2016 (all deaths).txt", "Compressed Mortality, 1999-2016 (all suicides).txt", "Compressed Mortality, 1999-2016 (firearm suicides).txt"]):
+	for varname, fn in zip(['suicides', 'firearm suicides'], ["Compressed Mortality, 1999-2016 (all suicides).txt", "Compressed Mortality, 1999-2016 (firearm suicides).txt"]):
 		with open(pjoin('data', fn), 'r') as f:
 			reader = csv.reader(f, delimiter='\t', quotechar='"')
 			rows = [row for row in reader]
@@ -365,7 +314,7 @@ def add_cdc_deaths(states):
 		rows = rows[:rows.index(['---']) - 1]
 		former_independent_cities = {}
 		for row in rows:
-			_, county, _, deaths, population, _ = row
+			_, county, _, deaths, _, _ = row
 			county = county.lower()
 			state = abbreviation_to_name[county.split(', ')[-1].upper()]
 			county = ', '.join(county.split(', ')[:-1])
