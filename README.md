@@ -86,6 +86,8 @@ While most of this repositoory is dedicated to providing the data and code that 
 }
 ```
 
+If you want to use this data, feel free to (all the sources, except the Washington Post, are .gov websites), but please let me know (it's nice to know my work is being used).
+
 ## Sources
 
 1. State geometry (location, area, etc.) is computed from data.gov, specifically [here](https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-county-and-equivalent-national-shapefile).  This data is NOT included in the repository because if is 122 MB.  State areas are computed naively, assuming longitude/latitude are x/y coordinates.  As a result they're not particularly accurate (because longitude sizes vary based on location) but should be useful for computing population density.  Some day I hope to get around to computing them [accurately](https://stackoverflow.com/questions/1340223/calculating-area-enclosed-by-arbitrary-polygon-on-earths-surface) (or a helpful Internet stranger like yourself might do it for me).
