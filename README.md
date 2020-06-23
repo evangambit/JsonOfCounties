@@ -1,8 +1,10 @@
 # County-level Data
 
-This is a working repository of data broken down by US county.
+This is a repository of various data, broken down by US county.
 
-While most of this repositoory is dedicated to providing the data and code that we used to produce the final dataset, the dataset itself is simply states.json.  An example entry:
+While most of this repository is dedicated to providing the data and code that I used to produce the final dataset, the dataset itself is simply "states.json".
+
+An example entry:
 
 ```JavaScript
 {
@@ -10,10 +12,12 @@ While most of this repositoory is dedicated to providing the data and code that 
   "Nebraska": {
     // ...
     "holt county": {
-      // Area is computed as if longitude and latitude were (x, y) coordinates. This is
-      // naive, but should suffice for rough population density estimates.
+      // Area is computed as if longitude and latitude were (x, y) coordinates
+      // This is naive, but should suffice for comparing rough population
+      // densities between counties.
       "area": 0.68525076424703,
-      // Location is the average latitude/longitude of the vertices bounding the county.
+      // Location is the average latitude/longitude of the vertices bounding the
+      // county.
       "location": [
        -98.66118420812809,
        42.4859272567734
@@ -28,8 +32,8 @@ While most of this repositoory is dedicated to providing the data and code that 
        -98.300212,
        42.896724
       ],
-      // The Census Bureau has a lot more than this.  It should be easy to add them
-      // in the script if you need them.
+      // The Census Bureau has a lot more than this.  It should be easy to add
+      // them in the script if you need them.
       "race_demographics": {
        "non_hispanic_white_alone_male": 0.4622715661230104,
        "non_hispanic_white_alone_female": 0.4660051090587542,
@@ -86,7 +90,7 @@ While most of this repositoory is dedicated to providing the data and code that 
 }
 ```
 
-If you want to use this data, feel free to (all the sources, except the Washington Post, are .gov websites), but please let me know (it's nice to know my work is being used).  You can email me ${myGithubUsername}@gmail, or just open an issue on Github.
+If you want to use this data, feel free (all the sources, except the Washington Post, are .gov websites), but please let me know (it's nice to know my work is being used).  You can email me ${myGithubUsername}@gmail, or just open an issue on Github.
 
 ## Sources
 
@@ -98,7 +102,7 @@ If you want to use this data, feel free to (all the sources, except the Washingt
 
 4. Labor statistics comes from [here](https://www.bls.gov/lau/#cntyaa) (the BLS).
 
-5. Police shootings data comes from the [Washington Post's dataset](https://github.com/washingtonpost/data-police-shootings).  In cases where the county is ambiguous, shootings are distributed fractionally.
+5. Police shootings data comes from the [Washington Post's dataset](https://github.com/washingtonpost/data-police-shootings) and only includes 2019 shootings.  In cases where the county is ambiguous, shootings are distributed fractionally.
 
 6. Average income comes from the BEA [here](https://apps.bea.gov/regional/downloadzip.cfm).  I don't trust the median income estimates (there are some really crazy counties...), so I only report the average income.
 
