@@ -86,7 +86,7 @@ While most of this repositoory is dedicated to providing the data and code that 
 }
 ```
 
-If you want to use this data, feel free to (all the sources, except the Washington Post, are .gov websites), but please let me know (it's nice to know my work is being used).
+If you want to use this data, feel free to (all the sources, except the Washington Post, are .gov websites), but please let me know (it's nice to know my work is being used).  You can email me ${myGithubUsername}@gmail, or just open an issue on Github.
 
 ## Sources
 
