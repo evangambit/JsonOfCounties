@@ -97,3 +97,7 @@ Fortunately, it shouldn't be hard for somebody with some Python experience to mo
 
 ## Why
 
+I was originally trying to reproduce [this paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6391295/?fbclid=IwAR2Y0h6D-cEWXqk4_dooBX2MgUUrADyEIHN6iQFmbDc1qXf0MYHK3qWbUPo) (it reproduced!) and then I wanted to try and reproduce it with county-level data (since 3000 is a much larger sample size than 50).
+
+This effort formed the base of this project, and I figured, as long as I had sunk in several hours into this project, I might as well publicize the results.
+
