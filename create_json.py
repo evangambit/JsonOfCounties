@@ -467,9 +467,79 @@ def add_fatal_police_shootings(states):
 				if varname not in states[state][county]:
 					states[state][county][varname] = 0
 
-
 add_fatal_police_shootings(states)
 
+def add_avg_income(states):
+	for fn in os.listdir(pjoin('data', 'CAINC1')):
+		with open(pjoin('data', 'CAINC1', fn), 'r', encoding='Latin-1') as f:
+			reader = csv.reader(f, delimiter=',')
+			header = next(reader)
+			rows = [row for row in reader]
+			for row in rows[3:-1]:
+				if len(row) <= 1:
+					continue
+
+				if row[6] != 'Per capita personal income (dollars) 2/':
+					continue
+
+				# This is an effective way to ensure the row is
+				# sensible (and not a footer / footnote).
+				try:
+					avg_income = int(row[-1])
+				except ValueError:
+					continue
+
+				loc = row[1]
+				# ignore fotenotes...
+				while loc[-1] == '*':
+					loc = loc[:-1]
+				assert loc[-4:-2] == ', '
+				county = loc[:-4].lower()
+				state = abbreviation_to_name[loc[-2:]]
+
+				# These counties are combined...
+				if loc == 'Maui + Kalawao, HI':
+					states[state]['maui county']['avg_income'] = avg_income
+					states[state]['kalawao county']['avg_income'] = avg_income
+					continue
+
+				if state == 'Idaho' and county == 'fremont (includes yellowstone park)':
+					states[state]['fremont county']['avg_income'] = avg_income
+					continue
+
+				if state == 'Maryland' and county == 'baltimore (independent city)':
+					states[state]['baltimore city']['avg_income'] = avg_income
+					continue
+
+				# Independent cities are merged with their surrounding counties.
+				# We un-merge them here.
+				if '+' in county:
+					parts = [x.strip() for x in re.findall(r"[^,\+]+", county)]
+					states[state][parts[0] + ' county']['avg_income'] = avg_income
+					for part in parts[1:]:
+						if part[-5:] != ' city':
+							part += ' city'
+						states[state][part]['avg_income'] = avg_income
+					continue
+
+				if county[-19:] == ' (independent city)':
+					if county[-23:-18] != 'city ':
+						county = county[:-19] + ' city'
+					else:
+						county = county[:-19]
+
+				if county not in states[state] and county + ' county' in states[state]:
+					county = county + ' county'
+				if county not in states[state] and county + ' parish' in states[state]:
+					county = county + ' parish'
+
+				states[state][county]['avg_income'] = avg_income
+
+	for state in states:
+			for county in states[state]:
+				assert 'avg_income' in states[state][county]
+
+add_avg_income(states)
 
 with open('states.json', 'w+') as f:
 	json.dump(states, f, indent=1)
