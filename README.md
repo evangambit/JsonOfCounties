@@ -10,62 +10,75 @@ While most of this repositoory is dedicated to providing the data and code that 
   "Nebraska": {
     // ...
     "holt county": {
-     "area": 0.68525076424703,
-     "location": [
-      -98.66118420812809,
-      42.4859272567734
-     ],
-     "min_loation": [
-      -99.25703899999999,
-      42.087894999999996
-     ],
-     "max_loation": [
-      -98.300212,
-      42.896724
-     ],
-     "race_demographics": {
-      "non_hispanic_white_alone_male": 0.4622715661230104,
-      "non_hispanic_white_alone_female": 0.4660051090587542,
-      "black_alone_male": 0.0020632737276478678,
-      "black_alone_female": 0.0017685203379838867,
-      "asian_alone_male": 0.0021615248575358615,
-      "asian_alone_female": 0.003340538416191786,
-      "hispanic_male": 0.02859107879740617,
-      "hispanic_female": 0.024071526822558458
-     },
-     "age_demographics": {
-      "0-4": 0.07044606012969148,
-      "5-9": 0.0734918451562193,
-      "10-14": 0.07142857142857142,
-      "15-19": 0.05570839064649243,
-      "20-24": 0.0500098251129888,
-      "25-29": 0.04725879347612497,
-      "30-34": 0.04951856946354883,
-      "35-39": 0.0546276282177245,
-      "40-44": 0.04666928669679701,
-      "45-49": 0.046865788956573,
-      "50-54": 0.056494399685596386,
-      "55-59": 0.08351346040479465,
-      "60-64": 0.078109648260955,
-      "65-69": 0.06543525250540382,
-      "70-74": 0.048143053645116916,
-      "75-79": 0.039791707604637454,
-      "80-84": 0.027706818628414228,
-      "85+": 0.03478089998034977
-     },
-     "male": 5088,
-     "female": 5090,
-     "population": 10178,
-     "suicides": "17",
-     "firearm suicides": "12",
-     "labor_force": "5,763",
-     "employed": "5,613",
-     "unemployed": "150",
-     "unemployment_rate": "2.6",
-     "fatal_police_shootings": 0,
-     "unarmed_fatal_police_shootings": 0,
-     "fatal_police_shootings_where_victim_had_firearm": 0,
-     "avg_income": 51404
+      // Area is computed as if longitude and latitude were (x, y) coordinates. This is
+      // naive, but should suffice for rough population density estimates.
+      "area": 0.68525076424703,
+      // Location is the average latitude/longitude of the vertices bounding the county.
+      "location": [
+       -98.66118420812809,
+       42.4859272567734
+      ],
+      // Smallest latitude/longitude values in the county.
+      "min_loation": [
+       -99.25703899999999,
+       42.087894999999996
+      ],
+      // largest latitude/longitude values in the county.
+      "max_loation": [
+       -98.300212,
+       42.896724
+      ],
+      // The Census Bureau has a lot more than this.  It should be easy to add them
+      // in the script if you need them.
+      "race_demographics": {
+       "non_hispanic_white_alone_male": 0.4622715661230104,
+       "non_hispanic_white_alone_female": 0.4660051090587542,
+       "black_alone_male": 0.0020632737276478678,
+       "black_alone_female": 0.0017685203379838867,
+       "asian_alone_male": 0.0021615248575358615,
+       "asian_alone_female": 0.003340538416191786,
+       "hispanic_male": 0.02859107879740617,
+       "hispanic_female": 0.024071526822558458
+      },
+      // Percent of the population in each age bucket.
+      "age_demographics": {
+       "0-4": 0.07044606012969148,
+       "5-9": 0.0734918451562193,
+       "10-14": 0.07142857142857142,
+       "15-19": 0.05570839064649243,
+       "20-24": 0.0500098251129888,
+       "25-29": 0.04725879347612497,
+       "30-34": 0.04951856946354883,
+       "35-39": 0.0546276282177245,
+       "40-44": 0.04666928669679701,
+       "45-49": 0.046865788956573,
+       "50-54": 0.056494399685596386,
+       "55-59": 0.08351346040479465,
+       "60-64": 0.078109648260955,
+       "65-69": 0.06543525250540382,
+       "70-74": 0.048143053645116916,
+       "75-79": 0.039791707604637454,
+       "80-84": 0.027706818628414228,
+       "85+": 0.03478089998034977
+      },
+      // Number of people.
+      "male": 5088,
+      "female": 5090,
+      "population": 10178,
+      // Number of suicides in 2016 (from the CDC).
+      "suicides": "17",
+      "firearm suicides": "12",
+      // BLS labor statistics.
+      "labor_force": "5,763",
+      "employed": "5,613",
+      "unemployed": "150",
+      "unemployment_rate": "2.6",
+      // Washington Post fatal police shootings statistics.
+      "fatal_police_shootings": 0,
+      "unarmed_fatal_police_shootings": 0,
+      "fatal_police_shootings_where_victim_had_firearm": 0,
+      // BEA-estimated average income in the county.
+      "avg_income": 51404
     },
     // ...
   },
