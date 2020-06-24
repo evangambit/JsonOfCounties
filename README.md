@@ -12,7 +12,7 @@ An example entry:
   "Nebraska": {
     // ...
     "holt county": {
-     "area": 0.6852507642314996,
+     "area": 0.08072075790361428,
      "min_location": [
       -99.25703899999999,
       42.087894999999996
@@ -56,9 +56,9 @@ An example entry:
      "population": 10178,
      "suicides": "17",
      "firearm suicides": "12",
-     "labor_force": 5763,
-     "employed": 5613,
-     "unemployed": 150,
+     "labor_force": 5763.0,
+     "employed": 5613.0,
+     "unemployed": 150.0,
      "unemployment_rate": 2.6,
      "fatal_police_shootings": 0,
      "unarmed_fatal_police_shootings": 0,
@@ -81,7 +81,8 @@ An example entry:
        "dem": 522,
        "gop": 4275
       }
-     }
+     },
+     "fips": "31089"
     },
     // ...
   },
