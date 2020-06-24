@@ -13,11 +13,11 @@ An example entry:
     // ...
     "holt county": {
      "area": 0.6852507642314996,
-     "min_loation": [
+     "min_location": [
       -99.25703899999999,
       42.087894999999996
      ],
-     "max_loation": [
+     "max_location": [
       -98.300212,
       42.896724
      ],
@@ -56,10 +56,10 @@ An example entry:
      "population": 10178,
      "suicides": "17",
      "firearm suicides": "12",
-     "labor_force": "5,763",
-     "employed": "5,613",
-     "unemployed": "150",
-     "unemployment_rate": "2.6",
+     "labor_force": 5763,
+     "employed": 5613,
+     "unemployed": 150,
+     "unemployment_rate": 2.6,
      "fatal_police_shootings": 0,
      "unarmed_fatal_police_shootings": 0,
      "fatal_police_shootings_where_victim_had_firearm": 0,
@@ -95,7 +95,7 @@ Please let me know if you want to use the data (it's nice to know my work is bei
 
 ## Sources
 
-1. State geometry (location, area, etc.) is computed from data.gov, specifically [here](https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-county-and-equivalent-national-shapefile) (download "Shapefile Zip File").  This data is NOT included in the repository because it is 122 MB.  State areas are computed naively, assuming longitude/latitude are x/y coordinates.  As a result they're not particularly accurate (because longitude sizes vary based on location) but should be useful for computing population density.  Some day I hope to get around to computing them [accurately](https://stackoverflow.com/questions/1340223/calculating-area-enclosed-by-arbitrary-polygon-on-earths-surface) (or a helpful Internet stranger like yourself might do it for me).
+1. State geometry (location, area, etc.) is computed from data.gov, specifically [here](https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-county-and-equivalent-national-shapefile) (download "Shapefile Zip File").  This data is NOT included in the repository because it is 122 MB.  State areas are computed naively, assuming longitude/latitude are x/y coordinates. They are then adjusted by multiplying by the cosine of the county's centeral latitude. As a result they're not completely accurate but should be useful for computing population density.  Some day I hope to get around to computing them [accurately](https://stackoverflow.com/questions/1340223/calculating-area-enclosed-by-arbitrary-polygon-on-earths-surface) (or a helpful Internet stranger like yourself might do it for me).
 
 2. Population and demographics comes from the Census Bureau from a 2018 table ([here](https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-detail.html#par_textimage_1383669527)).  This "United States" csv file is NOT included, as it is 154 MB.
 

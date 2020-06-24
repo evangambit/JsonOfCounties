@@ -1,4 +1,4 @@
-import csv, json, os, re
+import csv, json, math, os, re
 
 # pip install pyshp
 import shapefile
@@ -154,12 +154,14 @@ for s in sf:
 		states[state] = {}
 	county_name = s.record.NAMELSAD.lower()
 	poly = geometry.Polygon(s.shape.points)
-
 	states[state][county_name] = {
 		"area": poly.area,
-		"min_loation": poly.bounds[:2],
-		"max_loation": poly.bounds[2:]
+		"min_location": poly.bounds[:2],
+		"max_location": poly.bounds[2:]
 	}
+	latitude_ish = (states[state][county_name]["min_location"][1] + states[state][county_name]["max_location"][1]) / 2
+	states[state][county_name]["area"] = math.cos(latitude_ish)
+
 
 def add_demographics(states):
 	age_code_to_group = {
@@ -404,10 +406,10 @@ def add_labor_force(states):
 			county = states[state][county_name]
 
 			assert 'labor_force' not in county
-			county['labor_force'] = labor_force
-			county['employed'] = employed
-			county['unemployed'] = unemployed
-			county['unemployment_rate'] = unemployment_rate
+			county['labor_force'] = float(labor_force.replace(",",""))
+			county['employed'] = float(employed.replace(",",""))
+			county['unemployed'] = float(unemployed.replace(",",""))
+			county['unemployment_rate'] = float(unemployment_rate)
 
 	# Missing county...
 	states["Hawaii"]["kalawao county"]["labor_force"] = None
