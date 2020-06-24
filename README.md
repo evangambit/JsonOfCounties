@@ -13,11 +13,11 @@ An example entry:
     // ...
     "holt county": {
      "area": 0.6852507642314996,
-     "min_loation": [
+     "min_location": [
       -99.25703899999999,
       42.087894999999996
      ],
-     "max_loation": [
+     "max_location": [
       -98.300212,
       42.896724
      ],
