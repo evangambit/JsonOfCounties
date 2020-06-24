@@ -404,7 +404,7 @@ def add_labor_force(states):
 			county = states[state][county_name]
 
 			assert 'labor_force' not in county
-			county['labor_force'] = labor_force
+			county['labor_force'] = float(labor_force.replace(",",""))
 			county['employed'] = float(employed.replace(",",""))
 			county['unemployed'] = float(unemployed.replace(",",""))
 			county['unemployment_rate'] = float(unemployment_rate)
