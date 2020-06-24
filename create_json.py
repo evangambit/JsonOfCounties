@@ -608,6 +608,10 @@ def add_covid(states):
 
 			assert f'{header[-1]}-covid-deaths' not in states[state][county]
 			states[state][county][f'{header[-1]}-covid-deaths'] = int(row[-1])
+			if float(row[79-7]) > 0:
+				states[state][county][f'covid-growth-est'] = float(row[79])/float(row[79-7])
+			else:
+				states[state][county][f'covid-growth-est'] = None
 
 	states['New York']['new york county'][f'{header[-1]}-covid-deaths'] += new_york_unallocated
 
