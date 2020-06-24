@@ -142,6 +142,8 @@ not_states = set([
 	"Virgin Islands",
 ])
 
+from shapely import geometry
+
 # Add geometric data for countries.
 states = {}
 for s in sf:
@@ -150,22 +152,13 @@ for s in sf:
 		continue
 	if state not in states:
 		states[state] = {}
-	# https://shapely.readthedocs.io/en/stable/manual.html#object.simplify
-	# TODO use shapely to simplify the points and
-	# write the points into the json.  This lets users
-	# (e.g.) compute location however they want.
-	X = np.array([p[0] for p in s.shape.points])
-	Y = np.array([p[1] for p in s.shape.points])
 	county_name = s.record.NAMELSAD.lower()
-
-	assert county_name not in states[state]
+	poly = geometry.Polygon(s.shape.points)
 
 	states[state][county_name] = {
-		"area": area(X, Y),
-		# A simple/naive "location" of the county.
-		"location": [X.mean(), Y.mean()],
-		"min_loation": [X.min(), Y.min()],
-		"max_loation": [X.max(), Y.max()],
+		"area": poly.area,
+		"min_loation": poly.bounds[:2],
+		"max_loation": poly.bounds[2:]
 	}
 
 def add_demographics(states):
@@ -273,7 +266,7 @@ def add_cdc_deaths(states):
 			"skagway-hoonah-angoon census area" : "skagway municipality",
 			"wrangell-petersburg census area": "wrangell city and borough",
 			"yakutat borough": "yakutat city and borough",
-			# I should figure out why this is correct...
+			# Formerly known as Wade Hampton Census Area
 			"wade hampton census area": "kusilvak census area",
 			# Renamed in 2008
 			"prince of wales-outer ketchikan census area": "prince of wales-hyder census area",
@@ -476,7 +469,7 @@ def add_avg_income(states):
 			header = next(reader)
 			rows = [row for row in reader]
 			for row in rows[3:-1]:
-				if len(row) <= 1:
+				if len(row) < 7:
 					continue
 
 				if row[6] != 'Per capita personal income (dollars) 2/':
@@ -499,15 +492,19 @@ def add_avg_income(states):
 
 				# These counties are combined...
 				if loc == 'Maui + Kalawao, HI':
+					assert 'avg_income' not in states[state]['maui county']
+					assert 'avg_income' not in states[state]['kalawao county']
 					states[state]['maui county']['avg_income'] = avg_income
 					states[state]['kalawao county']['avg_income'] = avg_income
 					continue
 
 				if state == 'Idaho' and county == 'fremont (includes yellowstone park)':
+					assert 'avg_income' not in states[state]['fremont county']
 					states[state]['fremont county']['avg_income'] = avg_income
 					continue
 
 				if state == 'Maryland' and county == 'baltimore (independent city)':
+					assert 'avg_income' not in states[state]['baltimore city']
 					states[state]['baltimore city']['avg_income'] = avg_income
 					continue
 
@@ -519,6 +516,7 @@ def add_avg_income(states):
 					for part in parts[1:]:
 						if part[-5:] != ' city':
 							part += ' city'
+						assert 'avg_income' not in states[state][part]
 						states[state][part]['avg_income'] = avg_income
 					continue
 
@@ -533,6 +531,7 @@ def add_avg_income(states):
 				if county not in states[state] and county + ' parish' in states[state]:
 					county = county + ' parish'
 
+				assert 'avg_income' not in states[state][county]
 				states[state][county]['avg_income'] = avg_income
 
 	for state in states:
@@ -540,6 +539,79 @@ def add_avg_income(states):
 				assert 'avg_income' in states[state][county]
 
 add_avg_income(states)
+
+def add_covid(states):
+	covid_to_census = {
+		"Alaska": {
+			"municipality of anchorage": "anchorage municipality",
+			"city and borough of juneau": "juneau city and borough",
+			"petersburg census area": "petersburg borough",
+			# Ordinarily we'd map this to "kusilvak census area" but,
+			# (I assume due to an oversight by either the CDC or
+			# usafacts.org) this county represented twice (once for
+			# each name).  Fortunately both death counts are zero, so
+			# we just ignore it for now.
+			"wade hampton census area": None,
+		},
+		"California": {
+			"grand princess cruise ship": None,
+		},
+		"District of Columbia": {
+			"washington": "district of columbia",
+		},
+		"Louisiana": {
+			"la salle parish": "lasalle parish",
+		},
+		"Missouri": {
+			"jackson county (including other portions of kansas city)": "jackson county",
+			"city of st. louis": "st. louis city",
+		},
+		"New Mexico": {
+			"dona ana county": "doña ana county",
+		},
+	}
+
+	new_york_unallocated = 0
+
+	with open(pjoin('data', 'covid_deaths_usafacts.csv'), 'r') as f:
+		reader = csv.reader(f, delimiter=',')
+		header = next(reader)
+		for row in reader:
+			if row[1] == 'Statewide Unallocated':
+				continue
+			county = row[1].lower()
+			state = abbreviation_to_name[row[2]]
+
+			# Lacking any clear/easy alternatives, we simply dump
+			# these in New York County at the end of the loop.
+			# We assert that the number of unallocated deaths is
+			# pretty small.  If it ever becomes large (relative
+			# to the New York counties) we may want to revisit
+			# our approach.
+			if county == "new york city unallocated/probable":
+				new_york_unallocated = int(row[-1])
+				assert new_york_unallocated < 100
+				continue
+
+			if state == 'Alaska':
+				if county == "wade hampton census area":
+					wade_hampton = int(row[-1])
+				elif county == "kusilvak census area":
+					kusilvak = int(row[-1])
+
+			if state in covid_to_census and county in covid_to_census[state]:
+				county = covid_to_census[state][county]
+				if county is None:
+					continue
+
+			assert f'{header[-1]}-covid-deaths' not in states[state][county]
+			states[state][county][f'{header[-1]}-covid-deaths'] = int(row[-1])
+
+	states['New York']['new york county'][f'{header[-1]}-covid-deaths'] += new_york_unallocated
+
+	assert wade_hampton == kusilvak, 'If this is ever violated, we need to revisit how we resolve these duplicate rows'
+
+add_covid(states)
 
 with open('states.json', 'w+') as f:
 	json.dump(states, f, indent=1)
