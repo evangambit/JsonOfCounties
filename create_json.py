@@ -745,6 +745,7 @@ def add_elections(states):
 					"gop": gop2016,
 				}
 			}
+			states[state][county]['fips'] = row[0]
 
 	# Alaska and "Kalawao County, Hawaii" are missing from the
 	# datasource, so if they're missing election data it doesn't
