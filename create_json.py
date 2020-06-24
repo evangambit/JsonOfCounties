@@ -613,6 +613,151 @@ def add_covid(states):
 
 add_covid(states)
 
+def add_elections(states):
+	fips_to_county = {
+		'08014': ('broomfield county', 'Colorado')
+	}
+	with open(pjoin('data', 'fips_to_county.txt'), 'r') as f:
+		for line in f.readlines():
+			if len(line.strip()) == 0:
+				continue
+			code, county, state = line.strip().split('\t')
+			# American Samoa, Northern Mariana Islands, Puerto Rico
+			if state in ['AS', 'MP', 'PR']:
+				continue
+			fips_to_county[code] = (county.lower(), abbreviation_to_name[state])
+
+	election_to_census = {
+		"Alabama": {
+			"de kalb": "dekalb county",	
+		},
+		"Indiana": {
+			"de kalb": "dekalb county",	
+		},
+		"Tennessee": {
+			"de kalb": "dekalb county",	
+		},
+		"Mississippi": {
+			"de soto": "desoto county",
+		},
+		"Florida": {
+			"de soto": "desoto county",
+		},
+		"Missouri": {
+			"de kalb": "dekalb county",
+		},
+		"Maryland": {
+			"prince georges": "prince george's county",
+		},
+		"Louisiana": {
+			"la salle": "lasalle parish",
+		},
+		"Indiana": {
+			"la porte": "laporte county",
+			"de kalb": "dekalb county",
+			"la grange": "lagrange county",
+		},
+		"District of Columbia": {
+			"washington": "district of columbia",
+		},
+		"Illinois": {
+			"la salle": "lasalle county",
+			"du page": "dupage county",
+			"de kalb": "dekalb county",
+		},
+		"North Dakota": {
+			"la moure": "lamoure county",
+		},
+		"New Mexico": {
+			"dona ana": "doña ana county",
+		},
+		"South Dakota": {
+			"shannon": "oglala lakota county",
+		},
+		"Iowa": {
+			"o brien": "o'brien county",
+		},
+		"Texas": {
+			"de witt": "dewitt county",
+		},
+		"Georgia": {
+			"de kalb": "dekalb county",
+		},
+		"Maryland": {
+			"queen annes": "queen anne's county",
+			"prince georges": "prince george's county",
+			"st marys": "st. mary's county",
+		},
+		"Virginia": {
+			"colonial heights cit": "colonial heights city"
+		}
+	}
+
+	with open(pjoin('data', 'US_County_Level_Presidential_Results_08-16.csv'), 'r') as f:
+		reader = csv.reader(f, delimiter=',')
+		header = next(reader)
+		assert header == ['fips_code', 'county', 'total_2008', 'dem_2008', 'gop_2008', 'oth_2008', 'total_2012', 'dem_2012', 'gop_2012', 'oth_2012', 'total_2016', 'dem_2016', 'gop_2016', 'oth_2016']
+		rows = [row for row in reader]
+		for row in rows:
+			county, state = fips_to_county[row[0]]
+
+			if state in election_to_census and county in election_to_census[state]:
+				county = election_to_census[state][county]
+
+			if county[:3] == 'st ':
+				county = 'st. ' + county[3:]
+
+			if county not in states[state] and county + ' county' in states[state]:
+				county = county + ' county'
+			if county not in states[state] and county + ' parish' in states[state]:
+				county = county + ' parish'
+
+			assert county in states[state], f'{county}, {state}'
+
+			all2008 = int(row[2])
+			dem2008 = int(row[3])
+			gop2008 = int(row[4])
+
+			all2012 = int(row[6])
+			dem2012 = int(row[7])
+			gop2012 = int(row[8])
+
+			all2016 = int(row[10])
+			dem2016 = int(row[11])
+			gop2016 = int(row[12])
+
+			states[state][county]['elections'] = {
+				"2008": {
+					"total": all2008,
+					"dem": dem2008,
+					"gop": gop2008,
+				},
+				"2012": {
+					"total": all2012,
+					"dem": dem2012,
+					"gop": gop2012,
+				},
+				"2016": {
+					"total": all2016,
+					"dem": dem2016,
+					"gop": gop2016,
+				}
+			}
+
+	# Alaska and "Kalawao County, Hawaii" are missing from the
+	# datasource, so if they're missing election data it doesn't
+	# reflect poorly on our county name mapping.
+	for state in states:
+		if state == 'Alaska':
+			continue
+		for county in states[state]:
+			if state == 'Hawaii' and county == 'kalawao county':
+				continue
+			if 'elections' not in states[state][county]:
+				print(f'Missing election data for {county}, {state}')
+
+add_elections(states)
+
 with open('states.json', 'w+') as f:
 	json.dump(states, f, indent=1)
 
