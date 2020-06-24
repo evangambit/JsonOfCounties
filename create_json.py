@@ -17,7 +17,7 @@ from shapely.geometry import Point
 def area(x, y):
 	return 0.5*np.abs(np.dot(x,np.roll(y,1))-np.dot(y,np.roll(x,1)))
 
-sf = shapefile.Reader(pjoin('data', 'tl_2017_us_county.shp'))
+sf = shapefile.Reader(pjoin('data', 'tl_2017_us_county/tl_2017_us_county.shp'))
 
 abbreviation_to_name = {
 	"AL": "Alabama",
