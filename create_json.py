@@ -160,7 +160,7 @@ for s in sf:
 		"max_location": poly.bounds[2:]
 	}
 	latitude_ish = (states[state][county_name]["min_location"][1] + states[state][county_name]["max_location"][1]) / 2
-	states[state][county_name]["area"] = math.cos(latitude_ish)
+	states[state][county_name]["area"] = math.cos(latitude_ish * math.pi / 180)
 
 
 def add_demographics(states):
