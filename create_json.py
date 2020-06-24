@@ -157,8 +157,8 @@ for s in sf:
 
 	states[state][county_name] = {
 		"area": poly.area,
-		"min_loation": poly.bounds[:2],
-		"max_loation": poly.bounds[2:]
+		"min_location": poly.bounds[:2],
+		"max_location": poly.bounds[2:]
 	}
 
 def add_demographics(states):
@@ -405,9 +405,9 @@ def add_labor_force(states):
 
 			assert 'labor_force' not in county
 			county['labor_force'] = labor_force
-			county['employed'] = employed
-			county['unemployed'] = unemployed
-			county['unemployment_rate'] = unemployment_rate
+			county['employed'] = float(employed.replace(",",""))
+			county['unemployed'] = float(unemployed.replace(",",""))
+			county['unemployment_rate'] = float(unemployment_rate)
 
 	# Missing county...
 	states["Hawaii"]["kalawao county"]["labor_force"] = None
