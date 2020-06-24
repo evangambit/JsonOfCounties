@@ -64,7 +64,24 @@ An example entry:
      "unarmed_fatal_police_shootings": 0,
      "fatal_police_shootings_where_victim_had_firearm": 0,
      "avg_income": 51404,
-     "6/21/20-covid-deaths": 0
+     "6/21/20-covid-deaths": 0,
+     "elections": {
+      "2008": {
+       "total": 4974,
+       "dem": 1089,
+       "gop": 3746
+      },
+      "2012": {
+       "total": 4749,
+       "dem": 862,
+       "gop": 3789
+      },
+      "2016": {
+       "total": 4979,
+       "dem": 522,
+       "gop": 4275
+      }
+     }
     },
     // ...
   },
@@ -72,7 +89,9 @@ An example entry:
 }
 ```
 
-If you want to use this data, feel free (all the sources, except the Washington Post, are .gov websites), but please let me know (it's nice to know my work is being used).  You can email me ${myGithubUsername}@gmail, or just open an issue on Github.
+If you want to use this data, most of the sources are from .gov websites.  The exceptions are fatal police shooting data (from Washington Post) and election data (from a variety of sources, see the [repo's readme](https://github.com/tonmcg/US_County_Level_Election_Results_08-16) for more info).
+
+Please let me know if you want to use the data (it's nice to know my work is being used).  You can email me ${myGithubUsername}@gmail, or just open an issue on Github.
 
 ## Sources
 
@@ -89,6 +108,8 @@ If you want to use this data, feel free (all the sources, except the Washington 
 6. Average income comes from the BEA [here](https://apps.bea.gov/regional/downloadzip.cfm).  I don't trust the median income estimates (there are some really crazy counties...), so I only report the average income.
 
 7. Covid data comes from [this site](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/) on usafacts.org, who says their data comes from the CDC.  Data was last updated on June 20th, 2020.
+
+8. Presdential election data comes from Bill Morris' [github repository](https://github.com/tonmcg/US_County_Level_Election_Results_08-16/blob/master/US_County_Level_Presidential_Results_08-16.csv).  Alaska's counties are missing, as is Kalawao County, Hawaii.
 
 Note that this "states.json" does NOT contain a superset of each data source.  For instance the racial/age demographic breakdown provided by "cc-est2018-alldata.csv" is extremely specific (giving race/sex break downs for every age bucket for 9 years!) but we don't include all of that in states.json.
 
