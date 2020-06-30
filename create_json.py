@@ -276,7 +276,7 @@ class CountyNameMerger:
 
 	def merge_state(self, state, list1, list2, allow_missing, missing):
 		if (not allow_missing) and len(missing.get(state, {})) == 0:
-			assert len(list1) == len(list2), f"state\n\n{list1}\n\n{list2}"
+			assert len(list1) == len(list2), f"{state}\n\n{sorted(list1)}\n\n{sorted(list2)}"
 			assert len(set(list1)) == len(list1)
 			assert len(set(list2)) == len(list2)
 
@@ -741,56 +741,70 @@ def get_covid():
 
 	new_york_unallocated = 0
 
-	with open(pjoin('data', 'covid_deaths_usafacts.csv'), 'r') as f:
-		reader = csv.reader(f, delimiter=',')
-		header = next(reader)
-		for row in reader:
-			if row[1] == 'Statewide Unallocated':
-				continue
-			county = row[1].lower()
-			state = abbreviation_to_name[row[2]]
+	for varname, fn in zip(['deaths', 'confirmed'], ['covid_deaths_usafacts.csv', 'covid_confirmed_usafacts.csv']):
+		with open(pjoin('data', fn), 'r') as f:
+			reader = csv.reader(f, delimiter=',')
+			header = next(reader)
+			for row in reader:
+				if row[1] == 'Statewide Unallocated':
+					continue
+				county = row[1].lower()
+				state = abbreviation_to_name[row[2]]
 
-			if state not in states:
-				states[state] = {}
+				if state not in states:
+					states[state] = {}
 
-			# Lacking any clear/easy alternatives, we simply dump
-			# these in New York County at the end of the loop.
-			# We assert that the number of unallocated deaths is
-			# pretty small.  If it ever becomes large (relative
-			# to the New York counties) we may want to revisit
-			# our approach.
-			if county == "new york city unallocated/probable":
-				new_york_unallocated = int(row[-1])
-				assert new_york_unallocated < 100
-				continue
+				# Lacking any clear/easy alternatives, we simply dump
+				# these in New York County at the end of the loop.
+				# We assert that the number of unallocated deaths is
+				# pretty small.  If it ever becomes large (relative
+				# to the New York counties) we may want to revisit
+				# our approach.
+				if county == "new york city unallocated/probable":
+					new_york_unallocated = int(row[-1])
+					assert new_york_unallocated < 100
+					continue
 
-			if state == 'Alaska':
-				if county == "wade hampton census area":
-					wade_hampton = int(row[-1])
-				elif county == "kusilvak census area":
-					kusilvak = int(row[-1])
+				# Apparently this dataset isn't consistent between its own CSV files, so
+				# we need to hard-code some fixes...
+				if state == 'Colorado' and county == "broomfield county and city":
+					county = 'broomfield county'
+				if state == 'Virginia' and county == "matthews county":
+					county = "mathews county"
 
-			if state in blacklist and county in blacklist[state]:
-				continue
 
-			if county not in states[state]:
-				states[state][county] = {}
+				if state == 'Alaska':
+					if county == "wade hampton census area":
+						wade_hampton = int(row[-1])
+					elif county == "kusilvak census area":
+						kusilvak = int(row[-1])
 
-			assert f'{header[-1]}-covid-deaths' not in states[state][county]
-			states[state][county][f'{header[-1]}-covid-deaths'] = int(row[-1])
-			if float(row[79-7]) > 0:
-				states[state][county][f'covid-growth-est'] = float(row[79])/float(row[79-7])
-			else:
-				states[state][county][f'covid-growth-est'] = None
+				if state in blacklist and county in blacklist[state]:
+					continue
 
-	# We distribute "unattributed New York deaths" proportional to how the other
-	# covid deaths are distributed.
-	total = states['New York']['new york county'][f'{header[-1]}-covid-deaths'] + states['New York']['bronx county'][f'{header[-1]}-covid-deaths'] + states['New York']['kings county'][f'{header[-1]}-covid-deaths'] + states['New York']['queens county'][f'{header[-1]}-covid-deaths'] + states['New York']['richmond county'][f'{header[-1]}-covid-deaths']
-	states['New York']['new york county'][f'{header[-1]}-covid-deaths'] += new_york_unallocated * (states['New York']['new york county'][f'{header[-1]}-covid-deaths'] / total)
-	states['New York']['bronx county'][f'{header[-1]}-covid-deaths'] += new_york_unallocated * (states['New York']['bronx county'][f'{header[-1]}-covid-deaths'] / total)
-	states['New York']['kings county'][f'{header[-1]}-covid-deaths'] += new_york_unallocated * (states['New York']['kings county'][f'{header[-1]}-covid-deaths'] / total)
-	states['New York']['queens county'][f'{header[-1]}-covid-deaths'] += new_york_unallocated * (states['New York']['queens county'][f'{header[-1]}-covid-deaths'] / total)
-	states['New York']['richmond county'][f'{header[-1]}-covid-deaths'] += new_york_unallocated * (states['New York']['richmond county'][f'{header[-1]}-covid-deaths'] / total)
+				if county not in states[state]:
+					states[state][county] = {
+						"covid": {}
+					}
+
+				assert f'{header[-1]}-{varname}' not in states[state][county]
+				states[state][county]["covid"][f'{header[-1]}-{varname}'] = int(row[-1])
+
+				# Add growth in covid deaths the week before lock downs started having an effect.
+				if varname == 'deaths':
+					if float(row[79-7]) > 0:
+						states[state][county]["covid"][f'death-growth-rate-est'] = float(row[79])/float(row[79-7])
+					else:
+						states[state][county]["covid"][f'death-growth-rate-est'] = None
+
+			# We distribute "unattributed New York deaths" proportional to how the other
+			# covid deaths are distributed.
+			total = states['New York']['new york county']["covid"][f'{header[-1]}-{varname}'] + states['New York']['bronx county']["covid"][f'{header[-1]}-{varname}'] + states['New York']['kings county']["covid"][f'{header[-1]}-{varname}'] + states['New York']['queens county']["covid"][f'{header[-1]}-{varname}'] + states['New York']['richmond county']["covid"][f'{header[-1]}-{varname}']
+			states['New York']['new york county']["covid"][f'{header[-1]}-{varname}'] += new_york_unallocated * (states['New York']['new york county']["covid"][f'{header[-1]}-{varname}'] / total)
+			states['New York']['bronx county']["covid"][f'{header[-1]}-{varname}'] += new_york_unallocated * (states['New York']['bronx county']["covid"][f'{header[-1]}-{varname}'] / total)
+			states['New York']['kings county']["covid"][f'{header[-1]}-{varname}'] += new_york_unallocated * (states['New York']['kings county']["covid"][f'{header[-1]}-{varname}'] / total)
+			states['New York']['queens county']["covid"][f'{header[-1]}-{varname}'] += new_york_unallocated * (states['New York']['queens county']["covid"][f'{header[-1]}-{varname}'] / total)
+			states['New York']['richmond county']["covid"][f'{header[-1]}-{varname}'] += new_york_unallocated * (states['New York']['richmond county']["covid"][f'{header[-1]}-{varname}'] / total)
 
 	# Wade Hampton and Kusilvak are the same cuonty but, for some reason, exist as two rows.  Since both rows have zero
 	# deaths we won't worry about this for now... but if the rows ever differ we may want to email the CDC and ask why
