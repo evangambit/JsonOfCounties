@@ -11,13 +11,8 @@ import os
 pjoin = os.path.join
 
 # pip install Shapely
+from shapely import geometry
 from shapely.geometry import Point
-
-# https://stackoverflow.com/questions/24467972/calculate-area-of-polygon-given-x-y-coordinates
-def area(x, y):
-	return 0.5*np.abs(np.dot(x,np.roll(y,1))-np.dot(y,np.roll(x,1)))
-
-sf = shapefile.Reader(pjoin('data', 'tl_2017_us_county/tl_2017_us_county.shp'))
 
 abbreviation_to_name = {
 	"AL": "Alabama",
@@ -142,26 +137,33 @@ not_states = set([
 	"Virgin Islands",
 ])
 
-from shapely import geometry
+with open('base.json', 'r') as f:
+	states = json.load(f)
 
-# Add geometric data for countries.
-states = {}
-for s in sf:
-	state = fips_code_to_name[s.record.STATEFP]
-	if state in not_states:
-		continue
-	if state not in states:
-		states[state] = {}
-	county_name = s.record.NAMELSAD.lower()
-	poly = geometry.Polygon(s.shape.points)
-	states[state][county_name] = {
-		"area": poly.area,
-		"min_location": poly.bounds[:2],
-		"max_location": poly.bounds[2:]
-	}
-	latitude_ish = (states[state][county_name]["min_location"][1] + states[state][county_name]["max_location"][1]) / 2
-	states[state][county_name]["area"] = math.cos(latitude_ish)
+def add_geometry(states):
 
+	# https://stackoverflow.com/questions/24467972/calculate-area-of-polygon-given-x-y-coordinates
+	def area(x, y):
+		return 0.5*np.abs(np.dot(x,np.roll(y,1))-np.dot(y,np.roll(x,1)))
+
+	sf = shapefile.Reader(pjoin('data', 'tl_2017_us_county/tl_2017_us_county.shp'))
+
+	# Add geometric data for countries.
+	for s in sf:
+		state = fips_code_to_name[s.record.STATEFP]
+		if state in not_states:
+			continue
+		county_name = s.record.NAMELSAD.lower()
+		poly = geometry.Polygon(s.shape.points)
+		states[state][county_name] = {
+			"area": poly.area,
+			"min_location": poly.bounds[:2],
+			"max_location": poly.bounds[2:]
+		}
+		latitude_ish = (states[state][county_name]["min_location"][1] + states[state][county_name]["max_location"][1]) / 2
+		states[state][county_name]["area"] = math.cos(latitude_ish)
+
+add_geometry(states)
 
 def add_demographics(states):
 	age_code_to_group = {
