@@ -1,4 +1,4 @@
-import csv, json, math, os, re
+import code, copy, csv, json, math, os, re
 
 # pip install pyshp
 import shapefile
@@ -137,10 +137,234 @@ not_states = set([
 	"Virgin Islands",
 ])
 
-with open('base.json', 'r') as f:
-	states = json.load(f)
+# Maps formly independent cities to the counties they
+# now belong to.  This way we can add the deaths from
+# these cities (which the CDC keeps separate, since its
+# data goes back to 1999) to the counties the cities
+# now belong to.
+former_independent_cities_to_counties = {
+	"Virginia": {
+		"clifton forge city": "alleghany county",
+		"bedford city": "bedford county",
+	}
+}
 
-def add_geometry(states):
+class CountyNameMerger:
+	kHardCoded = {
+		"Alabama": {
+			"de kalb": "dekalb county",	
+		},
+		"Alaska": {
+			"anchorage borough": "anchorage municipality",
+			"juneau borough": "juneau city and borough",
+			"petersburg borough/census area": "petersburg borough",
+			"sitka borough": "sitka city and borough",
+			"skagway-hoonah-angoon census area" : "skagway municipality",
+			"wrangell-petersburg census area": "wrangell city and borough",
+			"yakutat borough": "yakutat city and borough",
+			# Formerly known as Wade Hampton Census Area
+			"wade hampton census area": "kusilvak census area",
+			# Renamed in 2008
+			"prince of wales-outer ketchikan census area": "prince of wales-hyder census area",
+
+			"anchorage borough/municipality": "anchorage municipality",
+			"juneau borough/city": "juneau city and borough",
+			"sitka borough/city": "sitka city and borough",
+			"wrangell borough/city": "wrangell city and borough",
+			"yakutat borough/city": "yakutat city and borough",
+
+			"municipality of anchorage": "anchorage municipality",
+			"city and borough of juneau": "juneau city and borough",
+			"petersburg census area": "petersburg borough",
+		},
+		"California": {
+			"san francisco county/city": "san francisco county",
+		},
+		"Colorado": {
+			"broomfield county/city": "broomfield county",
+		},
+		"District of Columbia": {
+			"washington": "district of columbia",
+			"district of columbia county": "district of columbia",
+		},
+		"Florida": {
+			"de soto": "desoto county",
+		},
+		"Georgia": {
+			"de kalb": "dekalb county",
+		},
+		"Idaho": {
+			"fremont (includes yellowstone park)": "fremont county"
+		},
+		"Illinois": {
+			"la salle": "lasalle county",
+			"du page": "dupage county",
+			"de kalb": "dekalb county",
+		},
+		"Indiana": {
+			"de kalb": "dekalb county",
+			"de kalb county": "dekalb county",
+			"la porte county": "laporte county",
+			"la porte": "laporte county",
+			"de kalb": "dekalb county",
+			"la grange": "lagrange county",
+		},
+		"Iowa": {
+			"o brien": "o'brien county",
+		},
+		"Louisiana": {
+			"la salle parish": "lasalle parish",
+			"la salle": "lasalle parish",
+		},
+		"Maryland": {
+			"baltimore (independent city)": "baltimore city",
+			"baltimore city county": "baltimore city",
+			"prince georges": "prince george's county",
+			"queen annes": "queen anne's county",
+			"st. marys": "st. mary's county",
+		},
+		"Mississippi": {
+			"de soto": "desoto county",
+		},
+		"Missouri": {
+			"jackson county (including other portions of kansas city)": "jackson county",
+			"city of st. louis": "st. louis city",
+			"st. louis city county": "st. louis city",
+			"Jackson County (including other portions of Kansas City)": "Jackson County",
+			"de kalb": "dekalb county",
+		},
+		"Nevada": {
+			"carson city county": "carson city"
+		},
+		"New Mexico": {
+			"debaca county": "de baca county",
+			"dona ana county": "doña ana county",
+			"dona ana": "doña ana county",
+		},
+		"North Dakota": {
+			"la moure": "lamoure county",
+		},
+		"Pennsylvania": {
+			"mc kean county": "mckean county",
+		},
+		"South Dakota": {
+			"shannon county": "oglala lakota county",
+			"shannon": "oglala lakota county",
+		},
+		"Tennessee": {
+			"de kalb": "dekalb county",	
+		},
+		"Texas": {
+			"de witt": "dewitt county",
+		},
+		"Virginia": {
+			"colonial heights cit": "colonial heights city"
+		}
+	}
+
+
+# if county not in states[state] and county + ' county' in states[state]:
+# 	county = county + ' county'
+# if county not in states[state] and county + ' parish' in states[state]:
+# 	county = county + ' parish'
+# assert county in states[state], f'{county}, {state}'
+
+
+	def __init__(self):
+		with open('base.json', 'r') as f:
+			self.states = json.load(f)
+
+	def merge_state(self, state, list1, list2, allow_missing, missing):
+		if (not allow_missing) and len(missing.get(state, {})) == 0:
+			assert len(list1) == len(list2), f"state\n\n{list1}\n\n{list2}"
+			assert len(set(list1)) == len(list1)
+			assert len(set(list2)) == len(list2)
+
+		hardCoded = CountyNameMerger.kHardCoded.get(state, {})
+
+		M = {}
+
+		foo = 'honolulu' in list1
+
+		i = 0
+		while i < len(list1):
+			county = list1[i]
+			if county[:3] == 'st ':
+				county = 'st. ' + county[3:]
+
+			if county[-19:] == ' (independent city)':
+				if county[-23:-18] != 'city ':
+					county = county[:-19] + ' city'
+				else:
+					county = county[:-19]
+
+			if county[-12:] == ' county/city':
+				county = county[:-5]
+			if county[-12:] == ' county/town':
+				county = county[:-5]
+
+			if county in hardCoded:
+				j = list2.index(hardCoded[county])
+				M[list1[i]] = list2[j]
+				del list1[i]
+				del list2[j]
+			elif county in list2:
+				j = list2.index(county)
+				M[list1[i]] = list2[j]
+				del list1[i]
+				del list2[j]
+			elif county + ' county' in list2:
+				j = list2.index(county + ' county')
+				M[list1[i]] = list2[j]
+				del list1[i]
+				del list2[j]
+			elif state == 'Louisiana' and county + ' parish' in list2:
+				j = list2.index(county + ' parish')
+				M[list1[i]] = list2[j]
+				del list1[i]
+				del list2[j]
+			else:
+				i += 1
+
+		if state not in missing:
+			assert len(list1) == 0, f"{state}\n\n{list1}\n\n{list2}"
+		else:
+			assert len([x for x in list1 if x not in missing[state]]) == 0
+
+		if not allow_missing:
+			assert len(list2) - len(missing.get(state, {})) == 0, list2
+
+		# Assert mapping is not many-to-1
+		assert len(M.values()) == len(set(M.values()))
+
+		return M
+
+	def merge(self, states, allow_missing=False, missing={}):
+		if not allow_missing:
+			assert len(states) == 51
+		for state in states:
+			M = self.merge_state(
+				state,
+				list(states[state].keys()),
+				list(self.states[state].keys()),
+				allow_missing=allow_missing,
+				missing=missing
+			)
+			for county in M:
+				self.add_to_json(
+					self.states[state][M[county]],
+					states[state][county]
+				)
+
+	def add_to_json(self, base, addition):
+		for k in addition:
+			assert k not in base
+			base[k] = addition[k]
+
+merger = CountyNameMerger()
+
+def get_geometry():
+	states = {}
 
 	# https://stackoverflow.com/questions/24467972/calculate-area-of-polygon-given-x-y-coordinates
 	def area(x, y):
@@ -153,6 +377,8 @@ def add_geometry(states):
 		state = fips_code_to_name[s.record.STATEFP]
 		if state in not_states:
 			continue
+		if state not in states:
+			states[state] = {}
 		county_name = s.record.NAMELSAD.lower()
 		poly = geometry.Polygon(s.shape.points)
 		states[state][county_name] = {
@@ -163,9 +389,12 @@ def add_geometry(states):
 		latitude_ish = (states[state][county_name]["min_location"][1] + states[state][county_name]["max_location"][1]) / 2
 		states[state][county_name]["area"] = math.cos(latitude_ish * math.pi / 180)
 
-add_geometry(states)
+	return states
 
-def add_demographics(states):
+
+merger.merge(get_geometry())
+
+def get_demographics():
 	age_code_to_group = {
 	  0: "all",
 		1: "0-4",
@@ -204,6 +433,9 @@ def add_demographics(states):
 	}
 	# After downloading this file you should open it with a text editor (
 	# I use Sublime) and re-encode it as utf8.
+
+	states = {}
+
 	with open(pjoin('data', 'cc-est2018-alldata.csv'), 'r') as f:
 		reader = csv.reader(f, delimiter=',')
 		header = next(reader)
@@ -211,6 +443,9 @@ def add_demographics(states):
 		assert header[:7] == ['SUMLEV', 'STATE', 'COUNTY', 'STNAME', 'CTYNAME', 'YEAR', 'AGEGRP']
 		for row in rows:
 			state = row[3]
+			if state not in states:
+				states[state] = {}
+
 			county = row[4].lower()
 
 			# We only grab the latest year available and ignore the
@@ -224,13 +459,15 @@ def add_demographics(states):
 				# this row.  The racial break down done by the Census
 				# Bureau is... intense, with 73 different columns.  To
 				# keep the file size reasonable I don't track them all.
+				# Fortunately the code and data is freely available so
+				# it is trivial for you to add more columns if you like!
 
 				# We assume this is the first row we see.
+				assert county not in states[state]
+				states[state][county] = {}
 				states[state][county]['race_demographics'] = {}
 				states[state][county]['age_demographics'] = {}
 
-				# Fortunately the code and data is freely available so
-				# it is trivial for you to add more columns if you like!
 				states[state][county]['male'] = int(row[8])
 				states[state][county]['female'] = int(row[9])
 
@@ -258,50 +495,12 @@ def add_demographics(states):
 		for county_name in states[state_name]:
 			assert 'race_demographics' in states[state_name][county_name]
 
-add_demographics(states)
+	return states
 
-def add_cdc_deaths(states):
-	cdc_to_census = {
-		"Alaska": {
-			"anchorage borough": "anchorage municipality",
-			"juneau borough": "juneau city and borough",
-			"petersburg borough/census area": "petersburg borough",
-			"sitka borough": "sitka city and borough",
-			"skagway-hoonah-angoon census area" : "skagway municipality",
-			"wrangell-petersburg census area": "wrangell city and borough",
-			"yakutat borough": "yakutat city and borough",
-			# Formerly known as Wade Hampton Census Area
-			"wade hampton census area": "kusilvak census area",
-			# Renamed in 2008
-			"prince of wales-outer ketchikan census area": "prince of wales-hyder census area",
-		},
-		"Indiana": {
-			"de kalb county": "dekalb county",
-			"la porte county": "laporte county",
-		},
-		"New Mexico": {
-			"debaca county": "de baca county",
-			"dona ana county": "doña ana county",
-		},
-		"Pennsylvania": {
-			"mc kean county": "mckean county",
-		},
-		"South Dakota": {
-			"shannon county": "oglala lakota county",
-		},
-	}
+merger.merge(get_demographics())
 
-	# Maps formly independent cities to the counties they
-	# now belong to.  This way we can add the deaths from
-	# these cities (which the CDC keeps separate, since its
-	# data goes back to 1999) to the counties the cities
-	# now belong to.
-	former_independent_cities_to_counties = {
-		"Virginia": {
-			"clifton forge city": "alleghany county",
-			"bedford city": "bedford county",
-		}
-	}
+def get_cdc_deaths():
+	states = {}
 	for varname, fn in zip(['suicides', 'firearm suicides'], ["Compressed Mortality, 1999-2016 (all suicides).txt", "Compressed Mortality, 1999-2016 (firearm suicides).txt"]):
 		with open(pjoin('data', fn), 'r') as f:
 			reader = csv.reader(f, delimiter='\t', quotechar='"')
@@ -314,13 +513,16 @@ def add_cdc_deaths(states):
 			_, county, _, deaths, _, _ = row
 			county = county.lower()
 			state = abbreviation_to_name[county.split(', ')[-1].upper()]
+			if state not in states:
+				states[state] = {}
 			county = ', '.join(county.split(', ')[:-1])
 
+			# These counties changed their names recently, and rows with
+			# both the old names and new names are found in the CDC
+			# dataset, so we simply ignore these names.
 			if county in ['prince of wales-outer ketchikan census area', 'skagway-hoonah-angoon census area', "wrangell-petersburg census area"]:
 				continue
 
-			if state in cdc_to_census and county in cdc_to_census[state]:
-				county = cdc_to_census[state][county]
 			if deaths == 'Suppressed':
 				deaths = None
 
@@ -330,6 +532,9 @@ def add_cdc_deaths(states):
 					former_independent_cities[state] = {}
 				former_independent_cities[state][county] = deaths
 				continue
+
+			if county not in states[state]:
+				states[state][county] = {}
 			assert varname not in states[state][county]
 			states[state][county][varname] = deaths
 
@@ -348,34 +553,15 @@ def add_cdc_deaths(states):
 			for county in states[state]:
 				assert varname in states[state][county]
 
-add_cdc_deaths(states)
+	return states
+
+merger.merge(get_cdc_deaths())
 
 # Labor force data
 # https://www.bls.gov/lau/#cntyaa
 
-def add_labor_force(states):
-	bls_to_census = {
-		"Alaska": {
-			"anchorage borough/municipality": "anchorage municipality",
-			"juneau borough/city": "juneau city and borough",
-			"sitka borough/city": "sitka city and borough",
-			"wrangell borough/city": "wrangell city and borough",
-			"yakutat borough/city": "yakutat city and borough",
-			# I should figure out why this is correct...
-			# "wade hampton census area": "kusilvak census area",
-			# Renamed in 2008
-			# "prince of wales-outer ketchikan census area": "prince of wales-hyder census area",
-		},
-		"California": {
-			"san francisco county/city": "san francisco county",
-		},
-		"Colorado": {
-			"broomfield county/city": "broomfield county",
-		},
-		"New Mexico": {
-			"dona ana county": "doña ana county",
-		},
-	}
+def get_labor_force():
+	states = {}
 
 	with open(pjoin('data', 'laborforce.txt'), 'r') as f:
 		lines = f.readlines()
@@ -398,43 +584,32 @@ def add_labor_force(states):
 			if state in not_states:
 				continue
 
-			if county_name[-12:] == ' county/city':
-				county_name = county_name[:-5]
-			if county_name[-12:] == ' county/town':
-				county_name = county_name[:-5]
-			if state in bls_to_census and county_name in bls_to_census[state]:
-				county_name = bls_to_census[state][county_name]
+			if state not in states:
+				states[state] = {}
 
-			county = states[state][county_name]
-
-			assert 'labor_force' not in county
+			county = {}
 			county['labor_force'] = float(labor_force.replace(",",""))
 			county['employed'] = float(employed.replace(",",""))
 			county['unemployed'] = float(unemployed.replace(",",""))
 			county['unemployment_rate'] = float(unemployment_rate)
+			assert county_name not in states[state]
+			states[state][county_name] = county
 
 	# Missing county...
-	states["Hawaii"]["kalawao county"]["labor_force"] = None
-	states["Hawaii"]["kalawao county"]["employed"] = None
-	states["Hawaii"]["kalawao county"]["unemployed"] = None
-	states["Hawaii"]["kalawao county"]["unemployment_rate"] = None
-
-	for state in states:
-		for county in states[state]:
-			assert 'labor_force' in states[state][county]
-
-add_labor_force(states)
-
-def add_fatal_police_shootings(states):
-	washingpost_to_census = {
-		"Alaska": {
-			"anchorage borough": "anchorage municipality",
-			"juneau borough": "juneau city and borough",
-		},
-		"New Mexico": {
-			"dona ana county": "doña ana county",
-		},
+	assert "kalawao county" not in states["Hawaii"]
+	states["Hawaii"]["kalawao county"] = {
+		"labor_force": None,
+		"employed": None,
+		"unemployed": None,
+		"unemployment_rate": None
 	}
+
+	return states
+
+merger.merge(get_labor_force())
+
+def get_fatal_police_shootings():
+	states = {}
 
 	for varname, fn in zip(
 		['fatal_police_shootings', 'unarmed_fatal_police_shootings', 'fatal_police_shootings_where_victim_had_firearm'],
@@ -444,29 +619,38 @@ def add_fatal_police_shootings(states):
 
 			for k in shootings:
 				state_name = abbreviation_to_name[k[-2:].upper()]
+				if state_name not in states:
+					states[state_name] = {}
 				state = states[state_name]
-
 				county_name = k[:-4]
-				if state_name in washingpost_to_census and county_name in washingpost_to_census[state_name]:
-					county_name = washingpost_to_census[state_name][county_name]
-				elif county_name not in state:
-					if county_name[-7:] == ' county':
-						county_name = county_name[:-7]
-					if county_name[-8:] == ' borough':
-						county_name = county_name[:-8]
+
+				if county_name not in state:
+					state[county_name] = {}
 
 				state[county_name][varname] = shootings[k]
 
-		# If a county is never present in the Washington Post database,
-		# this is because it has no recorded fatal police shootings.
-		for state in states:
-			for county in states[state]:
-				if varname not in states[state][county]:
-					states[state][county][varname] = 0
+	return states
 
-add_fatal_police_shootings(states)
+# Fatal police shootings are unique in that we don't have an
+# entry for every county, because the Washington Post tracks
+# stats by *shooting* rather than by county.  As a result, we
+# need to tolerate having missing counties.
+merger.merge(get_fatal_police_shootings(), allow_missing=True)
 
-def add_avg_income(states):
+# After we merge, add zeros for all missing counties (which
+# aren't present in the Washington Post dataset, simply because
+# they had no fatal police shootings).
+for state in merger.states:
+	for county in merger.states[state]:
+		if "fatal_police_shootings" not in merger.states[state][county]:
+			merger.states[state][county]["fatal_police_shootings"] = 0
+		if "unarmed_fatal_police_shootings" not in merger.states[state][county]:
+			merger.states[state][county]["unarmed_fatal_police_shootings"] = 0
+		if "fatal_police_shootings_where_victim_had_firearm" not in merger.states[state][county]:
+			merger.states[state][county]["fatal_police_shootings_where_victim_had_firearm"] = 0
+
+def get_avg_income():
+	states = {}
 	for fn in os.listdir(pjoin('data', 'CAINC1')):
 		with open(pjoin('data', 'CAINC1', fn), 'r', encoding='Latin-1') as f:
 			reader = csv.reader(f, delimiter=',')
@@ -494,62 +678,53 @@ def add_avg_income(states):
 				county = loc[:-4].lower()
 				state = abbreviation_to_name[loc[-2:]]
 
+				if state not in states:
+					states[state] = {}
+
 				# These counties are combined...
 				if loc == 'Maui + Kalawao, HI':
-					assert 'avg_income' not in states[state]['maui county']
-					assert 'avg_income' not in states[state]['kalawao county']
-					states[state]['maui county']['avg_income'] = avg_income
-					states[state]['kalawao county']['avg_income'] = avg_income
-					continue
-
-				if state == 'Idaho' and county == 'fremont (includes yellowstone park)':
-					assert 'avg_income' not in states[state]['fremont county']
-					states[state]['fremont county']['avg_income'] = avg_income
-					continue
-
-				if state == 'Maryland' and county == 'baltimore (independent city)':
-					assert 'avg_income' not in states[state]['baltimore city']
-					states[state]['baltimore city']['avg_income'] = avg_income
+					assert "maui county" not in states[state]
+					assert "kalawao county" not in states[state]
+					states[state]['maui county'] = {
+						"avg_income": avg_income
+					}
+					states[state]['kalawao county'] = {
+						"avg_income": avg_income
+					}
 					continue
 
 				# Independent cities are merged with their surrounding counties.
 				# We un-merge them here.
 				if '+' in county:
 					parts = [x.strip() for x in re.findall(r"[^,\+]+", county)]
-					states[state][parts[0] + ' county']['avg_income'] = avg_income
+					assert parts[0] + ' county' not in states[state]
+					states[state][parts[0] + ' county'] = {
+						"avg_income": avg_income
+					}
 					for part in parts[1:]:
 						if part[-5:] != ' city':
 							part += ' city'
-						assert 'avg_income' not in states[state][part]
+						assert part not in states[state]
+						states[state][part] = {}
 						states[state][part]['avg_income'] = avg_income
 					continue
 
-				if county[-19:] == ' (independent city)':
-					if county[-23:-18] != 'city ':
-						county = county[:-19] + ' city'
-					else:
-						county = county[:-19]
-
-				if county not in states[state] and county + ' county' in states[state]:
-					county = county + ' county'
-				if county not in states[state] and county + ' parish' in states[state]:
-					county = county + ' parish'
-
-				assert 'avg_income' not in states[state][county]
-				states[state][county]['avg_income'] = avg_income
+				assert county not in states[state]
+				states[state][county] = {
+					"avg_income": avg_income
+				}
 
 	for state in states:
-			for county in states[state]:
-				assert 'avg_income' in states[state][county]
+		for county in states[state]:
+			assert 'avg_income' in states[state][county]
 
-add_avg_income(states)
+	return states
 
-def add_covid(states):
-	covid_to_census = {
+merger.merge(get_avg_income())
+
+def get_covid():
+	blacklist = {
 		"Alaska": {
-			"municipality of anchorage": "anchorage municipality",
-			"city and borough of juneau": "juneau city and borough",
-			"petersburg census area": "petersburg borough",
 			# Ordinarily we'd map this to "kusilvak census area" but,
 			# (I assume due to an oversight by either the CDC or
 			# usafacts.org) this county represented twice (once for
@@ -560,20 +735,9 @@ def add_covid(states):
 		"California": {
 			"grand princess cruise ship": None,
 		},
-		"District of Columbia": {
-			"washington": "district of columbia",
-		},
-		"Louisiana": {
-			"la salle parish": "lasalle parish",
-		},
-		"Missouri": {
-			"jackson county (including other portions of kansas city)": "jackson county",
-			"city of st. louis": "st. louis city",
-		},
-		"New Mexico": {
-			"dona ana county": "doña ana county",
-		},
 	}
+
+	states = {}
 
 	new_york_unallocated = 0
 
@@ -585,6 +749,9 @@ def add_covid(states):
 				continue
 			county = row[1].lower()
 			state = abbreviation_to_name[row[2]]
+
+			if state not in states:
+				states[state] = {}
 
 			# Lacking any clear/easy alternatives, we simply dump
 			# these in New York County at the end of the loop.
@@ -603,10 +770,11 @@ def add_covid(states):
 				elif county == "kusilvak census area":
 					kusilvak = int(row[-1])
 
-			if state in covid_to_census and county in covid_to_census[state]:
-				county = covid_to_census[state][county]
-				if county is None:
-					continue
+			if state in blacklist and county in blacklist[state]:
+				continue
+
+			if county not in states[state]:
+				states[state][county] = {}
 
 			assert f'{header[-1]}-covid-deaths' not in states[state][county]
 			states[state][county][f'{header[-1]}-covid-deaths'] = int(row[-1])
@@ -615,13 +783,26 @@ def add_covid(states):
 			else:
 				states[state][county][f'covid-growth-est'] = None
 
-	states['New York']['new york county'][f'{header[-1]}-covid-deaths'] += new_york_unallocated
+	# We distribute "unattributed New York deaths" proportional to how the other
+	# covid deaths are distributed.
+	total = states['New York']['new york county'][f'{header[-1]}-covid-deaths'] + states['New York']['bronx county'][f'{header[-1]}-covid-deaths'] + states['New York']['kings county'][f'{header[-1]}-covid-deaths'] + states['New York']['queens county'][f'{header[-1]}-covid-deaths'] + states['New York']['richmond county'][f'{header[-1]}-covid-deaths']
+	states['New York']['new york county'][f'{header[-1]}-covid-deaths'] += new_york_unallocated * (states['New York']['new york county'][f'{header[-1]}-covid-deaths'] / total)
+	states['New York']['bronx county'][f'{header[-1]}-covid-deaths'] += new_york_unallocated * (states['New York']['bronx county'][f'{header[-1]}-covid-deaths'] / total)
+	states['New York']['kings county'][f'{header[-1]}-covid-deaths'] += new_york_unallocated * (states['New York']['kings county'][f'{header[-1]}-covid-deaths'] / total)
+	states['New York']['queens county'][f'{header[-1]}-covid-deaths'] += new_york_unallocated * (states['New York']['queens county'][f'{header[-1]}-covid-deaths'] / total)
+	states['New York']['richmond county'][f'{header[-1]}-covid-deaths'] += new_york_unallocated * (states['New York']['richmond county'][f'{header[-1]}-covid-deaths'] / total)
 
+	# Wade Hampton and Kusilvak are the same cuonty but, for some reason, exist as two rows.  Since both rows have zero
+	# deaths we won't worry about this for now... but if the rows ever differ we may want to email the CDC and ask why
+	# they have duplicate rows.
 	assert wade_hampton == kusilvak, 'If this is ever violated, we need to revisit how we resolve these duplicate rows'
 
-add_covid(states)
+	return states
 
-def add_elections(states):
+merger.merge(get_covid())
+
+def get_elections():
+	states = {}
 	fips_to_county = {
 		'08014': ('broomfield county', 'Colorado')
 	}
@@ -635,72 +816,6 @@ def add_elections(states):
 				continue
 			fips_to_county[code] = (county.lower(), abbreviation_to_name[state])
 
-	election_to_census = {
-		"Alabama": {
-			"de kalb": "dekalb county",	
-		},
-		"Indiana": {
-			"de kalb": "dekalb county",	
-		},
-		"Tennessee": {
-			"de kalb": "dekalb county",	
-		},
-		"Mississippi": {
-			"de soto": "desoto county",
-		},
-		"Florida": {
-			"de soto": "desoto county",
-		},
-		"Missouri": {
-			"de kalb": "dekalb county",
-		},
-		"Maryland": {
-			"prince georges": "prince george's county",
-		},
-		"Louisiana": {
-			"la salle": "lasalle parish",
-		},
-		"Indiana": {
-			"la porte": "laporte county",
-			"de kalb": "dekalb county",
-			"la grange": "lagrange county",
-		},
-		"District of Columbia": {
-			"washington": "district of columbia",
-		},
-		"Illinois": {
-			"la salle": "lasalle county",
-			"du page": "dupage county",
-			"de kalb": "dekalb county",
-		},
-		"North Dakota": {
-			"la moure": "lamoure county",
-		},
-		"New Mexico": {
-			"dona ana": "doña ana county",
-		},
-		"South Dakota": {
-			"shannon": "oglala lakota county",
-		},
-		"Iowa": {
-			"o brien": "o'brien county",
-		},
-		"Texas": {
-			"de witt": "dewitt county",
-		},
-		"Georgia": {
-			"de kalb": "dekalb county",
-		},
-		"Maryland": {
-			"queen annes": "queen anne's county",
-			"prince georges": "prince george's county",
-			"st marys": "st. mary's county",
-		},
-		"Virginia": {
-			"colonial heights cit": "colonial heights city"
-		}
-	}
-
 	with open(pjoin('data', 'US_County_Level_Presidential_Results_08-16.csv'), 'r') as f:
 		reader = csv.reader(f, delimiter=',')
 		header = next(reader)
@@ -709,18 +824,8 @@ def add_elections(states):
 		for row in rows:
 			county, state = fips_to_county[row[0]]
 
-			if state in election_to_census and county in election_to_census[state]:
-				county = election_to_census[state][county]
-
-			if county[:3] == 'st ':
-				county = 'st. ' + county[3:]
-
-			if county not in states[state] and county + ' county' in states[state]:
-				county = county + ' county'
-			if county not in states[state] and county + ' parish' in states[state]:
-				county = county + ' parish'
-
-			assert county in states[state], f'{county}, {state}'
+			if state not in states:
+				states[state] = {}
 
 			all2008 = int(row[2])
 			dem2008 = int(row[3])
@@ -734,39 +839,38 @@ def add_elections(states):
 			dem2016 = int(row[11])
 			gop2016 = int(row[12])
 
-			states[state][county]['elections'] = {
-				"2008": {
-					"total": all2008,
-					"dem": dem2008,
-					"gop": gop2008,
+			states[state][county] = {
+				"elections": {
+					"2008": {
+						"total": all2008,
+						"dem": dem2008,
+						"gop": gop2008,
+					},
+					"2012": {
+						"total": all2012,
+						"dem": dem2012,
+						"gop": gop2012,
+					},
+					"2016": {
+						"total": all2016,
+						"dem": dem2016,
+						"gop": gop2016,
+					}
 				},
-				"2012": {
-					"total": all2012,
-					"dem": dem2012,
-					"gop": gop2012,
-				},
-				"2016": {
-					"total": all2016,
-					"dem": dem2016,
-					"gop": gop2016,
-				}
+				"fips": row[0]
 			}
-			states[state][county]['fips'] = row[0]
 
-	# Alaska and "Kalawao County, Hawaii" are missing from the
-	# datasource, so if they're missing election data it doesn't
-	# reflect poorly on our county name mapping.
-	for state in states:
-		if state == 'Alaska':
-			continue
-		for county in states[state]:
-			if state == 'Hawaii' and county == 'kalawao county':
-				continue
-			if 'elections' not in states[state][county]:
-				print(f'Missing election data for {county}, {state}')
+	# Missing Alaska
+	assert "Alaska" not in states
+	states["Alaska"] = {}
 
-add_elections(states)
+	return states
+
+merger.merge(get_elections(), missing={
+	"Alaska": set(merger.states["Alaska"].keys()),
+	"Hawaii": {"kalawao"}
+})
 
 with open('states.json', 'w+') as f:
-	json.dump(states, f, indent=1)
+	json.dump(merger.states, f, indent=1)
 
