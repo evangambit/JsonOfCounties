@@ -12,7 +12,7 @@ An example entry:
   "Nebraska": {
     // ...
     "holt county": {
-     "area": 0.08072075790361428,
+     "area": 0.7373680109573566,
      "min_location": [
       -99.25703899999999,
       42.087894999999996
@@ -65,6 +65,7 @@ An example entry:
      "fatal_police_shootings_where_victim_had_firearm": 0,
      "avg_income": 51404,
      "6/21/20-covid-deaths": 0,
+     "covid-growth-est": null,
      "elections": {
       "2008": {
        "total": 4974,
