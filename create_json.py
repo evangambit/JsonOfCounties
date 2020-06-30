@@ -612,7 +612,7 @@ def get_fatal_police_shootings():
 	states = {}
 
 	for varname, fn in zip(
-		['fatal_police_shootings', 'unarmed_fatal_police_shootings', 'fatal_police_shootings_where_victim_had_firearm'],
+		['total', 'unarmed', 'fire-armed'],
 		['shootings-by-county.json', 'unarmed-shootings-by-county.json', 'shootings-by-county-where-victim-had-firearm.json']):
 		with open(pjoin('generated', fn), 'r') as f:
 			shootings = json.load(f)
@@ -625,9 +625,11 @@ def get_fatal_police_shootings():
 				county_name = k[:-4]
 
 				if county_name not in state:
-					state[county_name] = {}
+					state[county_name] = {
+						"fatal_police_shootings": {}
+					}
 
-				state[county_name][varname] = shootings[k]
+				state[county_name]["fatal_police_shootings"][varname] = shootings[k]
 
 	return states
 
@@ -643,11 +645,14 @@ merger.merge(get_fatal_police_shootings(), allow_missing=True)
 for state in merger.states:
 	for county in merger.states[state]:
 		if "fatal_police_shootings" not in merger.states[state][county]:
-			merger.states[state][county]["fatal_police_shootings"] = 0
-		if "unarmed_fatal_police_shootings" not in merger.states[state][county]:
-			merger.states[state][county]["unarmed_fatal_police_shootings"] = 0
-		if "fatal_police_shootings_where_victim_had_firearm" not in merger.states[state][county]:
-			merger.states[state][county]["fatal_police_shootings_where_victim_had_firearm"] = 0
+			merger.states[state][county]["fatal_police_shootings"] = {}
+
+		if "total" not in merger.states[state][county]["fatal_police_shootings"]:
+			merger.states[state][county]["fatal_police_shootings"]["total"] = 0
+		if "unarmed" not in merger.states[state][county]["fatal_police_shootings"]:
+			merger.states[state][county]["fatal_police_shootings"]["unarmed"] = 0
+		if "fire-armed" not in merger.states[state][county]["fatal_police_shootings"]:
+			merger.states[state][county]["fatal_police_shootings"]["fire-armed"] = 0
 
 def get_avg_income():
 	states = {}
