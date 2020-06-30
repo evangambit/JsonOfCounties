@@ -60,9 +60,11 @@ An example entry:
       "employed": 5613.0,
       "unemployed": 150.0,
       "unemployment_rate": 2.6,
-      "fatal_police_shootings": 0,
-      "unarmed_fatal_police_shootings": 0,
-      "fatal_police_shootings_where_victim_had_firearm": 0,
+      "fatal_police_shootings": {
+       "total": 0,
+       "unarmed": 0,
+       "fire-armed": 0
+      },
       "avg_income": 51404,
       "covid": {
        "6/21/20-deaths": 0,
