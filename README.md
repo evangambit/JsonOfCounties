@@ -21,6 +21,23 @@ An example entry:
        -98.300212,
        42.896724
       ],
+      "zip-codes": [
+       "68766",
+       "68759",
+       "68725",
+       "68713",
+       "68746",
+       "68726",
+       "68823",
+       "68764",
+       "68735",
+       "68763",
+       "68711",
+       "68777",
+       "68780",
+       "68734",
+       "68742"
+      ],
       "race_demographics": {
        "non_hispanic_white_alone_male": 0.4622715661230104,
        "non_hispanic_white_alone_female": 0.4660051090587542,
@@ -120,6 +137,8 @@ Please let me know if you want to use the data (it's nice to know my work is bei
 7. Covid data comes from [this site](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/) on usafacts.org, who says their data comes from the CDC.  Data was last updated on June 20th, 2020.
 
 8. Presidential election data comes from Bill Morris' [github repository](https://github.com/tonmcg/US_County_Level_Election_Results_08-16/blob/master/US_County_Level_Presidential_Results_08-16.csv).  Alaska's counties are missing, as is Kalawao County, Hawaii.
+
+9. Zip code-to-county data is from data.world [here](https://data.world/niccolley/us-zipcode-to-county-state), specifically Nic Colley, and is in the Public Domain.  Zip codes can overlap multiple counties.
 
 Note that this "states.json" does NOT contain a superset of each data source.  For instance the racial/age demographic breakdown provided by "cc-est2018-alldata.csv" is extremely specific (giving race/sex break downs for every age bucket for 9 years!) but we don't include all of that in states.json.
 

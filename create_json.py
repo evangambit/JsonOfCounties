@@ -288,7 +288,7 @@ class CountyNameMerger:
 
 		i = 0
 		while i < len(list1):
-			county = list1[i]
+			county = list1[i].lower()
 			if county[:3] == 'st ':
 				county = 'st. ' + county[3:]
 
@@ -391,8 +391,41 @@ def get_geometry():
 
 	return states
 
-
 merger.merge(get_geometry())
+
+def get_zips():
+	states = {}
+	with open(pjoin('data', 'zip_county_fips_2018_03.csv'), 'r') as f:
+		reader = csv.reader(f, delimiter=',')
+		header = next(reader)
+		rows = [row for row in reader]
+
+	for zipcode, fips, city, state, county, _ in rows:
+		if state in ["PR", "GU", "VI"]:
+			continue
+		state = abbreviation_to_name[state]
+		county = county.lower()
+		if state not in states:
+			states[state] = {}
+		if county not in states[state]:
+			states[state][county] = {
+				'zip-codes': []
+			}
+		states[state][county]['zip-codes'].append(zipcode)
+
+	states["Alaska"]["kusilvak census area"] = {
+		"zip-codes": [
+			"99554", "99563", "99581", "99585", "99604", "99620", "99632", "99650", "99657", "99658", "99662", "99666"
+		]
+	}
+	states["South Dakota"]["oglala lakota county"] = {
+		"zip-codes": [
+			"57716", "57752", "57756", "57764", "57770", "57772", "57794",
+		]
+	}
+	return states
+
+merger.merge(get_zips())
 
 def get_demographics():
 	age_code_to_group = {
