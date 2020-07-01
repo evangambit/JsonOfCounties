@@ -54,8 +54,11 @@ An example entry:
       "male": 5088,
       "female": 5090,
       "population": 10178,
-      "suicides": "17",
-      "firearm suicides": "12",
+      "deaths": {
+       "suicides": 17,
+       "firearm suicides": 12,
+       "homicides": null
+      },
       "labor_force": 5763.0,
       "employed": 5613.0,
       "unemployed": 150.0,
@@ -106,7 +109,7 @@ Please let me know if you want to use the data (it's nice to know my work is bei
 
 2. Population and demographics comes from the Census Bureau from a 2018 table ([here](https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-detail.html#par_textimage_1383669527)).  This "United States" csv file is NOT included, as it is 154 MB, but can be downloaded from Google Drive [here](https://drive.google.com/file/d/11k-YAy4SM36jbXYUy5pylgo0mE-ZKudZ/view?usp=sharing).
 
-3. Deaths, suicides, and firearm suicides come from the [CDC's website](https://wonder.cdc.gov/cmf-icd10.html), where you can request the totals for each county.  We manually requested totals for all deaths, all suicides, and firearm suicides, but adding other causes of deaths is easy if you can give us the [ICD-10 Codes](https://wonder.cdc.gov/wonder/help/cmf.html#ICD-10%20Codes) you're interested in.  This is the source of the vast majority of missing data (marked as null in the JSON), since the CDC suppresses data from counties with sufficiently few cases. 
+3. Deaths, suicides, and and homicides come from the [CDC's website](https://wonder.cdc.gov/cmf-icd10.html), where you can request the totals for each county.  We manually requested totals for all deaths, suicides, firearm suicides, and homicides.  Adding other causes of deaths is easy if you can give us the [ICD-10 Codes](https://wonder.cdc.gov/wonder/help/cmf.html#ICD-10%20Codes) you're interested in.  This is the source of the vast majority of missing data (marked as null in the JSON), since the CDC suppresses data from counties when there are fewer than 10 cases.
 
 4. Labor statistics comes from [here](https://www.bls.gov/lau/#cntyaa) (the BLS).
 

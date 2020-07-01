@@ -501,7 +501,7 @@ merger.merge(get_demographics())
 
 def get_cdc_deaths():
 	states = {}
-	for varname, fn in zip(['suicides', 'firearm suicides'], ["Compressed Mortality, 1999-2016 (all suicides).txt", "Compressed Mortality, 1999-2016 (firearm suicides).txt"]):
+	for varname, fn in zip(['suicides', 'firearm suicides', 'homicides'], ["Compressed Mortality, 1999-2016 (all suicides).txt", "Compressed Mortality, 1999-2016 (firearm suicides).txt", "Compressed Mortality (assaults), 1999-2016.txt"]):
 		with open(pjoin('data', fn), 'r') as f:
 			reader = csv.reader(f, delimiter='\t', quotechar='"')
 			rows = [row for row in reader]
@@ -525,6 +525,8 @@ def get_cdc_deaths():
 
 			if deaths == 'Suppressed':
 				deaths = None
+			else:
+				deaths = int(deaths)
 
 			if state in former_independent_cities_to_counties and county in former_independent_cities_to_counties[state]:
 				county = former_independent_cities_to_counties[state][county]
@@ -534,24 +536,26 @@ def get_cdc_deaths():
 				continue
 
 			if county not in states[state]:
-				states[state][county] = {}
+				states[state][county] = {
+					"deaths": {}
+				}
 			assert varname not in states[state][county]
-			states[state][county][varname] = deaths
+			states[state][county]["deaths"][varname] = deaths
 
 		# Add formly independent cities to their respective counties.
 		for state in former_independent_cities:
 			for county in former_independent_cities[state]:
 				# If either value was suppressed, we keep the concatenated
 				# value as None.
-				if states[state][county][varname] is None:
+				if states[state][county]["deaths"][varname] is None:
 					continue
 				if former_independent_cities[state][county] is None:
 					continue
-				states[state][county][varname] += former_independent_cities[state][county]
+				states[state][county]["deaths"][varname] += former_independent_cities[state][county]
 
 		for state in states:
 			for county in states[state]:
-				assert varname in states[state][county]
+				assert varname in states[state][county]["deaths"]
 
 	return states
 
