@@ -928,5 +928,5 @@ merger.merge(get_elections(), missing={
 })
 
 with open('states.json', 'w+') as f:
-	json.dump(merger.states, f, indent=1)
+	json.dump(merger.states, f, indent=2)
 
