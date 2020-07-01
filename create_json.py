@@ -361,14 +361,8 @@ class CountyNameMerger:
 			assert k not in base
 			base[k] = addition[k]
 
-merger = CountyNameMerger()
-
 def get_geometry():
 	states = {}
-
-	# https://stackoverflow.com/questions/24467972/calculate-area-of-polygon-given-x-y-coordinates
-	def area(x, y):
-		return 0.5*np.abs(np.dot(x,np.roll(y,1))-np.dot(y,np.roll(x,1)))
 
 	sf = shapefile.Reader(pjoin('data', 'tl_2017_us_county/tl_2017_us_county.shp'))
 
@@ -396,8 +390,6 @@ def get_geometry():
 		states[state][county_name]["area"] *= math.cos(states[state][county_name]["latitude"] * math.pi / 180)
 
 	return states
-
-merger.merge(get_geometry())
 
 def get_zips():
 	states = {}
@@ -430,8 +422,6 @@ def get_zips():
 		]
 	}
 	return states
-
-merger.merge(get_zips())
 
 def get_demographics():
 	age_code_to_group = {
@@ -536,8 +526,6 @@ def get_demographics():
 
 	return states
 
-merger.merge(get_demographics())
-
 def get_cdc_deaths():
 	states = {}
 	for varname, fn in zip(['suicides', 'firearm suicides', 'homicides'], ["Compressed Mortality, 1999-2016 (all suicides).txt", "Compressed Mortality, 1999-2016 (firearm suicides).txt", "Compressed Mortality (assaults), 1999-2016.txt"]):
@@ -598,8 +586,6 @@ def get_cdc_deaths():
 
 	return states
 
-merger.merge(get_cdc_deaths())
-
 # Labor force data
 # https://www.bls.gov/lau/#cntyaa
 
@@ -649,8 +635,6 @@ def get_labor_force():
 
 	return states
 
-merger.merge(get_labor_force())
-
 def get_fatal_police_shootings():
 	states = {}
 
@@ -675,27 +659,6 @@ def get_fatal_police_shootings():
 				state[county_name]["fatal_police_shootings"][varname] = shootings[k]
 
 	return states
-
-# Fatal police shootings are unique in that we don't have an
-# entry for every county, because the Washington Post tracks
-# stats by *shooting* rather than by county.  As a result, we
-# need to tolerate having missing counties.
-merger.merge(get_fatal_police_shootings(), allow_missing=True)
-
-# After we merge, add zeros for all missing counties (which
-# aren't present in the Washington Post dataset, simply because
-# they had no fatal police shootings).
-for state in merger.states:
-	for county in merger.states[state]:
-		if "fatal_police_shootings" not in merger.states[state][county]:
-			merger.states[state][county]["fatal_police_shootings"] = {}
-
-		if "total" not in merger.states[state][county]["fatal_police_shootings"]:
-			merger.states[state][county]["fatal_police_shootings"]["total"] = 0
-		if "unarmed" not in merger.states[state][county]["fatal_police_shootings"]:
-			merger.states[state][county]["fatal_police_shootings"]["unarmed"] = 0
-		if "fire-armed" not in merger.states[state][county]["fatal_police_shootings"]:
-			merger.states[state][county]["fatal_police_shootings"]["fire-armed"] = 0
 
 def get_avg_income():
 	states = {}
@@ -767,8 +730,6 @@ def get_avg_income():
 			assert 'avg_income' in states[state][county]
 
 	return states
-
-merger.merge(get_avg_income())
 
 def get_covid():
 	blacklist = {
@@ -861,8 +822,6 @@ def get_covid():
 
 	return states
 
-merger.merge(get_covid())
-
 def get_elections():
 	states = {}
 	fips_to_county = {
@@ -928,11 +887,44 @@ def get_elections():
 
 	return states
 
-merger.merge(get_elections(), missing={
-	"Alaska": set(merger.states["Alaska"].keys()),
-	"Hawaii": {"kalawao"}
-})
+if __name__ == '__main__':
+	merger = CountyNameMerger()
 
-with open('states.json', 'w+') as f:
-	json.dump(merger.states, f, indent=2)
+	merger.merge(get_geometry())
+	merger.merge(get_zips())
+	merger.merge(get_demographics())
+	merger.merge(get_cdc_deaths())
+	merger.merge(get_labor_force())
+
+	# Fatal police shootings are unique in that we don't have an
+	# entry for every county, because the Washington Post tracks
+	# stats by *shooting* rather than by county.  As a result, we
+	# need to tolerate having missing counties.
+	merger.merge(get_fatal_police_shootings(), allow_missing=True)
+	# After we merge, add zeros for all missing counties (which
+	# aren't present in the Washington Post dataset, simply because
+	# they had no fatal police shootings).
+	for state in merger.states:
+		for county in merger.states[state]:
+			if "fatal_police_shootings" not in merger.states[state][county]:
+				merger.states[state][county]["fatal_police_shootings"] = {}
+
+			if "total" not in merger.states[state][county]["fatal_police_shootings"]:
+				merger.states[state][county]["fatal_police_shootings"]["total"] = 0
+			if "unarmed" not in merger.states[state][county]["fatal_police_shootings"]:
+				merger.states[state][county]["fatal_police_shootings"]["unarmed"] = 0
+			if "fire-armed" not in merger.states[state][county]["fatal_police_shootings"]:
+				merger.states[state][county]["fatal_police_shootings"]["fire-armed"] = 0
+
+	merger.merge(get_avg_income())
+	merger.merge(get_covid())
+
+	# We're missing election data for Alaska and Kalawao County, HI
+	merger.merge(get_elections(), missing={
+		"Alaska": set(merger.states["Alaska"].keys()),
+		"Hawaii": {"kalawao"}
+	})
+
+	with open('states.json', 'w+') as f:
+		json.dump(merger.states, f, indent=2)
 
