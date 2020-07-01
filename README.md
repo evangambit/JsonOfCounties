@@ -12,15 +12,9 @@ An example entry:
   "Nebraska": {
     // ...
     "holt county": {
-      "area": 0.5221165901894756,
-      "min_location": [
-        -99.25703899999999,
-        42.087894999999996
-      ],
-      "max_location": [
-        -98.300212,
-        42.896724
-      ],
+      "area": 0.5223427619161941,
+      "longitude": -98.78364595127402,
+      "latitude": 42.465209445121566,
       "zip-codes": [
         "68766",
         "68759",
@@ -122,7 +116,7 @@ Please let me know if you want to use the data (it's nice to know my work is bei
 
 ## Sources
 
-1. State geometry (location, area, etc.) is computed from data.gov, specifically [here](https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-county-and-equivalent-national-shapefile) (download "Shapefile Zip File").  This data is NOT included in the repository because it is 122 MB; you may download it from the source, or from Google Drive [here](https://drive.google.com/file/d/1RvdPYAx3l0wJeGwNEfDnFOZafthqS4_b/view?usp=sharing).  Regardless of where you download it from, save the corresponding directory inside the "data" directory.  County areas are not exact; they assume longitude/latitude are x/y coordinates, and are then adjusted by multiplying by the cosine of the county's central point.  We also use the convex hull of the county, because of oddities that arise when a county has small "islands" of territory.
+1. State geometry (location, area, etc.) is computed from data.gov, specifically [here](https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-county-and-equivalent-national-shapefile) (download "Shapefile Zip File").  This data is NOT included in the repository because it is 122 MB; you may download it from the source, or from Google Drive [here](https://drive.google.com/file/d/1RvdPYAx3l0wJeGwNEfDnFOZafthqS4_b/view?usp=sharing).  Regardless of where you download it from, save the corresponding directory inside the "data" directory.  County areas are not exact; they assume longitude/latitude are x/y coordinates, and are then adjusted by multiplying by the cosine of the county's central point.  We also use the convex hull of the county, because of oddities that arise when a county has small "islands" of territory.  This overestimates the area of counties that contain many islands (most notably Monroe County, FL, Aleutians West, AK, and Honolulu County, HI)
 
 2. Population and demographics comes from the Census Bureau from a 2018 table ([here](https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-detail.html#par_textimage_1383669527)).  This "United States" csv file is NOT included, as it is 154 MB, but can be downloaded from Google Drive [here](https://drive.google.com/file/d/11k-YAy4SM36jbXYUy5pylgo0mE-ZKudZ/view?usp=sharing).
 
