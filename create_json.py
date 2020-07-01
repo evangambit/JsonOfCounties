@@ -382,12 +382,12 @@ def get_geometry():
 		county_name = s.record.NAMELSAD.lower()
 		poly = geometry.Polygon(s.shape.points)
 		states[state][county_name] = {
-			"area": poly.area,
+			"area": poly.convex_hull.area,
 			"min_location": poly.bounds[:2],
 			"max_location": poly.bounds[2:]
 		}
 		latitude_ish = (states[state][county_name]["min_location"][1] + states[state][county_name]["max_location"][1]) / 2
-		states[state][county_name]["area"] = math.cos(latitude_ish * math.pi / 180)
+		states[state][county_name]["area"] *= math.cos(latitude_ish * math.pi / 180)
 
 	return states
 
