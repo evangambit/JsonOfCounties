@@ -79,11 +79,22 @@ An example entry:
         "unarmed": 0,
         "fire-armed": 0
       },
+      "police_deaths": 0,
       "avg_income": 51404,
-      "covid": {
-        "6/21/20-deaths": 0,
-        "death-growth-rate-est": null,
-        "6/21/20-confirmed": 1
+      "covid-deaths": {
+        "growth-rate-est": null,
+        "6/3/20": 0,
+        "6/10/20": 0,
+        "6/17/20": 0,
+        "6/24/20": 0,
+        "7/1/20": 0
+      },
+      "covid-confirmed": {
+        "6/3/20": 1,
+        "6/10/20": 1,
+        "6/17/20": 1,
+        "6/24/20": 3,
+        "7/1/20": 3
       },
       "elections": {
         "2008": {
