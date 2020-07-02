@@ -660,6 +660,28 @@ def get_fatal_police_shootings():
 
 	return states
 
+def get_police_deaths():
+	states = {}
+
+	with open(pjoin('data', 'police-deaths-2019.txt'), 'r') as f:
+		lines = f.readlines()[8:]
+	lines = [line.strip() for line in lines]
+	F = {}
+	for i in range(0, len(lines), 5):
+		name = lines[i + 0]
+		cause = lines[i + 2]
+		F[cause] = F.get(cause, 0) + 1
+		location = lines[i + 3]
+		state = abbreviation_to_name[location[-2:]]
+		county = location[:-4].lower()
+		if state not in states:
+			states[state] = {}
+		if county not in states[state]:
+			states[state][county] = {}
+		states[state][county]['police_deaths'] = states[state][county].get('police_deaths', 0) + 1
+
+	return states
+
 def get_avg_income():
 	states = {}
 	for fn in os.listdir(pjoin('data', 'CAINC1')):
@@ -908,13 +930,19 @@ if __name__ == '__main__':
 		for county in merger.states[state]:
 			if "fatal_police_shootings" not in merger.states[state][county]:
 				merger.states[state][county]["fatal_police_shootings"] = {}
-
 			if "total" not in merger.states[state][county]["fatal_police_shootings"]:
 				merger.states[state][county]["fatal_police_shootings"]["total"] = 0
 			if "unarmed" not in merger.states[state][county]["fatal_police_shootings"]:
 				merger.states[state][county]["fatal_police_shootings"]["unarmed"] = 0
 			if "fire-armed" not in merger.states[state][county]["fatal_police_shootings"]:
 				merger.states[state][county]["fatal_police_shootings"]["fire-armed"] = 0
+
+	# We do the same thing for police deaths.
+	merger.merge(get_police_deaths(), allow_missing=True)
+	for state in merger.states:
+		for county in merger.states[state]:
+			if 'police_deaths' not in merger.states[state][county]:
+				merger.states[state][county]['police_deaths'] = 0
 
 	merger.merge(get_avg_income())
 	merger.merge(get_covid())

@@ -1,0 +1,278 @@
+Source: http://www.odmp.org/search/year?year=2019
+
+This file contains murders *of* police officers by county.
+
+Names, locations, and means of the murder were copied from ODMP (link above).  The actual *county* was entered by hand.  When the county was ambiguous (e.g. the city was near a county border) the locations from ODMP was cross-referenced with https://www.randymajors.com/p/countygmap.html.
+
+I removed accidents, friendly fire, unintentional vehicular deaths, cancer from 9/11, etc.
+================================
+Master Police Officer Joseph William Shinners
+Provo Police Department, UT
+Gunfire
+Utah County, UT
+================================
+Police Officer Chatéri Alyse Payne
+Shreveport Police Department, LA
+Gunfire
+Caddo Parish, LA
+================================
+Police Officer Natalie Becky Corona
+Davis Police Department, CA
+Gunfire
+Yolo County, CA
+================================
+Trooper Christopher James Lambert
+Illinois State Police, IL
+Vehicular assault
+Cook County, IL
+================================
+Sergeant WyTasha Lamar Carter
+Birmingham Police Department, AL
+Gunfire
+Jefferson County, AL
+================================
+Police Officer Sean Paul Tuder
+Mobile Police Department, AL
+Gunfire
+Mobile County, AL
+================================
+Lieutenant Robert Earl "Bo" McCallister
+Susquehanna Township Police Department, PA
+Gunfire
+Dauphin County, PA
+================================
+Detective William Lee Brewer, Jr.
+Clermont County Sheriff's Office, OH
+Gunfire
+Clermont County, OH
+================================
+Trooper Lucas Bartley Dowell
+Virginia State Police, VA
+Gunfire
+Prince Edward County, VA
+================================
+Police Officer Matthew John Rittner
+Milwaukee Police Department, WI
+Gunfire
+Milwaukee County, WI
+================================
+Sergeant Steven Gaspare Greco
+Miccosukee Tribal Police Department, TR
+Vehicular assault
+Miami-Dade County, FL
+================================
+Police Officer Nicholas Scott Galinger
+Chattanooga Police Department, TN
+Vehicular assault
+Hamilton County, TN
+================================
+Sergeant Steven Billie Hinkle
+Sullivan County Sheriff's Office, TN
+Gunfire
+Sullivan County, TN
+================================
+Police Officer Nathan Hayden Heidelberg
+Midland Police Department, TX
+Gunfire
+Midland County, TX
+================================
+Deputy Sheriff Jacob Howard Keltner
+McHenry County Sheriff's Office, IL
+Gunfire
+McHenry County, IL
+================================
+Deputy Sheriff Ryan Shane Thompson
+Kittitas County Sheriff's Office, WA
+Gunfire
+Kittitas County, WA
+================================
+Deputy Sheriff Peter John Herrera
+El Paso County Sheriff's Office, TX
+Gunfire
+El Paso County, TX
+================================
+Deputy Sheriff Justin Richard DeRosier
+Cowlitz County Sheriff's Office, WA
+Gunfire
+Cowlitz County, WA
+================================
+Police Officer Kyle David Olinger
+Montgomery County Police Department, MD
+Gunfire
+Montgomery County, MD
+================================
+K9 Officer Jordan Harris Sheldon
+Mooresville Police Department, NC
+Gunfire
+Iredell County, NC
+================================
+Police Officer Robert Stanton McKeithen
+Biloxi Police Department, MS
+Gunfire
+Harrison County, MS
+================================
+Sergeant Kelvin Bernard Ansari
+Savannah Police Department, GA
+Gunfire
+Chatham County, GA
+================================
+Police Officer William Ray Buechner, Jr.
+Auburn Police Division, AL
+Gunfire
+Lee County, AL
+================================
+Patrol Officer John David Hetland
+Racine Police Department, WI
+Gunfire
+Racine County, WI
+================================
+Police Officer Tara Christina O'Sullivan
+Sacramento Police Department, CA
+Gunfire
+Sacramento County, CA
+================================
+Corporal Jose Luis "Speedy" Espericueta, Jr.
+Mission Police Department, TX
+Gunfire
+Hidalgo County, TX
+================================
+Police Officer Michael Vincent Langsdorf
+North County Police Cooperative, MO
+Gunfire
+St. Louis city, MO
+================================
+Deputy Sheriff Troy Phillip Chisum
+Fulton County Sheriff's Office, IL
+Gunfire
+Fulton County, IL
+================================
+Police Officer John Ralph Anderson, IV
+Metro Nashville Police Department, TN
+Vehicular assault
+Davidson County, TN
+================================
+Deputy Sheriff Nicolas Blane Dixon
+Hall County Sheriff's Office, GA
+Gunfire
+Hall County, GA
+================================
+Sergeant Michael David Stephen, Sr.
+Stone County Sheriff's Office, AR
+Gunfire
+Stone County, AR
+================================
+Police Officer Juan Jose Diaz
+Los Angeles Police Department, CA
+Gunfire
+Los Angeles County, CA
+================================
+Detective James Joseph Biello
+Atlanta Police Department, GA
+Gunfire
+Gwinnett County, GA
+================================
+Officer Andre Maurice Moye, Jr.
+California Highway Patrol, CA
+Gunfire
+Riverside County, CA
+================================
+Trooper Nicholas John Hopkins
+Illinois State Police, IL
+Gunfire
+St. Clair County, IL
+================================
+Trooper Moises Sanchez
+Texas Department of Public Safety - Texas Highway Patrol, TX
+Gunfire
+Hidalgo County, TX
+================================
+Investigator Dornell Cousette
+Tuscaloosa Police Department, AL
+Gunfire
+Tuscaloosa County, AL
+================================
+Captain Vincent Nat Liberto, Jr.
+Mandeville Police Department, LA
+Gunfire
+St. Tammany Parish, LA
+================================
+Deputy Sheriff Sandeep Singh Dhaliwal
+Harris County Sheriff's Office, TX
+Gunfire
+Harris County, TX
+================================
+Deputy Sheriff Brian David Ishmael
+El Dorado County Sheriff's Office, CA
+Gunfire
+El Dorado County, CA
+================================
+Detention Officer Gene Wade Lee
+Maricopa County Sheriff's Office, AZ
+Assault
+Maricopa County, AZ
+================================
+Police Officer Elmer Jonathan Diaz
+Lemoore Police Department, CA
+Gunfire
+Kings County, CA
+================================
+Detective Jorge Rene DelRio
+Dayton Police Department, OH
+Gunfire
+Montgomery County, OH
+================================
+Investigator Cecil Dwayne Ridley
+Richmond County Sheriff's Office, GA
+Gunfire
+Richmond County, GA
+================================
+Sergeant Rasheen Phillipe McClain
+Detroit Police Department, MI
+Gunfire
+Oakland County, MI
+================================
+Sheriff John Arthur "Big John" Williams, Sr.
+Lowndes County Sheriff's Office, AL
+Gunfire
+Lowndes County, AL
+================================
+Agent Billy Fred Clardy, III
+Huntsville Police Department, AL
+Gunfire
+Madison County, AL
+================================
+Police Officer Stephen Paul Carr
+Fayetteville Police Department, AR
+Gunfire
+Washington County, AR
+================================
+Sergeant Christopher Charles Lewis Brewster
+Houston Police Department, TX
+Gunfire
+Harris County, TX
+================================
+Detective Joseph Alan Seals
+Jersey City Police Department, NJ
+Gunfire
+Hudson County, NJ
+================================
+Sergeant Kaila Marie Sullivan
+Nassau Bay Police Department, TX
+Vehicular assault
+Harris County, TX
+================================
+Constable Eula Ray "Raye" Hawkins
+Panola County Constable's Office, MS
+Vehicle pursuit
+Panola County, MS
+================================
+Detective Clifton John Martinez
+San Antonio Independent School District	 Police Department, TX
+Vehicular assault
+Bexar County, TX
+================================
+Deputy Sheriff William Christopher Dickerson
+Panola County Sheriff's Office, TX
+Gunfire
+Panola County, TX
+================================
