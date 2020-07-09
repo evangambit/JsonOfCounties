@@ -374,20 +374,32 @@ def get_geometry():
 		if state not in states:
 			states[state] = {}
 		county_name = s.record.NAMELSAD.lower()
+
 		# There is one county that crosses from negative
-		# to positive longitudes.  The easiest fix is to
-		# subtract 360 degrees for positive longitudes.
+		# to positive longitudes, which screws up center-point
+		# computations.  To fix this we subtact 360 from
+		# positive longitudes.
 		poly = geometry.Polygon([(x - 360 if x > 0 else x, y) for x, y in s.shape.points])
+
+		# We explicitly compute centroids rather than use
+		# s.record.INTPTLAT and s.record.INTPTLON, since
+		# I can't find any documentation of how these
+		# points are actually picked.  We use the convex
+		# hull since some 'polygons' are weird, due to some
+		# islands containing islands of territory (figuratively
+		# and literally).
 		center = poly.convex_hull.centroid
+
 		states[state][county_name] = {
-			"area": poly.convex_hull.area,
+			"land_area": s.record.ALAND / 1e6,
+			"area": (s.record.ALAND + s.record.AWATER) / 1e6,
+
 			# NOTE: we don't undo the "- 360" transformation
 			# above, since most use cases probably *prefer*
 			# not having to deal with the wrapping behavior.
 			"longitude": center.x,
 			"latitude": center.y,
 		}
-		states[state][county_name]["area"] *= math.cos(states[state][county_name]["latitude"] * math.pi / 180)
 
 	return states
 
