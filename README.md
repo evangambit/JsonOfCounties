@@ -153,12 +153,14 @@ Fortunately, it shouldn't be hard for somebody with some Python experience to mo
 
 Run
 
-```
+```Bash
+# If you change fatal-police-shootings.csv or get_county_shootings.py
 $ python get_county_shootings.py
+
 $ python create_json.py
 ```
 
-The first script writes some JSONs to generated/... and is only necessary if you've made changes to fatal-police-shootings.csv or get_county_shootings.py.
+*ONLY THE LAST COMMAND* is typically required.  The output of the other command is included in the repo, so you shouldn't have to regenerate them.
 
 ## Why
 

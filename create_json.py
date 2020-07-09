@@ -775,7 +775,7 @@ def get_covid():
 			reader = csv.reader(f, delimiter=',')
 			header = next(reader)
 			rows = [row for row in reader]
-			for date in ['6/3/20', '6/10/20', '6/17/20', '6/24/20', '7/1/20']:
+			for date in ['5/4/20', '5/11/20', '5/18/20', '5/25/20', '6/1/20', '6/8/20', '6/15/20', '6/22/20', '6/29/20', '7/6/20']:
 				column = header.index(date)
 				new_york_unallocated = 0
 				for row in rows:
@@ -795,7 +795,7 @@ def get_covid():
 					# our approach.
 					if county == "new york city unallocated/probable":
 						new_york_unallocated = int(row[column])
-						assert new_york_unallocated < 500, new_york_unallocated
+						assert new_york_unallocated < 1500, new_york_unallocated
 						continue
 
 					# Apparently this dataset isn't consistent between its own CSV files, so
@@ -835,11 +835,12 @@ def get_covid():
 				# We distribute "unattributed New York deaths" proportional to how the other
 				# covid deaths are distributed.
 				total = states['New York']['new york county'][f"covid-{varname}"][date] + states['New York']['bronx county'][f"covid-{varname}"][date] + states['New York']['kings county'][f"covid-{varname}"][date] + states['New York']['queens county'][f"covid-{varname}"][date] + states['New York']['richmond county'][f"covid-{varname}"][date]
-				states['New York']['new york county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['new york county'][f"covid-{varname}"][date] / total)
-				states['New York']['bronx county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['bronx county'][f"covid-{varname}"][date] / total)
-				states['New York']['kings county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['kings county'][f"covid-{varname}"][date] / total)
-				states['New York']['queens county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['queens county'][f"covid-{varname}"][date] / total)
-				states['New York']['richmond county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['richmond county'][f"covid-{varname}"][date] / total)
+				if total > 0:
+					states['New York']['new york county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['new york county'][f"covid-{varname}"][date] / total)
+					states['New York']['bronx county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['bronx county'][f"covid-{varname}"][date] / total)
+					states['New York']['kings county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['kings county'][f"covid-{varname}"][date] / total)
+					states['New York']['queens county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['queens county'][f"covid-{varname}"][date] / total)
+					states['New York']['richmond county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['richmond county'][f"covid-{varname}"][date] / total)
 
 	# Wade Hampton and Kusilvak are the same cuonty but, for some reason, exist as two rows.  Since both rows have zero
 	# deaths we won't worry about this for now... but if the rows ever differ we may want to email the CDC and ask why
