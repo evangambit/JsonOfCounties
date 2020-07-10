@@ -1,4 +1,4 @@
-import code, copy, csv, json, math, os, re
+import bson, code, copy, csv, json, math, os, re
 
 # pip install pyshp
 import shapefile
@@ -649,26 +649,24 @@ def get_labor_force():
 
 def get_fatal_police_shootings():
 	states = {}
+	for year in ['2018', '2019']:
+		for varname in [f'total-{year}', f'unarmed-{year}', f'firearmed-{year}']:
+			with open(pjoin('generated', 'police_shootings', varname + '.json'), 'r') as f:
+				shootings = json.load(f)
 
-	for varname, fn in zip(
-		['total', 'unarmed', 'fire-armed'],
-		['shootings-by-county.json', 'unarmed-shootings-by-county.json', 'shootings-by-county-where-victim-had-firearm.json']):
-		with open(pjoin('generated', fn), 'r') as f:
-			shootings = json.load(f)
+				for k in shootings:
+					state_name = abbreviation_to_name[k[-2:].upper()]
+					if state_name not in states:
+						states[state_name] = {}
+					state = states[state_name]
+					county_name = k[:-4]
 
-			for k in shootings:
-				state_name = abbreviation_to_name[k[-2:].upper()]
-				if state_name not in states:
-					states[state_name] = {}
-				state = states[state_name]
-				county_name = k[:-4]
+					if county_name not in state:
+						state[county_name] = {
+							"fatal_police_shootings": {}
+						}
 
-				if county_name not in state:
-					state[county_name] = {
-						"fatal_police_shootings": {}
-					}
-
-				state[county_name]["fatal_police_shootings"][varname] = shootings[k]
+					state[county_name]["fatal_police_shootings"][varname] = shootings[k]
 
 	return states
 
@@ -930,6 +928,37 @@ if __name__ == '__main__':
 	merger = CountyNameMerger()
 
 	merger.merge(get_geometry())
+
+	# sf = shapefile.Reader(pjoin('data', 'noaa', 'CONUS_CLIMATE_DIVISIONS.shp', 'GIS.OFFICIAL_CLIM_DIVISIONS.shp'))
+	# for s in sf:
+	# 	break
+
+	A = []
+	states = {}
+	sf = shapefile.Reader(pjoin('data', 'SpatialJoin_CDs_to_Counties_Final.shp'))
+	for i, s in enumerate(sf):
+		if s.record.STATE_NAME not in states:
+			states[s.record.STATE_NAME] = {}
+		r = s.record
+		states[r.STATE_NAME][r.NAME] = {
+			"noaa": {
+				"males": r.MALES,
+				"females": r.FEMALES,
+				"families": r.FAMILIES,
+				"asian": r.ASIAN,
+				"black": r.BLACK,
+				"hispanic": r.HISPANIC,
+				"white": r.WHITE,
+				"mult_race": r.MULT_RACE,
+				"households": r.HOUSEHOLDS,
+				"median_age": r.MED_AGE,
+				"median_age_male": r.MED_AGE_M,
+				"median_age_female": r.MED_AGE_F,
+				"average_family_size": r.AVE_FAM_SZ,
+			}
+		}
+		A.append(r.AVE_FAM_SZ)
+
 	merger.merge(get_zips())
 	merger.merge(get_demographics())
 	merger.merge(get_cdc_deaths())
@@ -947,12 +976,13 @@ if __name__ == '__main__':
 		for county in merger.states[state]:
 			if "fatal_police_shootings" not in merger.states[state][county]:
 				merger.states[state][county]["fatal_police_shootings"] = {}
-			if "total" not in merger.states[state][county]["fatal_police_shootings"]:
-				merger.states[state][county]["fatal_police_shootings"]["total"] = 0
-			if "unarmed" not in merger.states[state][county]["fatal_police_shootings"]:
-				merger.states[state][county]["fatal_police_shootings"]["unarmed"] = 0
-			if "fire-armed" not in merger.states[state][county]["fatal_police_shootings"]:
-				merger.states[state][county]["fatal_police_shootings"]["fire-armed"] = 0
+			for year in ['2018', '2019']:
+				if f"total-{year}" not in merger.states[state][county]["fatal_police_shootings"]:
+					merger.states[state][county]["fatal_police_shootings"][f"total-{year}"] = 0
+				if f"unarmed-{year}" not in merger.states[state][county]["fatal_police_shootings"]:
+					merger.states[state][county]["fatal_police_shootings"][f"unarmed-{year}"] = 0
+				if f"firearmed-{year}" not in merger.states[state][county]["fatal_police_shootings"]:
+					merger.states[state][county]["fatal_police_shootings"][f"firearmed-{year}"] = 0
 
 	# We do the same thing for police deaths.
 	merger.merge(get_police_deaths(), allow_missing=True)
@@ -972,4 +1002,7 @@ if __name__ == '__main__':
 
 	with open('states.json', 'w+') as f:
 		json.dump(merger.states, f, indent=2)
+
+	with open('states.bson', 'wb+') as f:
+		f.write(bson.dumps(merger.states))
 

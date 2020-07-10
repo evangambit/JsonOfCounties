@@ -76,9 +76,12 @@ An example entry:
       "unemployed": 150.0,
       "unemployment_rate": 2.6,
       "fatal_police_shootings": {
-        "total": 0,
-        "unarmed": 0,
-        "fire-armed": 0
+        "total-2018": 0,
+        "unarmed-2018": 0,
+        "firearmed-2018": 0,
+        "total-2019": 0,
+        "unarmed-2019": 0,
+        "firearmed-2019": 0
       },
       "police_deaths": 0,
       "avg_income": 51404,

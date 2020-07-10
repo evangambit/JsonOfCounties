@@ -195,44 +195,6 @@ def get_county(state, city, cache={}):
 
 	return A
 
-
-# Load police shootings data.
-with open(pjoin('data', 'fatal-police-shootings-data.csv'), 'r') as f:
-	reader = csv.reader(f, delimiter=',', quotechar='"')
-	rows = [row for row in reader]
-header = rows[0]
-rows = rows[1:]
-
-rows = [row for row in rows if row[2][:-5] == '2019-']
-
-A = {
-	'gun': 0,
-	'knife': 0,
-	'unarmed': 0,
-	'undetermined': 0,
-	'vehicle': 0,
-	'other': 0,
-}
-for row in rows:
-	if row[4] in A:
-		A[row[4]] += 1
-	else:
-		A['other'] += 1
-
-print(f'{pad(len(rows), 4)} total fatal police shootings')
-print(f'{pad(A["unarmed"], 4)} were unarmed')
-print(f'{pad(A["gun"], 4)} were armed with a gun')
-print(f'{pad(A["undetermined"], 4)} were undetermined')
-
-# For historical reasons we use all-counties.json as the
-# groundtruth for this script, and try to warp county names
-# to fit them.  As the code exists now this is a little silly
-# since we do a similar thing later in create_json.py.
-# data/all-counties.json was created by some script (I think
-# based on census data) that has since been lost to time.
-with open(pjoin('data', 'all-counties.json'), 'r') as f:
-	all_counties = json.load(f)
-
 kHardCode = {
 	"Whitehaven, TN": "Shelby County, TN",
 	"Glen Valley, CA": "Riverside County, CA",
@@ -301,6 +263,81 @@ kHardCode = {
 	"Bracketville, TX": "Kinney County, TX",
 	"Jamaica, NY": "Queens County, NY",
 	"Treme, LA": "Orleans Parish, LA",
+	"Romance, AR": "White County, AR",
+	"Manchester Township": "York County, PA",
+	"El Sereno, CA": "Los Angeles County, CA",
+	"Ebey Island, WA": "Snohomish County, WA",
+	"Union Township, MI": "Isabella County, MI",
+	"Bolton, VT": "Chittenden County, VT",
+	"Monongalia, WV": "Monongalia County, WV",
+	"Henrico, VA": "Henrico County, VA",
+	"Bristol Township, PA": "Bucks County, PA",
+	"Abington Township, PA": "Montgomery County, PA",
+	"Barnwell, AL": "Baldwin County, AL",
+	"Oil Springs, KY": "Johnson County, KY",
+	"Shelbyville, TX": "Shelby County, TX",
+	"Jurupa Valley, CA": "Riverside County, CA",
+	"Blackman Township, MI": "Jackson County, MI",
+	"East Baton Rouge, LA": "East Baton Rouge Parish, LA",
+	"Valley View, CA": "San Diego County, CA",
+	"Utica, KY": "Daviess County, KY",
+	"Lone Rock, AR": "Baxter County, AR",
+	"Timberlake, NC": "Person County, NC",
+	"Amelia Island, FL": "Nassau County, FL",
+	"Greenspoint, TX": "Harris County, TX",
+	"Genesee Township, MI": "Genesee County, MI",
+	"Lower Macungie Township, PA": "Lehigh County, PA",
+	"Manchester Township, PA": "York County, PA",
+	"Goodbee, LA": "St. Tammany Parish, LA",
+	"Reynoldsville, WV": "Harrison County, WV",
+	"Reseda, CA": "Los Angeles County, CA",
+	"Baldwin Hills, CA": "Los Angeles County, CA",
+	"Winn Parish, LA": "Winn Parish, LA",
+	"Pembroke, NY": "Genesee County, NY",
+	"Sugar House, UT": "Salt Lake County, UT",
+	"Pavilion Township, MI": "Kalamazoo County, MI",
+	"West Olive, MI": "Ottawa County, MI",
+	"Harmony, TX": "Henderson County, TX",
+	"Grand Canyon Caverns, AZ": "Coconino County, AZ",
+	"Shelby Township, MI": "Oceana County, MI",
+	"Oakfield, ME": "Aroostook County, ME",
+	"North Shore, HI": "Honolulu County, HI",
+	"South Whitehall Township, PA": "Lehigh County, PA",
+	"Plymouth Township, MI": "Wayne County, MI",
+	"Wales, ME": "Androscoggin County, ME",
+	"Franklinton, OH": "Franklin County, OH",
+	"Haynesville, AL": "Lowndes County, AL",
+	"Auburn, MA": "Worcester County, MA",
+	"Charleston View, CA": "Inyo County, CA",
+	"Camp Croft, SC": "Spartanburg County, SC",
+	"Cleear Creek Canyon, CO": "Jefferson County, CO",
+	"Hollywood, CA": "Los Angeles County, CA",
+	"Scarbo, WV": "Fayette County, WV",
+	"Johns Island, SC": "Charleston County, SC",
+	"Stanfordville, NY": "Dutchess County, NY",
+	"Stead, NV": "Washoe County, NV",
+	"Maspeth, NY": "Queens County, NY",
+	"Gonic, NH": "Strafford County, NH",
+	"Olustee, FL": "Baker County, FL",
+	"Baxter, KY": "Harlan County, KY",
+	"Citra, FL": "Marion County, FL",
+	"Hardwick, NJ": "Warren County, NJ",
+	"Deptford, NJ": "Gloucester County, NJ",
+	"Westminister, CO": "Jefferson County, CO",
+	"Van Nuys, CA": "Los Angeles County, CA",
+	"Devil's Lake, ND": "Ramsey County, ND",
+	"Clear Creek Canyon, CO": "Jefferson County, CO",
+	"Lincoln Township, MI": "Berrien County, MI",
+	"South Knoxville, TN": "Knox County, TN",
+	"Philadephia, PA": "Philadelphia County, PA",
+	"Salt River Reservation, AZ": "Maricopa County, AZ",
+	"Waterford Township, MI": "Oakland County, MI",
+	"Kent Station, WA": "King County, WA",
+	"Rangley, CO": "Rio Blanco County, CO",
+	"Natomas, CA": "Sacramento County, CA",
+	"Franklin Township, PA": "Beaver County, PA",
+	"Sunridge, NV": "Douglas County, NV",
+	"Hanover, CO": "El Paso County, CO",
 
 	# I had to Google the specific shootings for these
 	# cases.
@@ -308,74 +345,113 @@ kHardCode = {
 	"Sun City, SC": "Beaufort County, SC",
 	"Sherman Oaks, CA": "Los Angeles County, CA",
 
-
-	# Typos!
+	# Typos
 	"Charlottte, NC": "Mecklenburg County, NC",
 	"Watuaga County, NC": "Watauga County, NC",
+
+	# Errors
+	"Orem, OR": "Utah County, UT",
 }
 
-number_of_shootings = {}
-number_of_unarmed_shootings = {}
-number_of_firearm_shootings = {}
+for year in ['2018', '2019']:
+	# Load police shootings data.
+	with open(pjoin('data', 'fatal-police-shootings-data.csv'), 'r') as f:
+		reader = csv.reader(f, delimiter=',', quotechar='"')
+		rows = [row for row in reader]
+	header = rows[0]
+	rows = rows[1:]
+	rows = [row for row in rows if row[2][:-5] == f'{year}-']
 
-# id,name,date,manner_of_death,armed,age,gender,race,city,state,signs_of_mental_illness,threat_level,flee,body_camera
-for row_idx, row in enumerate(rows):
-	state = row[header.index('state')]
-	city = row[header.index('city')]
-	was_unarmed = row[header.index('armed')] == 'unarmed'
-	had_firearm = row[header.index('armed')] == 'gun'
+	A = {
+		'gun': 0,
+		'knife': 0,
+		'unarmed': 0,
+		'undetermined': 0,
+		'vehicle': 0,
+		'other': 0,
+	}
+	for row in rows:
+		if row[4] in A:
+			A[row[4]] += 1
+		else:
+			A['other'] += 1
 
-	if f'{city}, {state}' in kHardCode:
-		counties = {
-			kHardCode[f'{city}, {state}']: 1
-		}
-	else:
-		counties = get_county(state, city)
+	print(f'{pad(len(rows), 4)} total fatal police shootings')
+	print(f'{pad(A["unarmed"], 4)} were unarmed')
+	print(f'{pad(A["gun"], 4)} were armed with a gun')
+	print(f'{pad(A["undetermined"], 4)} were undetermined')
 
-	if counties is None:
-		# print(f'{city}, {state}')
-		print(row)
-		continue
+	# For historical reasons we use all-counties.json as the
+	# groundtruth for this script, and try to warp county names
+	# to fit them.  As the code exists now this is a little silly
+	# since we do a similar thing later in create_json.py.
+	# data/all-counties.json was created by some script (I think
+	# based on census data) that has since been lost to time.
+	with open(pjoin('data', 'all-counties.json'), 'r') as f:
+		all_counties = json.load(f)
 
-	# Reformt county so that it matches the name in
-	# the CDC's dataset.  Shockingly only one county
-	# cannot be found (Watuaga County, NC) which seems
-	# to be an error by the CDC.
-	for key in counties:
-		assert key[-4:-2] == ', '
-		state = key[-2:].lower()
-		county = key[:-4].lower()
+	number_of_shootings = {}
+	number_of_unarmed_shootings = {}
+	number_of_firearm_shootings = {}
 
-		if county[-20:] == ' city (county equiv)':
-			county = county[:-20]
+	# id,name,date,manner_of_death,armed,age,gender,race,city,state,signs_of_mental_illness,threat_level,flee,body_camera
+	for row_idx, row in enumerate(rows):
+		state = row[header.index('state')]
+		city = row[header.index('city')]
+		was_unarmed = row[header.index('armed')] == 'unarmed'
+		had_firearm = row[header.index('armed')] == 'gun'
 
-		is_valid = [state, county] in all_counties
-		if not is_valid:
-			if county[-7:] == ' county':
-				is_valid |= [state, county[:-7]] in all_counties
-			else:
-				is_valid |= [state, county + ' county'] in all_counties
+		if f'{city}, {state}' in kHardCode:
+			counties = {
+				kHardCode[f'{city}, {state}']: 1
+			}
+		else:
+			counties = get_county(state, city)
 
-		k = f'{county}, {state}'.lower()
-		if k not in number_of_shootings:
-			number_of_shootings[k] = 0.0
-			number_of_unarmed_shootings[k] = 0.0
-			number_of_firearm_shootings[k] = 0.0
-		number_of_shootings[k] += counties[key]
-		if was_unarmed:
-			number_of_unarmed_shootings[k] += counties[key]
-		if had_firearm:
-			number_of_firearm_shootings[k] += counties[key]
+		if counties is None:
+			# print(f'{city}, {state}')
+			print(row)
+			continue
 
-	if row_idx % 50 == 0:
-		requester.save()
+		# Reformt county so that it matches the name in
+		# the CDC's dataset.  Shockingly only one county
+		# cannot be found (Watuaga County, NC) which seems
+		# to be an error by the CDC.
+		for key in counties:
+			assert key[-4:-2] == ', '
+			state = key[-2:].lower()
+			county = key[:-4].lower()
 
-with open(pjoin('generated', 'shootings-by-county.json'), 'w+') as f:
-	json.dump(number_of_shootings, f)
+			if county[-20:] == ' city (county equiv)':
+				county = county[:-20]
 
-with open(pjoin('generated', 'unarmed-shootings-by-county.json'), 'w+') as f:
-	json.dump(number_of_unarmed_shootings, f)
+			is_valid = [state, county] in all_counties
+			if not is_valid:
+				if county[-7:] == ' county':
+					is_valid |= [state, county[:-7]] in all_counties
+				else:
+					is_valid |= [state, county + ' county'] in all_counties
 
-with open(pjoin('generated', 'shootings-by-county-where-victim-had-firearm.json'), 'w+') as f:
-	json.dump(number_of_firearm_shootings, f)
+			k = f'{county}, {state}'.lower()
+			if k not in number_of_shootings:
+				number_of_shootings[k] = 0.0
+				number_of_unarmed_shootings[k] = 0.0
+				number_of_firearm_shootings[k] = 0.0
+			number_of_shootings[k] += counties[key]
+			if was_unarmed:
+				number_of_unarmed_shootings[k] += counties[key]
+			if had_firearm:
+				number_of_firearm_shootings[k] += counties[key]
+
+		if row_idx % 50 == 0:
+			requester.save()
+
+	with open(pjoin('generated', 'police_shootings', f'total-{year}.json'), 'w+') as f:
+		json.dump(number_of_shootings, f)
+
+	with open(pjoin('generated', 'police_shootings', f'unarmed-{year}.json'), 'w+') as f:
+		json.dump(number_of_unarmed_shootings, f)
+
+	with open(pjoin('generated', 'police_shootings', f'firearmed-{year}.json'), 'w+') as f:
+		json.dump(number_of_firearm_shootings, f)
 
