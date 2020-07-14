@@ -9,7 +9,7 @@ An example entry:
 ```JavaScript
 {
   // ...
-  "Nebraska": {
+  "Wisconsin": {
     // ...
     "waukesha county": {
       "driving": [
