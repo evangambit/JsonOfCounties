@@ -1,6 +1,6 @@
 import bson, code, copy, csv, json, math, os, re
 
-# pip install pyshp
+from scipy.ndimage import filters
 import shapefile
 
 import matplotlib.pyplot as plt
@@ -924,8 +924,55 @@ def get_elections():
 
 	return states
 
+daysBeforeMonth = [
+	0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+]
+daysBeforeMonth = np.cumsum(daysBeforeMonth)
+
+def get_mobility():
+	with open(pjoin('data', 'applemobilitytrends-2020-07-12.csv'), 'r') as f:
+		reader = csv.reader(f, delimiter=',')
+		header = next(reader)
+		rows = [row for row in reader]
+	rows = [r for r in rows if r[5] == 'United States' and r[0] == 'county']
+	rows = [[r[2], r[1], r[4]] + r[6:] for r in rows]
+
+	X = header[6:]
+	T = []
+	for x in X:
+		y, m, d = x.split('-')
+		T.append(int(daysBeforeMonth[int(m) - 1] + int(d)))
+
+	states = {}
+	for row in rows:
+		mode, county, state = row[:3]
+		if state in ['Puerto Rico', 'Guam', 'Virgin Islands']:
+			continue
+		r = row[3:]
+		Y = []
+		for i in range(len(r)):
+			if len(r[i]) > 0:
+				Y.append(float(r[i]))
+			elif len(r[i-1]) > 0:
+				Y.append(float(r[i - 1]))
+			else:
+				Y.append(float(r[i + 1]))
+		# import code; code.interact(local=locals())
+		if state not in states:
+			states[state] = {}
+		if county not in states[state]:
+			states[state][county] = {
+			}
+		Y = filters.uniform_filter(Y, 14)
+		states[state][county][mode] = [round(int(y)) for y in Y[::14]]
+
+	return states
+
+
 if __name__ == '__main__':
 	merger = CountyNameMerger()
+
+	merger.merge(get_mobility(), allow_missing=True)
 
 	merger.merge(get_geometry())
 

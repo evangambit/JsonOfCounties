@@ -11,123 +11,117 @@ An example entry:
   // ...
   "Nebraska": {
     // ...
-    "holt county": {
-      "land_area": 6248.083634,
-      "area": 6261.285137,
-      "longitude": -98.78364595127402,
-      "latitude": 42.465209445121566,
+    "waukesha county": {
+      "driving": [
+        107,
+        107,
+        108,
+        114,
+        107,
+        57,
+        57,
+        70,
+        85,
+        107,
+        134,
+        153,
+        158
+      ],
+      "land_area": 1423.675192,
+      "area": 1503.52665,
+      "longitude": -88.3041411471765,
+      "latitude": 43.01843887416162,
       "zip-codes": [
-        "68766",
-        "68759",
-        "68725",
-        "68713",
-        "68746",
-        "68726",
-        "68823",
-        "68764",
-        "68735",
-        "68763",
-        "68711",
-        "68777",
-        "68780",
-        "68734",
-        "68742"
+        "53186",
+        "53018",
+        ...
+        "53189",
+        "53187"
       ],
       "race_demographics": {
-        "non_hispanic_white_alone_male": 0.4622715661230104,
-        "non_hispanic_white_alone_female": 0.4660051090587542,
-        "black_alone_male": 0.0020632737276478678,
-        "black_alone_female": 0.0017685203379838867,
-        "asian_alone_male": 0.0021615248575358615,
-        "asian_alone_female": 0.003340538416191786,
-        "hispanic_male": 0.02859107879740617,
-        "hispanic_female": 0.024071526822558458
+        "non_hispanic_white_alone_male": 0.4326745593839314,
+        "non_hispanic_white_alone_female": 0.4491877381708479,
+        "black_alone_male": 0.008988468561448078,
+        "black_alone_female": 0.008063075579549063,
+        "asian_alone_male": 0.018686487773896476,
+        "asian_alone_female": 0.02018001746586218,
+        "hispanic_male": 0.024199150523975865,
+        "hispanic_female": 0.02367070895522388
       },
       "age_demographics": {
-        "0-4": 0.07044606012969148,
-        "5-9": 0.0734918451562193,
-        "10-14": 0.07142857142857142,
-        "15-19": 0.05570839064649243,
-        "20-24": 0.0500098251129888,
-        "25-29": 0.04725879347612497,
-        "30-34": 0.04951856946354883,
-        "35-39": 0.0546276282177245,
-        "40-44": 0.04666928669679701,
-        "45-49": 0.046865788956573,
-        "50-54": 0.056494399685596386,
-        "55-59": 0.08351346040479465,
-        "60-64": 0.078109648260955,
-        "65-69": 0.06543525250540382,
-        "70-74": 0.048143053645116916,
-        "75-79": 0.039791707604637454,
-        "80-84": 0.027706818628414228,
-        "85+": 0.03478089998034977
+        "0-4": 0.05173517386471896,
+        "5-9": 0.05720317958081931,
+        "10-14": 0.06437807637345189,
+        ...
+        "75-79": 0.03144599476024135,
+        "80-84": 0.02230866941886313,
+        "85+": 0.026079707843759924
       },
-      "male": 5088,
-      "female": 5090,
-      "population": 10178,
+      "male": 198189,
+      "female": 204883,
+      "population": 403072,
       "deaths": {
-        "suicides": 17,
-        "firearm suicides": 12,
-        "homicides": null
+        "suicides": 722,
+        "firearm suicides": 341,
+        "homicides": 65
       },
-      "labor_force": 5763.0,
-      "employed": 5613.0,
-      "unemployed": 150.0,
-      "unemployment_rate": 2.6,
+      "labor_force": 224731.0,
+      "employed": 218151.0,
+      "unemployed": 6580.0,
+      "unemployment_rate": 2.9,
       "fatal_police_shootings": {
-        "total-2018": 0,
-        "unarmed-2018": 0,
-        "firearmed-2018": 0,
-        "total-2019": 0,
-        "unarmed-2019": 0,
-        "firearmed-2019": 0
+        "total-2018": 0.0,
+        "unarmed-2018": 0.0,
+        "firearmed-2018": 0.0,
+        "total-2019": 1.0,
+        "unarmed-2019": 0.0,
+        "firearmed-2019": 0.0
       },
       "police_deaths": 0,
-      "avg_income": 51404,
+      "avg_income": 72650,
       "covid-deaths": {
         "growth-rate-est": null,
-        "5/4/20": 0,
-        "5/11/20": 0,
-        "5/18/20": 0,
-        "5/25/20": 0,
-        "6/1/20": 0,
-        "6/8/20": 0,
-        "6/15/20": 0,
-        "6/22/20": 0,
-        "6/29/20": 0,
-        "7/6/20": 0
+        "5/4/20": 20,
+        "5/11/20": 23,
+        "5/18/20": 23,
+        "5/25/20": 25,
+        "6/1/20": 30,
+        "6/8/20": 33,
+        "6/15/20": 35,
+        "6/22/20": 37,
+        "6/29/20": 38,
+        "7/6/20": 39
       },
       "covid-confirmed": {
-        "5/4/20": 1,
-        "5/11/20": 1,
-        "5/18/20": 1,
-        "5/25/20": 1,
-        "6/1/20": 1,
-        "6/8/20": 1,
-        "6/15/20": 1,
-        "6/22/20": 2,
-        "6/29/20": 3,
-        "7/6/20": 3
+        "5/4/20": 367,
+        "5/11/20": 409,
+        "5/18/20": 482,
+        "5/25/20": 567,
+        "6/1/20": 709,
+        "6/8/20": 823,
+        "6/15/20": 915,
+        "6/22/20": 1015,
+        "6/29/20": 1151,
+        "7/6/20": 1412
       },
       "elections": {
         "2008": {
-          "total": 4974,
-          "dem": 1089,
-          "gop": 3746
+          "total": 232897,
+          "dem": 85339,
+          "gop": 145152
         },
         "2012": {
-          "total": 4749,
-          "dem": 862,
-          "gop": 3789
+          "total": 241084,
+          "dem": 77617,
+          "gop": 161567
         },
         "2016": {
-          "total": 4979,
-          "dem": 522,
-          "gop": 4275
+          "total": 236269,
+          "dem": 79199,
+          "gop": 145519
         }
       },
-      "fips": "31089"
+      "fips": "55133"
     },
     // ...
   },
@@ -135,7 +129,7 @@ An example entry:
 }
 ```
 
-If you want to use this data, most of the sources are from .gov websites.  The exceptions are fatal police shooting data (from Washington Post) and election data (from a variety of sources, see the [repo's readme](https://github.com/tonmcg/US_County_Level_Election_Results_08-16) for more info).
+If you want to use this data, most of the sources are from .gov websites.  The exceptions are fatal police shooting data (from Washington Post), election data (from a variety of sources, see the [repo's readme](https://github.com/tonmcg/US_County_Level_Election_Results_08-16) for more info), and the driving/mobiity data (from Apple).
 
 Please let me know if you want to use the data (it's nice to know my work is being used).  You can email me at ${myGithubUsername}@gmail, or just open an issue on Github.
 
@@ -158,6 +152,8 @@ Please let me know if you want to use the data (it's nice to know my work is bei
 8. Presidential election data comes from Bill Morris' [github repository](https://github.com/tonmcg/US_County_Level_Election_Results_08-16/blob/master/US_County_Level_Presidential_Results_08-16.csv).  Alaska's counties are missing, as is Kalawao County, Hawaii.
 
 9. Zip code-to-county data is from data.world [here](https://data.world/niccolley/us-zipcode-to-county-state), specifically Nic Colley, and is in the Public Domain.  Zip codes can overlap multiple counties.
+
+10. Driving mobility data comes from Apple [here](https://www.apple.com/covid19/mobility), which they released to help analyze covid-19.
 
 Note that this "states.json" does NOT contain a superset of each data source.  For instance the racial/age demographic breakdown provided by "cc-est2018-alldata.csv" is extremely specific (giving race/sex break downs for every age bucket for 9 years!) but we don't include all of that in states.json.
 
