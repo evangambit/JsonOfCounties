@@ -938,10 +938,6 @@ def get_mobility():
 	rows = [[r[2], r[1], r[4]] + r[6:] for r in rows]
 
 	X = header[6:]
-	T = []
-	for x in X:
-		y, m, d = x.split('-')
-		T.append(int(daysBeforeMonth[int(m) - 1] + int(d)))
 
 	states = {}
 	for row in rows:
@@ -961,18 +957,18 @@ def get_mobility():
 		if state not in states:
 			states[state] = {}
 		if county not in states[state]:
-			states[state][county] = {
-			}
+			states[state][county] = {}
+		if mode not in states[state][county]:
+			states[state][county][mode] = {}
 		Y = filters.uniform_filter(Y, 14)
-		states[state][county][mode] = [round(int(y)) for y in Y[::14]]
+		for x, y in zip(X[::14], Y[::14]):
+			states[state][county][mode][x] = round(int(y))
 
 	return states
 
 
 if __name__ == '__main__':
 	merger = CountyNameMerger()
-
-	merger.merge(get_mobility(), allow_missing=True)
 
 	merger.merge(get_geometry())
 
@@ -1040,6 +1036,8 @@ if __name__ == '__main__':
 
 	merger.merge(get_avg_income())
 	merger.merge(get_covid())
+
+	merger.merge(get_mobility(), allow_missing=True)
 
 	# We're missing election data for Alaska and Kalawao County, HI
 	merger.merge(get_elections(), missing={
