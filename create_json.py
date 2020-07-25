@@ -785,7 +785,7 @@ def get_covid():
 			reader = csv.reader(f, delimiter=',')
 			header = next(reader)
 			rows = [row for row in reader]
-			for date in ['5/4/20', '5/11/20', '5/18/20', '5/25/20', '6/1/20', '6/8/20', '6/15/20', '6/22/20', '6/29/20', '7/6/20']:
+			for date in ['5/4/20', '5/11/20', '5/18/20', '5/25/20', '6/1/20', '6/8/20', '6/15/20', '6/22/20', '6/29/20', '7/6/20', '7/13/20', '7/20/20']:
 				column = header.index(date)
 				new_york_unallocated = 0
 				for row in rows:
@@ -852,10 +852,11 @@ def get_covid():
 					states['New York']['queens county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['queens county'][f"covid-{varname}"][date] / total)
 					states['New York']['richmond county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['richmond county'][f"covid-{varname}"][date] / total)
 
-	# Wade Hampton and Kusilvak are the same cuonty but, for some reason, exist as two rows.  Since both rows have zero
-	# deaths we won't worry about this for now... but if the rows ever differ we may want to email the CDC and ask why
-	# they have duplicate rows.
-	assert wade_hampton == kusilvak, 'If this is ever violated, we need to revisit how we resolve these duplicate rows'
+	# Wade Hampton and Kusilvak are the same cuonty but, for some reason, exist as two rows.
+	# Hopefuly this is just an oversight and wade_hampton deaths are simply being counted as
+	# kusilvak deaths.  But if wade_hampton deaths are ever non-zer we may want to email the
+	# CDC and ask why they have duplicate rows.
+	assert wade_hampton == 0, 'If this is ever violated, we need to revisit how we resolve these duplicate rows'
 
 	return states
 
@@ -930,7 +931,7 @@ daysBeforeMonth = [
 daysBeforeMonth = np.cumsum(daysBeforeMonth)
 
 def get_mobility():
-	with open(pjoin('data', 'applemobilitytrends-2020-07-12.csv'), 'r') as f:
+	with open(pjoin('data', 'applemobilitytrends-2020-07-23.csv'), 'r') as f:
 		reader = csv.reader(f, delimiter=',')
 		header = next(reader)
 		rows = [row for row in reader]
