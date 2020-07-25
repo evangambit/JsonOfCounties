@@ -14,6 +14,10 @@ pjoin = os.path.join
 from shapely import geometry
 from shapely.geometry import Point
 
+def pad(t, n, c=' '):
+	t = str(t)
+	return max(n - len(t), 0) * c + t
+
 abbreviation_to_name = {
 	"AL": "Alabama",
 	"AK": "Alaska",
@@ -136,6 +140,11 @@ not_states = set([
 	"Puerto Rico",
 	"Virgin Islands",
 ])
+
+# Converts '7/13/20' to '2020-07-13'
+def date_to_ymd(t):
+	m, d, y = t.split('/')
+	return f"20{y}-{pad(m, 2, c='0')}-{pad(d, 2, c='0')}"
 
 # Maps formly independent cities to the counties they
 # now belong to.  This way we can add the deaths from
@@ -839,18 +848,19 @@ def get_covid():
 						else:
 							states[state][county][f"covid-{varname}"][f'growth-rate-est'] = None
 
-					assert date not in states[state][county][f"covid-{varname}"]
-					states[state][county][f"covid-{varname}"][date] = int(row[column])
+					datekey = date_to_ymd(date)
+					assert datekey not in states[state][county][f"covid-{varname}"]
+					states[state][county][f"covid-{varname}"][datekey] = int(row[column])
 
 				# We distribute "unattributed New York deaths" proportional to how the other
 				# covid deaths are distributed.
-				total = states['New York']['new york county'][f"covid-{varname}"][date] + states['New York']['bronx county'][f"covid-{varname}"][date] + states['New York']['kings county'][f"covid-{varname}"][date] + states['New York']['queens county'][f"covid-{varname}"][date] + states['New York']['richmond county'][f"covid-{varname}"][date]
+				total = states['New York']['new york county'][f"covid-{varname}"][datekey] + states['New York']['bronx county'][f"covid-{varname}"][datekey] + states['New York']['kings county'][f"covid-{varname}"][datekey] + states['New York']['queens county'][f"covid-{varname}"][datekey] + states['New York']['richmond county'][f"covid-{varname}"][datekey]
 				if total > 0:
-					states['New York']['new york county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['new york county'][f"covid-{varname}"][date] / total)
-					states['New York']['bronx county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['bronx county'][f"covid-{varname}"][date] / total)
-					states['New York']['kings county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['kings county'][f"covid-{varname}"][date] / total)
-					states['New York']['queens county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['queens county'][f"covid-{varname}"][date] / total)
-					states['New York']['richmond county'][f"covid-{varname}"][date] += new_york_unallocated * (states['New York']['richmond county'][f"covid-{varname}"][date] / total)
+					states['New York']['new york county'][f"covid-{varname}"][datekey] += new_york_unallocated * (states['New York']['new york county'][f"covid-{varname}"][datekey] / total)
+					states['New York']['bronx county'][f"covid-{varname}"][datekey] += new_york_unallocated * (states['New York']['bronx county'][f"covid-{varname}"][datekey] / total)
+					states['New York']['kings county'][f"covid-{varname}"][datekey] += new_york_unallocated * (states['New York']['kings county'][f"covid-{varname}"][datekey] / total)
+					states['New York']['queens county'][f"covid-{varname}"][datekey] += new_york_unallocated * (states['New York']['queens county'][f"covid-{varname}"][datekey] / total)
+					states['New York']['richmond county'][f"covid-{varname}"][datekey] += new_york_unallocated * (states['New York']['richmond county'][f"covid-{varname}"][datekey] / total)
 
 	# Wade Hampton and Kusilvak are the same cuonty but, for some reason, exist as two rows.
 	# Hopefuly this is just an oversight and wade_hampton deaths are simply being counted as
