@@ -67,22 +67,22 @@ An example entry:
         "2020-05-04": 20,
         "2020-05-11": 23,
         ...
-        "2020-07-13": 40,
-        "2020-07-20": 40
+        "2020-08-03": 55,
+        "2020-08-10": 59
       },
       "covid-confirmed": {
         "2020-05-04": 367,
         "2020-05-11": 409,
         ...
-        "2020-07-13": 1725,
-        "2020-07-20": 2221
+        "2020-08-03": 3693,
+        "2020-08-10": 4299
       },
       "driving": {
         "2020-01-13": 107,
         "2020-01-27": 107,
-        ,,,
-        "2020-06-29": 158,
-        "2020-07-13": 165
+        ...
+        "2020-07-27": 163,
+        "2020-08-10": 162
       },
       "elections": {
         "2008": {
@@ -115,7 +115,7 @@ Please let me know if you want to use the data (it's nice to know my work is bei
 
 ## Sources
 
-1. State geometry (location, area, etc.) is computed from data.gov, specifically [here](https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-county-and-equivalent-national-shapefile) (download "Shapefile Zip File").  This data is NOT included in the repository because it is 122 MB; you may download it from the source, or from Google Drive [here](https://drive.google.com/file/d/1RvdPYAx3l0wJeGwNEfDnFOZafthqS4_b/view?usp=sharing).  Regardless of where you download it from, save the corresponding directory inside the "data" directory.  County areas are not exact; they assume longitude/latitude are x/y coordinates, and are then adjusted by multiplying by the cosine of the county's central point.  We also use the convex hull of the county, because of oddities that arise when a county has small "islands" of territory.  This overestimates the area of counties that contain many islands (most notably Monroe County, FL, Aleutians West, AK, and Honolulu County, HI)
+1. State geometry (location, area, etc.) comes from data.gov, specifically [here](https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-county-and-equivalent-national-shapefile) (download "Shapefile Zip File").  This data is NOT included in the repository because it is 122 MB; you may download it from the source, or from Google Drive [here](https://drive.google.com/file/d/1RvdPYAx3l0wJeGwNEfDnFOZafthqS4_b/view?usp=sharing).  Regardless of where you download it from, save the corresponding directory inside the "data" directory.
 
 2. Population and demographics comes from the Census Bureau from a 2018 table ([here](https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-detail.html#par_textimage_1383669527)).  This "United States" csv file is NOT included, as it is 154 MB, but can be downloaded from Google Drive [here](https://drive.google.com/file/d/11k-YAy4SM36jbXYUy5pylgo0mE-ZKudZ/view?usp=sharing).
 
@@ -123,13 +123,13 @@ Please let me know if you want to use the data (it's nice to know my work is bei
 
 4. Labor statistics comes from [here](https://www.bls.gov/lau/#cntyaa) (the BLS).
 
-5. Police shootings data comes from the [Washington Post's dataset](https://github.com/washingtonpost/data-police-shootings) and only includes 2019 shootings.  In cases where the county is ambiguous, shootings are distributed fractionally.
+5. Police shootings data comes from the [Washington Post's dataset](https://github.com/washingtonpost/data-police-shootings) and only includes 2019 shootings.  To convert from city (which is typically how the Washington Post reports) to county a variety of methods were used.  Of particular importance was the [City-to-County finder](http://www.stats.indiana.edu/uspr/a/place_frame.html) by [Stats Indiana](http://www.stats.indiana.edu/), which let me automatically map counties to cities.  Frequently cities belonged to several counties, in which case the shootings were distributed fractionally.  Where their tool failed (e.g. sometimes the location of a shooting is ambiguous, or wasn't in/near a large city), I was forced to determine location by hand, either from news articles or via Randy Major's [County Lines on Google Maps](https://www.randymajors.com/p/countygmap.html) page.
 
 6. Average income comes from the BEA [here](https://apps.bea.gov/regional/downloadzip.cfm).  I don't trust the median income estimates (there are some really crazy counties...), so I only report the average income.
 
 7. Covid data comes from [this site](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/) on usafacts.org, who says their data comes from the CDC.  Data was last updated on June 20th, 2020.
 
-8. Presidential election data comes from Bill Morris' [github repository](https://github.com/tonmcg/US_County_Level_Election_Results_08-16/blob/master/US_County_Level_Presidential_Results_08-16.csv).  Alaska's counties are missing, as is Kalawao County, Hawaii.
+8. Presidential election data comes this [github repository](https://github.com/tonmcg/US_County_Level_Election_Results_08-16/blob/master/US_County_Level_Presidential_Results_08-16.csv) which aggregates from a variety of sources, with credit to Tony McGovern, Bill Morris, The Guardian, townhall.com, and others.  Alaskan boroughs and census areas are missing, as is Kalawao County, Hawaii.
 
 9. Zip code-to-county data is from data.world [here](https://data.world/niccolley/us-zipcode-to-county-state), specifically Nic Colley, and is in the Public Domain.  Zip codes can overlap multiple counties.
 
@@ -137,7 +137,7 @@ Please let me know if you want to use the data (it's nice to know my work is bei
 
 Note that this "states.json" does NOT contain a superset of each data source.  For instance the racial/age demographic breakdown provided by "cc-est2018-alldata.csv" is extremely specific (giving race/sex break downs for every age bucket for 9 years!) but we don't include all of that in states.json.
 
-Fortunately, it shouldn't be hard for somebody with some Python experience to modify "create_json.py" to add whatever additional data they might need.
+Fortunately, it shouldn't be too hard for somebody with some Python experience to modify "create_json.py" to add whatever additional data they might need.
 
 ## How to (Re)Generate
 
@@ -152,9 +152,26 @@ $ python create_json.py
 
 *ONLY THE LAST COMMAND* is typically required.  The output of the other command is included in the repo, so you shouldn't have to regenerate them.
 
-## Why
+## APA Citations
 
-I was originally trying to reproduce [this paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6391295/?fbclid=IwAR2Y0h6D-cEWXqk4_dooBX2MgUUrADyEIHN6iQFmbDc1qXf0MYHK3qWbUPo) (it reproduced!) and then I wanted to try and reproduce it with county-level data (since 3000 is a much larger sample size than 50).
+Apple. (2020, July 24). COVID‑19 - Mobility Trends Reports. COVID‑19 - Mobility Trends Reports. https://www.apple.com/covid19/mobility
 
-This effort formed the base of this project, and I figured, as long as I had sunk in several hours into this project, I might as well publicize the results.
+Bureau of Economic Analysis. (2020). BEA : Regional Economic Accounts: Download. BEA : Regional Economic Accounts. https://apps.bea.gov/regional/downloadzip.cfm
+Covid cases/deaths:
+
+Bureau of Labor Statistics. (2019). Local Area Unemployment Statistics Home Page. Local Area Unemployment Statistics. https://www.bls.gov/lau/#cntyaa
+
+Centers for Disease Control and Prevention. (2016). Compressed Mortality, 1999-2016 Request. Centers for Disease Control and Prevention (CDC). https://wonder.cdc.gov/cmf-icd10.html
+
+Colley, N. (2020). US Zipcode to County State to FIPS Look Up. Data.World. https://data.world/niccolley/us-zipcode-to-county-state
+
+McGovern, Anthony and Morris, Bill (2016). US County Level Presidential Results. Retrieved from: https://github.com/tonmcg/US_County_Level_Election_Results_08-16
+
+US Census Bureau. (2019). TIGER/Line Shapefile, 2017, nation, U.S., Current County and Equivalent National Shapefile - Data.gov. DATA.GOV. https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-county-and-equivalent-national-shapefile
+
+US Census Bureau. (2018). County Population by Characteristics: 2010-2019. The United States Census Bureau. https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-detail.html#par_textimage_1383669527
+
+USAFacts. (2020, August 11). US Coronavirus Cases and Deaths. USAFacts.Org. https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/
+
+Washington Post. (2020). washingtonpost/data-police-shootings. GitHub. https://github.com/washingtonpost/data-police-shootings
 
