@@ -338,6 +338,97 @@ kHardCode = {
 	"Franklin Township, PA": "Beaver County, PA",
 	"Sunridge, NV": "Douglas County, NV",
 	"Hanover, CO": "El Paso County, CO",
+	"Brooklyn, NY": "Kings County, NY",
+	"Reagan, TN": "Henderson County, TN",
+	"Woodford, VA": "Caroline County, VA",
+	"Jean, NV": "Clark County, NV",
+	"Algoma Township, MI": "Kent County, MI",
+	"Madison Township, OH": "Butler County, OH",
+	"Oakdale, CT": "New London County, CT",
+	"Geneva, WI": "Walworth County, WI",
+	"Olympic Valley, CA": "Placer County, CA",
+	"Mt. Pleasant, TN": "Maury County, TN",
+	"Howland Township, OH": "Trumbull County, OH",
+	"Geneva Township, OH": "Ashtabula County, OH",
+	"Vassalboro, ME": "Kennebec County, ME",
+	"Grand Prarie, TX": "Dallas County, TX",
+	"Aragonite, UT": "Tooele County, UT",
+	"Corning, WI": "Lincoln County, WI",
+	"Newton, NH": "Rockingham County, NH",
+	"Union Township, PA": "Washington County, PA",
+	"Cranbury Township, NJ": "Middlesex County, NJ",
+	"Cantonment, FL": "Escambia County, FL",
+	"Colebrook Township, OH": "Ashtabula County, OH",
+	"Wolf Creek, OR": "Josephine County, OR",
+	"Lizella, GA": "Bibb County, GA",
+	"Papaaloa, HI": "Hawaii County, HI",
+	"Tom, OK": "McCurtain County, OK",
+	"Brighton Township, MI": "Livingston County, MI",
+	"Barona Indian Reservation, CA": "San Diego County, CA",
+	"Lower Mount Bethel, PA": "Northampton County, PA",
+	"Belgrade, ME": "Kennebec County, ME",
+	"Arundel, ME": "York County, ME",
+	"Gerrardstown, WV": "Berkeley County, WV",
+	"Lakes Wales, FL": "Polk County, FL",
+	"Orrington, ME": "Penobscot County, ME",
+	"Trosper, KY": "Knox County, KY",
+	"St. Clair Township, OH": "Butler County, OH",
+	"Hollywood Hills, CA": "Los Angeles County, CA",
+	"Lawndale, IL": "Logan County, IL",
+	"Bonaire, GA": "Houston County, GA",
+	"Pleasant View, CO": "Montezuma County, CO",
+	"Glenville, NY": "Schenectady County, NY",
+	"Mt. Airy, NC": "Surry County, NC",
+	"Mead Township, PA": "Warren County, PA",
+	"North Bergen, NJ": "Hudson County, NJ",
+	"Blue Summit, MO": "Jackson County, MO",
+	"Frederickstown, WA": "Pierce County, WA",
+	"York, WI": "Clark County, WI",
+	"Habersham, GA": "Habersham County, GA",
+	"Cosby, TN": "Cocke County, TN",
+	"Bloomfield, NJ": "Essex County, NJ",
+	"Brick, NJ": "Ocean County, NJ",
+	"Watagua, TX": "Tarrant County, TX",
+	"Hixson, TN": "Hamilton County, TN",
+	"Frametown, WV": "Braxton County, WV",
+	"Coolin, ID": "Bonner County, ID",
+	"Columbua, IN": "Bartholomew County, IN",
+	"Canton Township, PA": "Washington County, PA",
+	"North Fort Collins, CO": "Larimer County, CO",
+	"Kingwood, TX": "Harris County, TX",
+	"Fort Smith, OK": "Sequoyah County, OK",
+	"Plymouth Township, PA": "Montgomery County, PA",
+	"Rudioso, NM": "Lincoln County, NM",
+	"Tremont, NY": "Bronx County, NY",
+	"Cedar Lake, TX": "Matagorda County, TX",
+	"Holland Township, MI": "Ottawa County, MI",
+	"Penasco, NM": "Taos County, NM",
+	"North Hollywood, CA": "Los Angeles County, CA",
+	"Point Loma, CA": "San Diego County, CA",
+	"Miami Township, OH": "Clermont County, OH",
+	"Boring, OR": "Clackamas County, OR",
+	"Dover Township, PA": "York County, PA",
+	"Lincoln Parish, LA": "Lincoln Parish, LA",
+	"St. Tammany Parish, LA": "St. Tammany Parish, LA",
+	"West Ouachita, LA": "Ouachita Parish, LA",
+	"Gibson, LA": "Terrebonne Parish, LA",
+	"Hillyard, WA": "Spokane County, WA",
+	"Bassett, CA": "Los Angeles County, CA",
+
+	# Salvador Byassee
+	"300 block of State Line Road, TN": "Weakley County, TN",
+
+	# George Gipp
+	"Standing Rock Reservation, ND": "Sioux County, ND",
+
+	# Cody Ethan Mitchell
+	"Mt Airy, MD": "Frederick County, MD",
+
+	# Peter Raymond Selis
+	"University City, CA": "San Diego County, CA",
+
+	# Chazz Brown
+	"St Louis, MO": "St. Louis city county, MO",
 
 	# I had to Google the specific shootings for these
 	# cases.
@@ -353,7 +444,7 @@ kHardCode = {
 	"Orem, OR": "Utah County, UT",
 }
 
-for year in ['2018', '2019']:
+for year in ['2017', '2018', '2019']:
 	# Load police shootings data.
 	with open(pjoin('data', 'fatal-police-shootings-data.csv'), 'r') as f:
 		reader = csv.reader(f, delimiter=',', quotechar='"')
@@ -413,7 +504,7 @@ for year in ['2018', '2019']:
 			print(row)
 			continue
 
-		# Reformt county so that it matches the name in
+		# Reformat county so that it matches the name in
 		# the CDC's dataset.  Shockingly only one county
 		# cannot be found (Watuaga County, NC) which seems
 		# to be an error by the CDC.

@@ -53,6 +53,9 @@ An example entry:
       "unemployed": 6580.0,
       "unemployment_rate": 2.9,
       "fatal_police_shootings": {
+        "total-2017": 1.0,
+        "unarmed-2017": 0.0,
+        "firearmed-2017": 1.0,
         "total-2018": 0.0,
         "unarmed-2018": 0.0,
         "firearmed-2018": 0.0,

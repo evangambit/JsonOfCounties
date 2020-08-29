@@ -293,8 +293,6 @@ class CountyNameMerger:
 
 		M = {}
 
-		foo = 'honolulu' in list1
-
 		i = 0
 		while i < len(list1):
 			county = list1[i].lower()
@@ -334,6 +332,9 @@ class CountyNameMerger:
 				del list2[j]
 			else:
 				i += 1
+
+		list1.sort()
+		list2.sort()
 
 		if state not in missing:
 			assert len(list1) == 0, f"{state}\n\n{list1}\n\n{list2}"
@@ -658,7 +659,7 @@ def get_labor_force():
 
 def get_fatal_police_shootings():
 	states = {}
-	for year in ['2018', '2019']:
+	for year in ['2017', '2018', '2019']:
 		for varname in [f'total-{year}', f'unarmed-{year}', f'firearmed-{year}']:
 			with open(pjoin('generated', 'police_shootings', varname + '.json'), 'r') as f:
 				shootings = json.load(f)
