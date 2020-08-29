@@ -795,7 +795,7 @@ def get_covid():
 			reader = csv.reader(f, delimiter=',')
 			header = next(reader)
 			rows = [row for row in reader]
-			for date in ['5/4/20', '5/11/20', '5/18/20', '5/25/20', '6/1/20', '6/8/20', '6/15/20', '6/22/20', '6/29/20', '7/6/20', '7/13/20', '7/20/20', '7/27/20', '8/3/20', '8/10/20']:
+			for date in ['5/4/20', '5/11/20', '5/18/20', '5/25/20', '6/1/20', '6/8/20', '6/15/20', '6/22/20', '6/29/20', '7/6/20', '7/13/20', '7/20/20', '7/27/20', '8/3/20', '8/10/20', '8/17/20', '8/24/20']:
 				column = header.index(date)
 				new_york_unallocated = 0
 				for row in rows:
@@ -840,14 +840,6 @@ def get_covid():
 
 					if f"covid-{varname}" not in states[state][county]:
 						states[state][county][f"covid-{varname}"] = {}
-
-					# Add growth in covid deaths the week before lock downs started having an effect to estimate the
-					# naive growth rate.
-					if varname == 'deaths':
-						if float(row[79-7]) > 0:
-							states[state][county][f"covid-{varname}"][f'growth-rate-est'] = float(row[79])/float(row[79-7])
-						else:
-							states[state][county][f"covid-{varname}"][f'growth-rate-est'] = None
 
 					datekey = date_to_ymd(date)
 					assert datekey not in states[state][county][f"covid-{varname}"]
