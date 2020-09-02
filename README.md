@@ -16,6 +16,11 @@ An example entry:
       "area": 1503.52665,
       "longitude": -88.3041411471765,
       "latitude": 43.01843887416162,
+      "noaa": {
+        "prcp": 34.61,
+        "snow": 39.5,
+        "temp": 46.3
+      },
       "zip-codes": [
         "53186",
         "53018",

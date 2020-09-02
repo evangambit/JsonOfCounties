@@ -928,6 +928,73 @@ def get_elections():
 
 	return states
 
+def add_weather(states):
+	"""
+	Value flags (which we ignore):
+    C = complete (all 30 years used)
+    S = standard (no more than 5 years missing and no more than 3 consecutive 
+        years missing among the sufficiently complete years)
+    R = representative (observed record utilized incomplete, but value was scaled
+        or based on filled values to be representative of the full period of record)
+    P = provisional (at least 10 years used, but not sufficiently complete to be 
+        labeled as standard or representative). Also used for parameter values on 
+        February 29 as well as for interpolated daily precipitation, snowfall, and
+        snow depth percentiles. 
+    Q = quasi-normal (at least 2 years per month, but not sufficiently complete to 
+        be labeled as provisional or any other higher flag code. The associated
+        value was computed using a pseudonormals approach or derived from monthly
+        pseudonormals.
+	"""
+	stations = {}
+	for varname, fn in [
+			("prcp", "ann-prcp-normal.txt"),
+			("snow", "ann-snow-normal.txt"),
+			("temp", "ann-tavg-normal.txt"),
+		]:
+		with open(pjoin("data", "noaa-weather", fn), "r") as f:
+			for line in f.readlines():
+				station, val = re.split(r" +", line.strip())
+				assert val[-1] in "CSRPQ", repr(val)
+				val = float(val[:-1])
+				if station not in stations:
+					stations[station] = {}
+				if varname == "prcp":
+					stations[station][varname] = val / 100.0
+				elif varname == "snow":
+					stations[station][varname] = val / 10.0
+				else:
+					stations[station][varname] = val / 10.0
+
+	# Read station locations
+	with open(pjoin("data", "noaa-weather", "ghcnd-stations.txt"), "r") as f:
+		lines = f.readlines()
+		# Filter out stations that don't give us any data.
+		lines = [line for line in lines if line.split(' ')[0] in stations]
+		# station, latitude, longitude, elevation, ...
+		lines = [re.split(r" +", line.strip()) for line in lines]
+	station_locations = [(float(line[1]), float(line[2])) for line in lines]
+	station_locations = np.array(station_locations)
+
+	for state_name in states:
+		state = states[state_name]
+		for county_name in state:
+			county = state[county_name]
+			county["noaa"] = {}
+			loc = np.array([county["latitude"], county["longitude"]])
+			d = ((station_locations - loc)**2).sum(1)
+			# Iterate through stations in order of their distance until
+			# we find a value for every variable.
+			for i in np.argsort(d):
+				name = lines[i][0]
+				if name not in stations:
+					continue
+				station = stations[name]
+				for varname in station:
+					if varname not in county["noaa"]:
+						county["noaa"][varname] = station[varname]
+				if len(county["noaa"]) >= 3:
+					break
+
 daysBeforeMonth = [
 	0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 ]
@@ -976,9 +1043,7 @@ if __name__ == '__main__':
 
 	merger.merge(get_geometry())
 
-	# sf = shapefile.Reader(pjoin('data', 'noaa', 'CONUS_CLIMATE_DIVISIONS.shp', 'GIS.OFFICIAL_CLIM_DIVISIONS.shp'))
-	# for s in sf:
-	# 	break
+	add_weather(merger.states)
 
 	A = []
 	states = {}
