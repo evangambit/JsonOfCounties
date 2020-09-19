@@ -550,8 +550,8 @@ def get_demographics():
 
 def get_cdc_deaths():
 	states = {}
-	for varname, fn in zip(['suicides', 'firearm suicides', 'homicides'], ["Compressed Mortality, 1999-2016 (all suicides).txt", "Compressed Mortality, 1999-2016 (firearm suicides).txt", "Compressed Mortality (assaults), 1999-2016.txt"]):
-		with open(pjoin('data', fn), 'r') as f:
+	for varname, fn in zip(['suicides', 'firearm suicides', 'homicides', 'vehicle'], ["Compressed Mortality, 1999-2016 (all suicides).txt", "Compressed Mortality, 1999-2016 (firearm suicides).txt", "Compressed Mortality (assaults), 1999-2016.txt", "Compressed Mortality (land vehicle deaths; ICD-10 codes V01-V89), 1999-2016.txt"]):
+		with open(pjoin('data', 'CDC', fn), 'r') as f:
 			reader = csv.reader(f, delimiter='\t', quotechar='"')
 			rows = [row for row in reader]
 		header = rows[0]
@@ -574,6 +574,8 @@ def get_cdc_deaths():
 
 			if deaths == 'Suppressed':
 				deaths = None
+			elif deaths == 'Missing':
+				deaths = -1
 			else:
 				deaths = int(deaths)
 
