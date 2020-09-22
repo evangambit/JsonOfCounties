@@ -368,7 +368,7 @@ class CountyNameMerger:
 
 	def add_to_json(self, base, addition):
 		for k in addition:
-			assert k not in base
+			assert k not in base, f'base already has "{k}"'
 			base[k] = addition[k]
 
 def get_geometry():
@@ -920,8 +920,7 @@ def get_elections():
 						"dem": dem2016,
 						"gop": gop2016,
 					}
-				},
-				"fips": row[0]
+				}
 			}
 
 	# Missing Alaska
