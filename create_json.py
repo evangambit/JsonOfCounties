@@ -352,7 +352,10 @@ class CountyNameMerger:
 	def merge_with_fips(self, counties):
 		kFipsConversions = {
 			# Shannon County renamed to Oglala Lakota County
-			"46113": "46102"
+			"46113": "46102",
+
+			# kusilvak census area renamed to wade hampton census area
+			"02158": "02270",
 		}
 		for state_name in self.states:
 			for county_name in self.states[state_name]:
@@ -552,7 +555,7 @@ def get_demographics():
 	return counties
 
 def get_cdc_deaths():
-	states = {}
+	counties = {}
 	for varname, fn in zip(['suicides', 'firearm suicides', 'homicides', 'vehicle'], ["Compressed Mortality, 1999-2016 (all suicides).txt", "Compressed Mortality, 1999-2016 (firearm suicides).txt", "Compressed Mortality (assaults), 1999-2016.txt", "Compressed Mortality (land vehicle deaths; ICD-10 codes V01-V89), 1999-2016.txt"]):
 		with open(pjoin('data', 'CDC', fn), 'r') as f:
 			reader = csv.reader(f, delimiter='\t', quotechar='"')
@@ -562,11 +565,9 @@ def get_cdc_deaths():
 		rows = rows[:rows.index(['---']) - 1]
 		former_independent_cities = {}
 		for row in rows:
-			_, county, _, deaths, _, _ = row
+			_, county, fips, deaths, _, _ = row
 			county = county.lower()
 			state = abbreviation_to_name[county.split(', ')[-1].upper()]
-			if state not in states:
-				states[state] = {}
 			county = ', '.join(county.split(', ')[:-1])
 
 			# These counties changed their names recently, and rows with
@@ -589,29 +590,29 @@ def get_cdc_deaths():
 				former_independent_cities[state][county] = deaths
 				continue
 
-			if county not in states[state]:
-				states[state][county] = {
+			if fips not in counties:
+				counties[fips] = {
 					"deaths": {}
 				}
-			assert varname not in states[state][county]
-			states[state][county]["deaths"][varname] = deaths
+			assert varname not in counties[fips]["deaths"]
+			counties[fips]["deaths"][varname] = deaths
 
 		# Add formly independent cities to their respective counties.
 		for state in former_independent_cities:
 			for county in former_independent_cities[state]:
 				# If either value was suppressed, we keep the concatenated
 				# value as None.
-				if states[state][county]["deaths"][varname] is None:
+				if counties[fips]["deaths"][varname] is None:
 					continue
 				if former_independent_cities[state][county] is None:
 					continue
-				states[state][county]["deaths"][varname] += former_independent_cities[state][county]
+				counties[fips]["deaths"][varname] += former_independent_cities[state][county]
 
 		for state in states:
 			for county in states[state]:
-				assert varname in states[state][county]["deaths"]
+				assert varname in counties[fips]["deaths"]
 
-	return states
+	return counties
 
 # Labor force data
 # https://www.bls.gov/lau/#cntyaa
@@ -1077,7 +1078,7 @@ if __name__ == '__main__':
 
 	merger.merge_with_fips(get_zips())
 	merger.merge_with_fips(get_demographics())
-	merger.merge(get_cdc_deaths())
+	merger.merge_with_fips(get_cdc_deaths())
 	merger.merge(get_labor_force())
 
 	# Fatal police shootings are unique in that we don't have an
