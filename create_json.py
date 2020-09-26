@@ -618,7 +618,7 @@ def get_cdc_deaths():
 # https://www.bls.gov/lau/#cntyaa
 
 def get_labor_force():
-	states = {}
+	counties = {}
 
 	with open(pjoin('data', 'laborforce.txt'), 'r') as f:
 		lines = f.readlines()
@@ -627,41 +627,25 @@ def get_labor_force():
 			if len(line) == 0:
 				break
 			laus_code, state_fips_code, county_fips_code, county_name, year, labor_force, employed, unemployed, unemployment_rate = re.sub(r"  +", "  ", line).split("  ")
-
-			if county_name == "District of Columbia":
-				state = "District of Columbia"
-				county_name = state.lower()
-			else:
-				state = county_name.split(', ')[-1]
-				if state not in abbreviation_to_name:
-					continue
-				state = abbreviation_to_name[state]
-				county_name = ', '.join(county_name.split(', ')[:-1]).lower()
-
-			if state in not_states:
-				continue
-
-			if state not in states:
-				states[state] = {}
+			fips = state_fips_code + county_fips_code
 
 			county = {}
 			county['labor_force'] = float(labor_force.replace(",",""))
 			county['employed'] = float(employed.replace(",",""))
 			county['unemployed'] = float(unemployed.replace(",",""))
 			county['unemployment_rate'] = float(unemployment_rate)
-			assert county_name not in states[state]
-			states[state][county_name] = county
+			counties[fips] = county
 
-	# Missing county...
-	assert "kalawao county" not in states["Hawaii"]
-	states["Hawaii"]["kalawao county"] = {
+	# Missing kalawao county
+	assert "15005" not in counties
+	counties["15005"] = {
 		"labor_force": None,
 		"employed": None,
 		"unemployed": None,
 		"unemployment_rate": None
 	}
 
-	return states
+	return counties
 
 def get_fatal_police_shootings():
 	states = {}
@@ -1079,7 +1063,7 @@ if __name__ == '__main__':
 	merger.merge_with_fips(get_zips())
 	merger.merge_with_fips(get_demographics())
 	merger.merge_with_fips(get_cdc_deaths())
-	merger.merge(get_labor_force())
+	merger.merge_with_fips(get_labor_force())
 
 	# Fatal police shootings are unique in that we don't have an
 	# entry for every county, because the Washington Post tracks
