@@ -349,6 +349,19 @@ class CountyNameMerger:
 
 		return M
 
+	def merge_with_fips(self, counties):
+		kFipsConversions = {
+			# Shannon County renamed to Oglala Lakota County
+			"46113": "46102"
+		}
+		for state_name in self.states:
+			for county_name in self.states[state_name]:
+				county = self.states[state_name][county_name]
+				fips = county["fips"]
+				if kFipsConversions.get(fips, None) in counties:
+					fips = kFipsConversions[fips]
+				self.add_to_json(county, counties[fips])
+
 	def merge(self, states, allow_missing=False, missing={}):
 		if not allow_missing:
 			assert len(states) == 51
@@ -372,7 +385,7 @@ class CountyNameMerger:
 			base[k] = addition[k]
 
 def get_geometry():
-	states = {}
+	counties = {}
 
 	sf = shapefile.Reader(pjoin('data', 'tl_2017_us_county/tl_2017_us_county.shp'))
 
@@ -381,8 +394,7 @@ def get_geometry():
 		state = fips_code_to_name[s.record.STATEFP]
 		if state in not_states:
 			continue
-		if state not in states:
-			states[state] = {}
+		fips = s.record.GEOID
 		county_name = s.record.NAMELSAD.lower()
 
 		# There is one county that crosses from negative
@@ -400,7 +412,7 @@ def get_geometry():
 		# and literally).
 		center = poly.convex_hull.centroid
 
-		states[state][county_name] = {
+		counties[fips] = {
 			"land_area": s.record.ALAND / 1e6,
 			"area": (s.record.ALAND + s.record.AWATER) / 1e6,
 
@@ -411,7 +423,7 @@ def get_geometry():
 			"latitude": center.y,
 		}
 
-	return states
+	return counties
 
 def get_zips():
 	states = {}
@@ -1042,7 +1054,7 @@ def get_mobility():
 if __name__ == '__main__':
 	merger = CountyNameMerger()
 
-	merger.merge(get_geometry())
+	merger.merge_with_fips(get_geometry())
 
 	add_weather(merger.states)
 

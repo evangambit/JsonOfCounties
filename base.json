@@ -7681,8 +7681,12 @@
     "wrangell city and borough": {
       "fips": "02275"
     },
-    "juneau city and borough": {},
-    "kenai peninsula borough": {},
+    "juneau city and borough": {
+    	"fips": "02110"
+    },
+    "kenai peninsula borough": {
+    	"fips": "02122"
+    },
     "denali borough": {
       "fips": "02068"
     },
@@ -7696,16 +7700,16 @@
       "fips": "02090"
     },
     "haines borough": {
-      "fips": "02910"
+      "fips": "02100"
     },
     "bethel census area": {
-      "fips": "02905"
+      "fips": "02050"
     },
     "lake and peninsula borough": {
       "fips": "02164"
     },
     "bristol bay borough": {
-      "fips": "02907"
+      "fips": "02060"
     },
     "dillingham census area": {
       "fips": "02070"
@@ -9398,7 +9402,9 @@
     "honolulu county": {
       "fips": "15003"
     },
-    "kalawao county": {},
+    "kalawao county": {
+    	"fips": "15005"
+    },
     "kauai county": {
       "fips": "15007"
     },
