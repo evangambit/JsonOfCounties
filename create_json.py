@@ -426,36 +426,35 @@ def get_geometry():
 	return counties
 
 def get_zips():
-	states = {}
 	with open(pjoin('data', 'zip_county_fips_2018_03.csv'), 'r') as f:
 		reader = csv.reader(f, delimiter=',')
 		header = next(reader)
 		rows = [row for row in reader]
 
+	counties = {}
+
 	for zipcode, fips, city, state, county, _ in rows:
 		if state in ["PR", "GU", "VI"]:
 			continue
-		state = abbreviation_to_name[state]
-		county = county.lower()
-		if state not in states:
-			states[state] = {}
-		if county not in states[state]:
-			states[state][county] = {
+		if fips not in counties:
+			counties[fips] = {
 				'zip-codes': []
 			}
-		states[state][county]['zip-codes'].append(zipcode)
+		counties[fips]['zip-codes'].append(zipcode)
 
-	states["Alaska"]["kusilvak census area"] = {
+  # kusilvak census area
+	counties["02158"] = {
 		"zip-codes": [
 			"99554", "99563", "99581", "99585", "99604", "99620", "99632", "99650", "99657", "99658", "99662", "99666"
 		]
 	}
-	states["South Dakota"]["oglala lakota county"] = {
+	# oglala lakota county
+	counties["46113"] = {
 		"zip-codes": [
 			"57716", "57752", "57756", "57764", "57770", "57772", "57794",
 		]
 	}
-	return states
+	return counties
 
 def get_demographics():
 	age_code_to_group = {
@@ -1076,7 +1075,7 @@ if __name__ == '__main__':
 		}
 		A.append(r.AVE_FAM_SZ)
 
-	merger.merge(get_zips())
+	merger.merge_with_fips(get_zips())
 	merger.merge_with_fips(get_demographics())
 	merger.merge(get_cdc_deaths())
 	merger.merge(get_labor_force())
