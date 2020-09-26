@@ -497,7 +497,7 @@ def get_demographics():
 	# After downloading this file you should open it with a text editor (
 	# I use Sublime) and re-encode it as utf8.
 
-	states = {}
+	counties = {}
 
 	with open(pjoin('data', 'cc-est2018-alldata.csv'), 'r') as f:
 		reader = csv.reader(f, delimiter=',')
@@ -505,9 +505,7 @@ def get_demographics():
 		rows = [row for row in reader]
 		assert header[:7] == ['SUMLEV', 'STATE', 'COUNTY', 'STNAME', 'CTYNAME', 'YEAR', 'AGEGRP']
 		for row in rows:
-			state = row[3]
-			if state not in states:
-				states[state] = {}
+			fips = row[1] + row[2]
 
 			county = row[4].lower()
 
@@ -526,39 +524,33 @@ def get_demographics():
 				# it is trivial for you to add more columns if you like!
 
 				# We assume this is the first row we see.
-				assert county not in states[state]
-				states[state][county] = {}
-				states[state][county]['race_demographics'] = {}
-				states[state][county]['age_demographics'] = {}
+				assert fips not in counties
+				counties[fips] = {}
+				counties[fips]['race_demographics'] = {}
+				counties[fips]['age_demographics'] = {}
 
-				states[state][county]['male'] = int(row[8])
-				states[state][county]['female'] = int(row[9])
+				counties[fips]['male'] = int(row[8])
+				counties[fips]['female'] = int(row[9])
 
 				total = int(row[7])
-				states[state][county]['population'] = total
+				counties[fips]['population'] = total
 
-				states[state][county]['race_demographics']['non_hispanic_white_alone_male'] = int(row[34]) / total
-				states[state][county]['race_demographics']['non_hispanic_white_alone_female'] = int(row[35]) / total
+				counties[fips]['race_demographics']['non_hispanic_white_alone_male'] = int(row[34]) / total
+				counties[fips]['race_demographics']['non_hispanic_white_alone_female'] = int(row[35]) / total
 
-				states[state][county]['race_demographics']['black_alone_male'] = int(row[12]) / total
-				states[state][county]['race_demographics']['black_alone_female'] = int(row[13]) / total
+				counties[fips]['race_demographics']['black_alone_male'] = int(row[12]) / total
+				counties[fips]['race_demographics']['black_alone_female'] = int(row[13]) / total
 
-				states[state][county]['race_demographics']['asian_alone_male'] = int(row[16]) / total
-				states[state][county]['race_demographics']['asian_alone_female'] = int(row[17]) / total
+				counties[fips]['race_demographics']['asian_alone_male'] = int(row[16]) / total
+				counties[fips]['race_demographics']['asian_alone_female'] = int(row[17]) / total
 
-				states[state][county]['race_demographics']['hispanic_male'] = int(row[56]) / total
-				states[state][county]['race_demographics']['hispanic_female'] = int(row[57]) / total
+				counties[fips]['race_demographics']['hispanic_male'] = int(row[56]) / total
+				counties[fips]['race_demographics']['hispanic_female'] = int(row[57]) / total
 
 			else:
-				states[state][county]['age_demographics'][age_code_to_group[int(row[6])]] = int(row[7]) / states[state][county]['population']
+				counties[fips]['age_demographics'][age_code_to_group[int(row[6])]] = int(row[7]) / counties[fips]['population']
 
-			assert county in states[state]
-
-	for state_name in states:
-		for county_name in states[state_name]:
-			assert 'race_demographics' in states[state_name][county_name]
-
-	return states
+	return counties
 
 def get_cdc_deaths():
 	states = {}
@@ -1085,7 +1077,7 @@ if __name__ == '__main__':
 		A.append(r.AVE_FAM_SZ)
 
 	merger.merge(get_zips())
-	merger.merge(get_demographics())
+	merger.merge_with_fips(get_demographics())
 	merger.merge(get_cdc_deaths())
 	merger.merge(get_labor_force())
 
