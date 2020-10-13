@@ -616,25 +616,28 @@ def get_cdc_deaths():
 
 # Labor force data
 # https://www.bls.gov/lau/#cntyaa
-
 def get_labor_force():
 	counties = {}
+	for year in ['2004', '2008', '2012', '2016']:
+		with open(pjoin('data', 'bls', year + '.txt'), 'r') as f:
+			lines = f.readlines()
+			for line in lines[6:]:
+				line = line.strip()
+				if len(line) == 0:
+					break
+				laus_code, state_fips_code, county_fips_code, county_name, year, labor_force, employed, unemployed, unemployment_rate = re.sub(r"  +", "  ", line).split("  ")
+				fips = state_fips_code + county_fips_code
 
-	with open(pjoin('data', 'laborforce.txt'), 'r') as f:
-		lines = f.readlines()
-		for line in lines[6:]:
-			line = line.strip()
-			if len(line) == 0:
-				break
-			laus_code, state_fips_code, county_fips_code, county_name, year, labor_force, employed, unemployed, unemployment_rate = re.sub(r"  +", "  ", line).split("  ")
-			fips = state_fips_code + county_fips_code
-
-			county = {}
-			county['labor_force'] = float(labor_force.replace(",",""))
-			county['employed'] = float(employed.replace(",",""))
-			county['unemployed'] = float(unemployed.replace(",",""))
-			county['unemployment_rate'] = float(unemployment_rate)
-			counties[fips] = county
+				if fips not in counties:
+					counties[fips] = {'bls': {}}
+				c = {}
+				c['labor_force'] = float(labor_force.replace(",",""))
+				c['employed'] = float(employed.replace(",",""))
+				c['unemployed'] = float(unemployed.replace(",",""))
+				# NOTE: we exclude unemployment_rate since it is trivially computable as
+				# "unemployed / labor_force"
+				# c['unemployment_rate'] = float(unemployment_rate)
+				counties[fips]['bls'][year] = c
 
 	# Missing kalawao county
 	assert "15005" not in counties

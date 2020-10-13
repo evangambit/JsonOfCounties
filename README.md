@@ -54,7 +54,19 @@ An example entry:
         "homicides": 65,
         "vehicle": 301
       },
-      "labor_force": 224731.0,
+      "bls": {
+        "2004": {
+          "labor_force": 212347.0,
+          "employed": 203341.0,
+          "unemployed": 9006.0
+        },
+        ...
+        "2016": {
+          "labor_force": 225184.0,
+          "employed": 217425.0,
+          "unemployed": 7759.0
+        }
+      },
       "employed": 218151.0,
       "unemployed": 6580.0,
       "unemployment_rate": 2.9,
