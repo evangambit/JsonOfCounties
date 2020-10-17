@@ -500,6 +500,7 @@ def get_demographics():
 	# I use Sublime) and re-encode it as utf8.
 
 	counties = {}
+	populations = {}
 
 	with open(pjoin('data', 'cc-est2018-alldata.csv'), 'r') as f:
 		reader = csv.reader(f, delimiter=',')
@@ -515,6 +516,11 @@ def get_demographics():
 			# other rows.
 			if year_code_to_year[row[5]] != '7/1/2018':
 				continue
+
+			total = int(row[7])
+			if fips not in populations:
+				populations[fips] = {}
+			populations[fips][year_code_to_year[row[5]].split('/')[-2]] = total
 
 			age_group = int(row[6])
 			if age_group == 0:
@@ -534,7 +540,6 @@ def get_demographics():
 				counties[fips]['male'] = int(row[8])
 				counties[fips]['female'] = int(row[9])
 
-				total = int(row[7])
 				counties[fips]['population'] = total
 
 				counties[fips]['race_demographics']['non_hispanic_white_alone_male'] = int(row[34]) / total
@@ -551,6 +556,9 @@ def get_demographics():
 
 			else:
 				counties[fips]['age_demographics'][age_code_to_group[int(row[6])]] = int(row[7]) / counties[fips]['population']
+
+	for fip in counties:
+		counties['population'] = populations[fip]
 
 	return counties
 
