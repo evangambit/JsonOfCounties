@@ -2,7 +2,7 @@
 
 This is a repository of various data, broken down by US county.
 
-While most of this repository is dedicated to providing the data and code that I used to produce the final dataset, the dataset itself is simply "states.json".
+While most of this repository is dedicated to providing the data and code that I used to produce the final dataset, the dataset itself is simply "counties.json".
 
 An example entry:
 
@@ -47,7 +47,9 @@ An example entry:
       },
       "male": 198189,
       "female": 204883,
-      "population": 403072,
+      "population": {
+        "2018": 10512
+      },
       "deaths": {
         "suicides": 722,
         "firearm suicides": 341,
@@ -139,7 +141,7 @@ Please let me know if you want to use the data (it's nice to know my work is bei
 
 2. Population and demographics comes from the Census Bureau from a 2018 table ([here](https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-detail.html#par_textimage_1383669527)).  This "United States" csv file is NOT included, as it is 154 MB, but can be downloaded from Google Drive [here](https://drive.google.com/file/d/11k-YAy4SM36jbXYUy5pylgo0mE-ZKudZ/view?usp=sharing).
 
-3. Deaths, suicides, and homicides come from the [CDC's website](https://wonder.cdc.gov/cmf-icd10.html), where you can request the totals for each county.  We manually requested totals for all deaths, suicides, firearm suicides, and homicides.  Adding other causes of deaths is easy if you can give us the [ICD-10 Codes](https://wonder.cdc.gov/wonder/help/cmf.html#ICD-10%20Codes) you're interested in.  This is the source of the vast majority of missing data (marked as null in the JSON), since the CDC suppresses data from counties when there are fewer than 10 cases.
+3. Deaths, suicides, and homicides come from the [CDC's website](https://wonder.cdc.gov/cmf-icd10.html), where you can request the totals for each county.  We manually requested totals for all deaths, suicides, firearm suicides, and homicides.  Adding other causes of deaths is easy if you can give us the [ICD-10 Codes](https://wonder.cdc.gov/wonder/help/cmf.html#ICD-10%20Codes) you're interested in.  This is the source of the vast majority of missing data (marked as null in the JSON), since the CDC suppresses data from counties when there are fewer than 10 cases.  Adult obesity rates for each state also comes from the CDC [here](https://www.cdc.gov/obesity/data/prevalence-maps.html#race), though New Jersey is missing so it's obesity rate comes from [here](https://www-doh.state.nj.us/doh-shad/indicator/complete_profile/Obese.html?ListCategoryFirst=x#:~:text=The%20age%2Dadjusted%20prevalence%20of%20obesity%20among%20New%20Jersey%20adults,to%2030.6%25%20for%20U.S.%20adults.).
 
 4. Labor statistics comes from [here](https://www.bls.gov/lau/#cntyaa) (the BLS).
 
@@ -155,7 +157,7 @@ Please let me know if you want to use the data (it's nice to know my work is bei
 
 10. Driving mobility data comes from Apple [here](https://www.apple.com/covid19/mobility), which they released to help analyze covid-19.
 
-Note that this "states.json" does NOT contain a superset of each data source.  For instance the racial/age demographic breakdown provided by "cc-est2018-alldata.csv" is extremely specific (giving race/sex break downs for every age bucket for 9 years!) but we don't include all of that in states.json.
+Note that this "counties.json" does NOT contain a superset of each data source.  For instance the racial/age demographic breakdown provided by "cc-est2018-alldata.csv" is extremely specific (giving race/sex break downs for every age bucket for 9 years!) but we don't include all of that in counties.json.
 
 Fortunately, it shouldn't be too hard for somebody with some Python experience to modify "create_json.py" to add whatever additional data they might need.
 

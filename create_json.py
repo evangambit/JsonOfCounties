@@ -520,7 +520,7 @@ def get_demographics():
 			total = int(row[7])
 			if fips not in populations:
 				populations[fips] = {}
-			populations[fips][year_code_to_year[row[5]].split('/')[-2]] = total
+			populations[fips][year_code_to_year[row[5]].split('/')[-1]] = total
 
 			age_group = int(row[6])
 			if age_group == 0:
@@ -558,7 +558,7 @@ def get_demographics():
 				counties[fips]['age_demographics'][age_code_to_group[int(row[6])]] = int(row[7]) / counties[fips]['population']
 
 	for fip in counties:
-		counties['population'] = populations[fip]
+		counties[fip]['population'] = populations[fip]
 
 	return counties
 
@@ -1114,9 +1114,9 @@ if __name__ == '__main__':
 		"Hawaii": {"kalawao"}
 	})
 
-	with open('states.json', 'w+') as f:
+	with open('counties.json', 'w+') as f:
 		json.dump(merger.states, f, indent=2)
 
-	with open('states.bson', 'wb+') as f:
+	with open('counties.bson', 'wb+') as f:
 		f.write(bson.dumps(merger.states))
 
