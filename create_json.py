@@ -511,16 +511,17 @@ def get_demographics():
 			fips = row[1] + row[2]
 
 			county = row[4].lower()
+			year = year_code_to_year[row[5]].split('/')[-1]
+
+			total = int(row[7])
+			if fips not in populations:
+				populations[fips] = {}
+			populations[fips][year] = total
 
 			# We only grab the latest year available and ignore the
 			# other rows.
 			if year_code_to_year[row[5]] != '7/1/2018':
 				continue
-
-			total = int(row[7])
-			if fips not in populations:
-				populations[fips] = {}
-			populations[fips][year_code_to_year[row[5]].split('/')[-1]] = total
 
 			age_group = int(row[6])
 			if age_group == 0:
@@ -796,7 +797,7 @@ def get_covid():
 			reader = csv.reader(f, delimiter=',')
 			header = next(reader)
 			rows = [row for row in reader]
-			for date in ['5/4/20', '5/11/20', '5/18/20', '5/25/20', '6/1/20', '6/8/20', '6/15/20', '6/22/20', '6/29/20', '7/6/20', '7/13/20', '7/20/20', '7/27/20', '8/3/20', '8/10/20', '8/17/20', '8/24/20', '8/31/20', '9/7/20', '9/14/20', '9/21/20']:
+			for date in ['5/4/20', '5/11/20', '5/18/20', '5/25/20', '6/1/20', '6/8/20', '6/15/20', '6/22/20', '6/29/20', '7/6/20', '7/13/20', '7/20/20', '7/27/20', '8/3/20', '8/10/20', '8/17/20', '8/24/20', '8/31/20', '9/7/20', '9/14/20', '9/21/20', '9/28/20', '10/5/20', '10/12/20', '10/19/20']:
 				column = header.index(date)
 				new_york_unallocated = 0
 				for row in rows:
