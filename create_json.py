@@ -1002,7 +1002,7 @@ daysBeforeMonth = [
 daysBeforeMonth = np.cumsum(daysBeforeMonth)
 
 def get_mobility():
-	with open(pjoin('data', 'applemobilitytrends-2020-09-24.csv'), 'r') as f:
+	with open(pjoin('data', 'applemobilitytrends-2020-10-24.csv'), 'r') as f:
 		reader = csv.reader(f, delimiter=',')
 		header = next(reader)
 		rows = [row for row in reader]
