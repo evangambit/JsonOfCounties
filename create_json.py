@@ -482,7 +482,7 @@ def get_demographics():
 		18: "85+"
 	}
 
-	# https://www2.census.gov/programs-surveys/popest/technical-documentation/file-layouts/2010-2018/cc-est2018-alldata.pdf
+	# https://www2.census.gov/programs-surveys/popest/technical-documentation/file-layouts/2010-2019/cc-est2019-alldata.pdf
 	year_code_to_year = {
 		 "1": "4/1/2010",
 		 "2": "4/1/2010", # sic
@@ -495,6 +495,7 @@ def get_demographics():
 		 "9": "7/1/2016",
 		"10": "7/1/2017",
 		"11": "7/1/2018",
+		"12": "7/1/2019",
 	}
 	# After downloading this file you should open it with a text editor (
 	# I use Sublime) and re-encode it as utf8.
@@ -502,7 +503,7 @@ def get_demographics():
 	counties = {}
 	populations = {}
 
-	with open(pjoin('data', 'cc-est2018-alldata.csv'), 'r') as f:
+	with open(pjoin('data', 'cc-est2019-alldata.csv'), 'r') as f:
 		reader = csv.reader(f, delimiter=',')
 		header = next(reader)
 		rows = [row for row in reader]
@@ -513,17 +514,20 @@ def get_demographics():
 			county = row[4].lower()
 			year = year_code_to_year[row[5]].split('/')[-1]
 
-			total = int(row[7])
 			if fips not in populations:
 				populations[fips] = {}
-			populations[fips][year] = total
+
+			age_group = int(row[6])
+			total = int(row[7])
+
+			if age_group == 0:
+				populations[fips][year] = total
 
 			# We only grab the latest year available and ignore the
 			# other rows.
-			if year_code_to_year[row[5]] != '7/1/2018':
+			if year_code_to_year[row[5]] != '7/1/2019':
 				continue
 
-			age_group = int(row[6])
 			if age_group == 0:
 				# age group "0" is everyone.  We grab racial data from
 				# this row.  The racial break down done by the Census
