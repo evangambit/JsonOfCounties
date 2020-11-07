@@ -801,7 +801,7 @@ def get_covid():
 			reader = csv.reader(f, delimiter=',')
 			header = next(reader)
 			rows = [row for row in reader]
-			for date in ['5/4/20', '5/11/20', '5/18/20', '5/25/20', '6/1/20', '6/8/20', '6/15/20', '6/22/20', '6/29/20', '7/6/20', '7/13/20', '7/20/20', '7/27/20', '8/3/20', '8/10/20', '8/17/20', '8/24/20', '8/31/20', '9/7/20', '9/14/20', '9/21/20', '9/28/20', '10/5/20', '10/12/20', '10/19/20']:
+			for date in ['5/4/20', '5/11/20', '5/18/20', '5/25/20', '6/1/20', '6/8/20', '6/15/20', '6/22/20', '6/29/20', '7/6/20', '7/13/20', '7/20/20', '7/27/20', '8/3/20', '8/10/20', '8/17/20', '8/24/20', '8/31/20', '9/7/20', '9/14/20', '9/21/20', '9/28/20', '10/5/20', '10/12/20', '10/19/20', '10/26/20', '11/2/20']:
 				column = header.index(date)
 				new_york_unallocated = 0
 				for row in rows:
@@ -1006,7 +1006,7 @@ daysBeforeMonth = [
 daysBeforeMonth = np.cumsum(daysBeforeMonth)
 
 def get_mobility():
-	with open(pjoin('data', 'applemobilitytrends-2020-10-24.csv'), 'r') as f:
+	with open(pjoin('data', 'applemobilitytrends-2020-11-06.csv'), 'r') as f:
 		reader = csv.reader(f, delimiter=',')
 		header = next(reader)
 		rows = [row for row in reader]
