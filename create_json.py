@@ -1119,6 +1119,25 @@ if __name__ == '__main__':
 		"Hawaii": {"kalawao"}
 	})
 
+	# Terrible hack for 2020
+	with open(pjoin('data', 'election2020.json'), 'r') as f:
+		e2020 = json.load(f)
+	merger.merge(e2020, missing={
+		"Alaska": set(merger.states["Alaska"].keys()),
+		"Hawaii": {"kalawao"}
+	})
+
+	for sn in merger.states:
+		if sn == 'Alaska':
+			continue
+		for cn in merger.states[sn]:
+			if sn == 'Hawaii' and cn == 'kalawao county':
+				continue
+			c = merger.states[sn][cn]
+			e20 = c['2020e']
+			del c['2020e']
+			c['elections']['2020'] = e20
+
 	with open('counties.json', 'w+') as f:
 		json.dump(merger.states, f, indent=2)
 
