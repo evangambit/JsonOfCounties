@@ -474,23 +474,23 @@
  "Arizona": {
   "apache county": {
    "2020e": {
-    "total": 34252,
-    "dem": 22618,
-    "gop": 11210
+    "total": 34397,
+    "dem": 22730,
+    "gop": 11240
    }
   },
   "cochise county": {
    "2020e": {
-    "total": 54235,
-    "dem": 21980,
-    "gop": 31265
+    "total": 57672,
+    "dem": 22997,
+    "gop": 33580
    }
   },
   "coconino county": {
    "2020e": {
-    "total": 72413,
-    "dem": 44220,
-    "gop": 26695
+    "total": 72832,
+    "dem": 44408,
+    "gop": 26914
    }
   },
   "gila county": {
@@ -516,30 +516,30 @@
   },
   "la paz county": {
    "2020e": {
-    "total": 6671,
-    "dem": 2050,
-    "gop": 4542
+    "total": 7458,
+    "dem": 2236,
+    "gop": 5129
    }
   },
   "maricopa county": {
    "2020e": {
-    "total": 2038832,
-    "dem": 1027269,
-    "gop": 980494
+    "total": 2045229,
+    "dem": 1030325,
+    "gop": 983690
    }
   },
   "mohave county": {
    "2020e": {
-    "total": 103692,
-    "dem": 24687,
-    "gop": 77724
+    "total": 104283,
+    "dem": 24769,
+    "gop": 78218
    }
   },
   "navajo county": {
    "2020e": {
-    "total": 51597,
-    "dem": 23308,
-    "gop": 27565
+    "total": 51688,
+    "dem": 23347,
+    "gop": 27615
    }
   },
   "pima county": {
@@ -551,23 +551,23 @@
   },
   "pinal county": {
    "2020e": {
-    "total": 183514,
-    "dem": 74530,
-    "gop": 106221
+    "total": 183937,
+    "dem": 74772,
+    "gop": 106390
    }
   },
   "santa cruz county": {
    "2020e": {
-    "total": 19523,
-    "dem": 13121,
-    "gop": 6179
+    "total": 19556,
+    "dem": 13138,
+    "gop": 6194
    }
   },
   "yavapai county": {
    "2020e": {
-    "total": 141437,
-    "dem": 49111,
-    "gop": 90280
+    "total": 141618,
+    "dem": 49150,
+    "gop": 90422
    }
   },
   "yuma county": {
@@ -1108,9 +1108,9 @@
  "California": {
   "alameda county": {
    "2020e": {
-    "total": 624357,
-    "dem": 507430,
-    "gop": 105764
+    "total": 676753,
+    "dem": 548073,
+    "gop": 115771
    }
   },
   "alpine county": {
@@ -1122,23 +1122,23 @@
   },
   "amador county": {
    "2020e": {
-    "total": 22158,
-    "dem": 8095,
-    "gop": 13503
+    "total": 22274,
+    "dem": 8145,
+    "gop": 13565
    }
   },
   "butte county": {
    "2020e": {
-    "total": 97720,
-    "dem": 48629,
-    "gop": 46370
+    "total": 99780,
+    "dem": 49402,
+    "gop": 47568
    }
   },
   "calaveras county": {
    "2020e": {
-    "total": 22506,
-    "dem": 8804,
-    "gop": 13275
+    "total": 26717,
+    "dem": 9845,
+    "gop": 16287
    }
   },
   "colusa county": {
@@ -1178,9 +1178,9 @@
   },
   "glenn county": {
    "2020e": {
-    "total": 9638,
-    "dem": 3315,
-    "gop": 6139
+    "total": 10890,
+    "dem": 3815,
+    "gop": 6854
    }
   },
   "humboldt county": {
@@ -1192,9 +1192,9 @@
   },
   "imperial county": {
    "2020e": {
-    "total": 25095,
-    "dem": 16732,
-    "gop": 7909
+    "total": 30732,
+    "dem": 20134,
+    "gop": 10023
    }
   },
   "inyo county": {
@@ -1234,9 +1234,9 @@
   },
   "los angeles county": {
    "2020e": {
-    "total": 3663467,
-    "dem": 2609329,
-    "gop": 984383
+    "total": 4083138,
+    "dem": 2910295,
+    "gop": 1089249
    }
   },
   "madera county": {
@@ -1269,9 +1269,9 @@
   },
   "merced county": {
    "2020e": {
-    "total": 72993,
-    "dem": 39977,
-    "gop": 31402
+    "total": 76944,
+    "dem": 41991,
+    "gop": 33226
    }
   },
   "modoc county": {
@@ -1290,16 +1290,16 @@
   },
   "monterey county": {
    "2020e": {
-    "total": 131425,
-    "dem": 93874,
-    "gop": 34893
+    "total": 154066,
+    "dem": 107925,
+    "gop": 42784
    }
   },
   "napa county": {
    "2020e": {
-    "total": 56589,
-    "dem": 40308,
-    "gop": 15193
+    "total": 62358,
+    "dem": 43567,
+    "gop": 17482
    }
   },
   "nevada county": {
@@ -1311,9 +1311,9 @@
   },
   "orange county": {
    "2020e": {
-    "total": 1478841,
-    "dem": 792966,
-    "gop": 655811
+    "total": 1484089,
+    "dem": 795376,
+    "gop": 658520
    }
   },
   "placer county": {
@@ -1332,9 +1332,9 @@
   },
   "riverside county": {
    "2020e": {
-    "total": 558734,
-    "dem": 304585,
-    "gop": 245056
+    "total": 616409,
+    "dem": 334155,
+    "gop": 272080
    }
   },
   "sacramento county": {
@@ -1353,16 +1353,16 @@
   },
   "san bernardino county": {
    "2020e": {
-    "total": 574585,
-    "dem": 320057,
-    "gop": 243419
+    "total": 620946,
+    "dem": 338557,
+    "gop": 270207
    }
   },
   "san diego county": {
    "2020e": {
-    "total": 1546031,
-    "dem": 933468,
-    "gop": 577573
+    "total": 1564277,
+    "dem": 943650,
+    "gop": 584914
    }
   },
   "san francisco county": {
@@ -1374,44 +1374,44 @@
   },
   "san joaquin county": {
    "2020e": {
-    "total": 155165,
-    "dem": 93016,
-    "gop": 59346
+    "total": 184142,
+    "dem": 107820,
+    "gop": 72925
    }
   },
   "san luis obispo county": {
    "2020e": {
-    "total": 132626,
-    "dem": 76398,
-    "gop": 53438
+    "total": 153409,
+    "dem": 85183,
+    "gop": 64514
    }
   },
   "san mateo county": {
    "2020e": {
-    "total": 284247,
-    "dem": 225185,
-    "gop": 54456
+    "total": 338492,
+    "dem": 264762,
+    "gop": 67750
    }
   },
   "santa barbara county": {
    "2020e": {
-    "total": 154571,
-    "dem": 103902,
-    "gop": 47471
+    "total": 194378,
+    "dem": 126419,
+    "gop": 63583
    }
   },
   "santa clara county": {
    "2020e": {
-    "total": 726186,
-    "dem": 533224,
-    "gop": 178553
+    "total": 767466,
+    "dem": 560440,
+    "gop": 191277
    }
   },
   "santa cruz county": {
    "2020e": {
-    "total": 138619,
-    "dem": 109745,
-    "gop": 25485
+    "total": 141079,
+    "dem": 111534,
+    "gop": 26072
    }
   },
   "shasta county": {
@@ -1430,16 +1430,16 @@
   },
   "siskiyou county": {
    "2020e": {
-    "total": 22836,
-    "dem": 9379,
-    "gop": 12916
+    "total": 22991,
+    "dem": 9456,
+    "gop": 12985
    }
   },
   "solano county": {
    "2020e": {
-    "total": 194829,
-    "dem": 124752,
-    "gop": 65558
+    "total": 199117,
+    "dem": 127544,
+    "gop": 66943
    }
   },
   "sonoma county": {
@@ -1465,9 +1465,9 @@
   },
   "tehama county": {
    "2020e": {
-    "total": 21525,
-    "dem": 7241,
-    "gop": 13835
+    "total": 25005,
+    "dem": 8105,
+    "gop": 16346
    }
   },
   "trinity county": {
@@ -1479,9 +1479,9 @@
   },
   "tulare county": {
    "2020e": {
-    "total": 124109,
-    "dem": 56159,
-    "gop": 65454
+    "total": 136166,
+    "dem": 61443,
+    "gop": 71857
    }
   },
   "tuolumne county": {
@@ -1966,58 +1966,58 @@
  "Connecticut": {
   "fairfield county": {
    "2020e": {
-    "total": 471474,
-    "dem": 288481,
-    "gop": 176871
+    "total": 472578,
+    "dem": 297556,
+    "gop": 168440
    }
   },
   "hartford county": {
    "2020e": {
-    "total": 436533,
-    "dem": 273267,
-    "gop": 156663
+    "total": 449171,
+    "dem": 283334,
+    "gop": 159016
    }
   },
   "litchfield county": {
    "2020e": {
-    "total": 107289,
-    "dem": 50013,
-    "gop": 55519
+    "total": 107530,
+    "dem": 50164,
+    "gop": 55601
    }
   },
   "middlesex county": {
    "2020e": {
-    "total": 98518,
-    "dem": 56404,
-    "gop": 40472
+    "total": 99113,
+    "dem": 56830,
+    "gop": 40633
    }
   },
   "new haven county": {
    "2020e": {
-    "total": 414313,
-    "dem": 240248,
-    "gop": 168800
+    "total": 415548,
+    "dem": 241228,
+    "gop": 169018
    }
   },
   "new london county": {
    "2020e": {
-    "total": 139464,
-    "dem": 79391,
-    "gop": 57069
+    "total": 139582,
+    "dem": 79459,
+    "gop": 57110
    }
   },
   "tolland county": {
    "2020e": {
-    "total": 80473,
-    "dem": 43994,
-    "gop": 34807
+    "total": 80497,
+    "dem": 44006,
+    "gop": 34819
    }
   },
   "windham county": {
    "2020e": {
-    "total": 57155,
-    "dem": 26784,
-    "gop": 29147
+    "total": 57063,
+    "dem": 26701,
+    "gop": 29141
    }
   }
  },
@@ -2667,9 +2667,9 @@
   },
   "candler county": {
    "2020e": {
-    "total": 4416,
-    "dem": 1258,
-    "gop": 3129
+    "total": 4432,
+    "dem": 1269,
+    "gop": 3134
    }
   },
   "carroll county": {
@@ -2688,16 +2688,16 @@
   },
   "charlton county": {
    "2020e": {
-    "total": 4565,
-    "dem": 1102,
+    "total": 4566,
+    "dem": 1103,
     "gop": 3419
    }
   },
   "chatham county": {
    "2020e": {
-    "total": 133289,
-    "dem": 78181,
-    "gop": 53191
+    "total": 133589,
+    "dem": 78369,
+    "gop": 53288
    }
   },
   "chattahoochee county": {
@@ -2716,9 +2716,9 @@
   },
   "cherokee county": {
    "2020e": {
-    "total": 144598,
-    "dem": 42683,
-    "gop": 99474
+    "total": 144830,
+    "dem": 42794,
+    "gop": 99587
    }
   },
   "clarke county": {
@@ -2737,9 +2737,9 @@
   },
   "clayton county": {
    "2020e": {
-    "total": 111077,
-    "dem": 94365,
-    "gop": 15671
+    "total": 112344,
+    "dem": 95476,
+    "gop": 15813
    }
   },
   "clinch county": {
@@ -2751,16 +2751,16 @@
   },
   "cobb county": {
    "2020e": {
-    "total": 393373,
-    "dem": 221746,
-    "gop": 165195
+    "total": 393744,
+    "dem": 221844,
+    "gop": 165459
    }
   },
   "coffee county": {
    "2020e": {
-    "total": 15195,
-    "dem": 4505,
-    "gop": 10565
+    "total": 15214,
+    "dem": 4511,
+    "gop": 10578
    }
   },
   "colquitt county": {
@@ -2821,9 +2821,9 @@
   },
   "dekalb county": {
    "2020e": {
-    "total": 369341,
-    "dem": 306987,
-    "gop": 58170
+    "total": 370665,
+    "dem": 308102,
+    "gop": 58361
    }
   },
   "decatur county": {
@@ -2835,9 +2835,9 @@
   },
   "dodge county": {
    "2020e": {
-    "total": 8064,
-    "dem": 2170,
-    "gop": 5839
+    "total": 8070,
+    "dem": 2171,
+    "gop": 5843
    }
   },
   "dooly county": {
@@ -2849,16 +2849,16 @@
   },
   "dougherty county": {
    "2020e": {
-    "total": 35266,
-    "dem": 24540,
-    "gop": 10446
+    "total": 35308,
+    "dem": 24579,
+    "gop": 10449
    }
   },
   "douglas county": {
    "2020e": {
-    "total": 68745,
-    "dem": 42609,
-    "gop": 25308
+    "total": 68806,
+    "dem": 42653,
+    "gop": 25323
    }
   },
   "early county": {
@@ -2877,9 +2877,9 @@
   },
   "effingham county": {
    "2020e": {
-    "total": 31569,
+    "total": 31570,
     "dem": 7720,
-    "gop": 23357
+    "gop": 23358
    }
   },
   "elbert county": {
@@ -2905,9 +2905,9 @@
   },
   "fannin county": {
    "2020e": {
-    "total": 14825,
+    "total": 14850,
     "dem": 2571,
-    "gop": 12144
+    "gop": 12169
    }
   },
   "fayette county": {
@@ -2926,9 +2926,9 @@
   },
   "forsyth county": {
    "2020e": {
-    "total": 129237,
-    "dem": 42177,
-    "gop": 85081
+    "total": 129305,
+    "dem": 42203,
+    "gop": 85122
    }
   },
   "franklin county": {
@@ -2996,9 +2996,9 @@
   },
   "habersham county": {
    "2020e": {
-    "total": 20407,
-    "dem": 3559,
-    "gop": 16616
+    "total": 20432,
+    "dem": 3563,
+    "gop": 16637
    }
   },
   "hall county": {
@@ -3115,9 +3115,9 @@
   },
   "lamar county": {
    "2020e": {
-    "total": 9028,
-    "dem": 2612,
-    "gop": 6322
+    "total": 9039,
+    "dem": 2615,
+    "gop": 6330
    }
   },
   "lanier county": {
@@ -3185,9 +3185,9 @@
   },
   "madison county": {
    "2020e": {
-    "total": 14707,
-    "dem": 3365,
-    "gop": 11146
+    "total": 14937,
+    "dem": 3411,
+    "gop": 11326
    }
   },
   "marion county": {
@@ -3241,16 +3241,16 @@
   },
   "montgomery county": {
    "2020e": {
-    "total": 3962,
-    "dem": 976,
-    "gop": 2959
+    "total": 3966,
+    "dem": 979,
+    "gop": 2960
    }
   },
   "morgan county": {
    "2020e": {
-    "total": 11705,
+    "total": 11707,
     "dem": 3355,
-    "gop": 8228
+    "gop": 8230
    }
   },
   "murray county": {
@@ -3276,16 +3276,16 @@
   },
   "oconee county": {
    "2020e": {
-    "total": 25165,
-    "dem": 8160,
-    "gop": 16594
+    "total": 25168,
+    "dem": 8162,
+    "gop": 16595
    }
   },
   "oglethorpe county": {
    "2020e": {
-    "total": 8126,
-    "dem": 2435,
-    "gop": 5591
+    "total": 8131,
+    "dem": 2436,
+    "gop": 5593
    }
   },
   "paulding county": {
@@ -3311,8 +3311,8 @@
   },
   "pierce county": {
    "2020e": {
-    "total": 9047,
-    "dem": 1099,
+    "total": 9048,
+    "dem": 1100,
     "gop": 7899
    }
   },
@@ -3374,8 +3374,8 @@
   },
   "rockdale county": {
    "2020e": {
-    "total": 44685,
-    "dem": 31243,
+    "total": 44686,
+    "dem": 31244,
     "gop": 13012
    }
   },
@@ -3458,9 +3458,9 @@
   },
   "telfair county": {
    "2020e": {
-    "total": 4323,
-    "dem": 1480,
-    "gop": 2822
+    "total": 4332,
+    "dem": 1486,
+    "gop": 2825
    }
   },
   "terrell county": {
@@ -3633,9 +3633,9 @@
   },
   "worth county": {
    "2020e": {
-    "total": 9281,
+    "total": 9286,
     "dem": 2395,
-    "gop": 6826
+    "gop": 6831
    }
   }
  },
@@ -5344,8 +5344,8 @@
  "Iowa": {
   "adair county": {
    "2020e": {
-    "total": 4171,
-    "dem": 1197,
+    "total": 4172,
+    "dem": 1198,
     "gop": 2917
    }
   },
@@ -5358,30 +5358,30 @@
   },
   "allamakee county": {
    "2020e": {
-    "total": 7410,
-    "dem": 2575,
-    "gop": 4733
+    "total": 7413,
+    "dem": 2576,
+    "gop": 4735
    }
   },
   "appanoose county": {
    "2020e": {
-    "total": 6500,
-    "dem": 1889,
-    "gop": 4508
+    "total": 6506,
+    "dem": 1891,
+    "gop": 4512
    }
   },
   "audubon county": {
    "2020e": {
-    "total": 3413,
+    "total": 3416,
     "dem": 1071,
-    "gop": 2292
+    "gop": 2295
    }
   },
   "benton county": {
    "2020e": {
-    "total": 14607,
-    "dem": 5156,
-    "gop": 9179
+    "total": 14622,
+    "dem": 5160,
+    "gop": 9188
    }
   },
   "black hawk county": {
@@ -5393,37 +5393,37 @@
   },
   "boone county": {
    "2020e": {
-    "total": 15277,
-    "dem": 6293,
-    "gop": 8676
+    "total": 15306,
+    "dem": 6303,
+    "gop": 8695
    }
   },
   "bremer county": {
    "2020e": {
-    "total": 14504,
-    "dem": 5954,
-    "gop": 8287
+    "total": 14516,
+    "dem": 5958,
+    "gop": 8294
    }
   },
   "buchanan county": {
    "2020e": {
-    "total": 10759,
-    "dem": 4167,
-    "gop": 6418
+    "total": 10764,
+    "dem": 4169,
+    "gop": 6420
    }
   },
   "buena vista county": {
    "2020e": {
-    "total": 8054,
-    "dem": 2919,
-    "gop": 5004
+    "total": 8057,
+    "dem": 2920,
+    "gop": 5006
    }
   },
   "butler county": {
    "2020e": {
-    "total": 8081,
-    "dem": 2423,
-    "gop": 5540
+    "total": 8084,
+    "dem": 2424,
+    "gop": 5542
    }
   },
   "calhoun county": {
@@ -5456,9 +5456,9 @@
   },
   "cerro gordo county": {
    "2020e": {
-    "total": 23737,
+    "total": 23744,
     "dem": 10941,
-    "gop": 12435
+    "gop": 12442
    }
   },
   "cherokee county": {
@@ -5470,23 +5470,23 @@
   },
   "chickasaw county": {
    "2020e": {
-    "total": 6605,
-    "dem": 2230,
-    "gop": 4299
+    "total": 6617,
+    "dem": 2233,
+    "gop": 4308
    }
   },
   "clarke county": {
    "2020e": {
-    "total": 4657,
+    "total": 4661,
     "dem": 1466,
-    "gop": 3140
+    "gop": 3144
    }
   },
   "clay county": {
    "2020e": {
-    "total": 8928,
-    "dem": 2653,
-    "gop": 6126
+    "total": 8948,
+    "dem": 2662,
+    "gop": 6137
    }
   },
   "clayton county": {
@@ -5498,9 +5498,9 @@
   },
   "clinton county": {
    "2020e": {
-    "total": 24620,
-    "dem": 10806,
-    "gop": 13349
+    "total": 24634,
+    "dem": 10811,
+    "gop": 13358
    }
   },
   "crawford county": {
@@ -5526,9 +5526,9 @@
   },
   "decatur county": {
    "2020e": {
-    "total": 3795,
-    "dem": 1117,
-    "gop": 2613
+    "total": 3801,
+    "dem": 1120,
+    "gop": 2615
    }
   },
   "delaware county": {
@@ -5547,15 +5547,15 @@
   },
   "dickinson county": {
    "2020e": {
-    "total": 11223,
-    "dem": 3660,
-    "gop": 7432
+    "total": 11230,
+    "dem": 3661,
+    "gop": 7438
    }
   },
   "dubuque county": {
    "2020e": {
-    "total": 53780,
-    "dem": 25655,
+    "total": 53782,
+    "dem": 25657,
     "gop": 27214
    }
   },
@@ -5568,37 +5568,37 @@
   },
   "fayette county": {
    "2020e": {
-    "total": 10156,
-    "dem": 3834,
+    "total": 10157,
+    "dem": 3835,
     "gop": 6145
    }
   },
   "floyd county": {
    "2020e": {
-    "total": 8011,
-    "dem": 3168,
-    "gop": 4730
+    "total": 8017,
+    "dem": 3172,
+    "gop": 4732
    }
   },
   "franklin county": {
    "2020e": {
-    "total": 5116,
-    "dem": 1625,
-    "gop": 3420
+    "total": 5119,
+    "dem": 1626,
+    "gop": 3422
    }
   },
   "fremont county": {
    "2020e": {
-    "total": 3849,
-    "dem": 1078,
+    "total": 3851,
+    "dem": 1080,
     "gop": 2711
    }
   },
   "greene county": {
    "2020e": {
-    "total": 5048,
-    "dem": 1768,
-    "gop": 3221
+    "total": 5051,
+    "dem": 1769,
+    "gop": 3223
    }
   },
   "grundy county": {
@@ -5610,7 +5610,7 @@
   },
   "guthrie county": {
    "2020e": {
-    "total": 6361,
+    "total": 6363,
     "dem": 1985,
     "gop": 4272
    }
@@ -5631,30 +5631,30 @@
   },
   "hardin county": {
    "2020e": {
-    "total": 8962,
-    "dem": 2971,
-    "gop": 5842
+    "total": 8975,
+    "dem": 2976,
+    "gop": 5850
    }
   },
   "harrison county": {
    "2020e": {
-    "total": 8137,
-    "dem": 2439,
-    "gop": 5563
+    "total": 8144,
+    "dem": 2440,
+    "gop": 5569
    }
   },
   "henry county": {
    "2020e": {
-    "total": 9929,
-    "dem": 3264,
-    "gop": 6483
+    "total": 9964,
+    "dem": 3275,
+    "gop": 6507
    }
   },
   "howard county": {
    "2020e": {
-    "total": 4951,
+    "total": 4952,
     "dem": 1772,
-    "gop": 3126
+    "gop": 3127
    }
   },
   "humboldt county": {
@@ -5673,8 +5673,8 @@
   },
   "iowa county": {
    "2020e": {
-    "total": 9715,
-    "dem": 3546,
+    "total": 9716,
+    "dem": 3547,
     "gop": 6009
    }
   },
@@ -5708,9 +5708,9 @@
   },
   "jones county": {
    "2020e": {
-    "total": 10959,
-    "dem": 4211,
-    "gop": 6569
+    "total": 10965,
+    "dem": 4213,
+    "gop": 6572
    }
   },
   "keokuk county": {
@@ -5722,9 +5722,9 @@
   },
   "kossuth county": {
    "2020e": {
-    "total": 9030,
-    "dem": 2681,
-    "gop": 6244
+    "total": 9077,
+    "dem": 2696,
+    "gop": 6275
    }
   },
   "lee county": {
@@ -5750,16 +5750,16 @@
   },
   "lucas county": {
    "2020e": {
-    "total": 4290,
-    "dem": 1220,
-    "gop": 2981
+    "total": 4622,
+    "dem": 1284,
+    "gop": 3287
    }
   },
   "lyon county": {
    "2020e": {
-    "total": 6846,
-    "dem": 1065,
-    "gop": 5703
+    "total": 6852,
+    "dem": 1067,
+    "gop": 5707
    }
   },
   "madison county": {
@@ -5771,9 +5771,9 @@
   },
   "mahaska county": {
    "2020e": {
-    "total": 11322,
-    "dem": 2879,
-    "gop": 8256
+    "total": 11381,
+    "dem": 2894,
+    "gop": 8297
    }
   },
   "marion county": {
@@ -5792,16 +5792,16 @@
   },
   "mills county": {
    "2020e": {
-    "total": 8216,
-    "dem": 2500,
-    "gop": 5572
+    "total": 8237,
+    "dem": 2508,
+    "gop": 5585
    }
   },
   "mitchell county": {
    "2020e": {
-    "total": 5797,
-    "dem": 2048,
-    "gop": 3665
+    "total": 5815,
+    "dem": 2053,
+    "gop": 3677
    }
   },
   "monona county": {
@@ -5820,9 +5820,9 @@
   },
   "montgomery county": {
    "2020e": {
-    "total": 5313,
+    "total": 5320,
     "dem": 1583,
-    "gop": 3653
+    "gop": 3659
    }
   },
   "muscatine county": {
@@ -5834,9 +5834,9 @@
   },
   "o'brien county": {
    "2020e": {
-    "total": 7535,
-    "dem": 1567,
-    "gop": 5857
+    "total": 7541,
+    "dem": 1569,
+    "gop": 5861
    }
   },
   "osceola county": {
@@ -5855,23 +5855,23 @@
   },
   "palo alto county": {
    "2020e": {
-    "total": 4948,
-    "dem": 1518,
-    "gop": 3369
+    "total": 4950,
+    "dem": 1519,
+    "gop": 3370
    }
   },
   "plymouth county": {
    "2020e": {
-    "total": 14134,
-    "dem": 3483,
-    "gop": 10472
+    "total": 14165,
+    "dem": 3494,
+    "gop": 10492
    }
   },
   "pocahontas county": {
    "2020e": {
-    "total": 3815,
-    "dem": 932,
-    "gop": 2825
+    "total": 3817,
+    "dem": 933,
+    "gop": 2826
    }
   },
   "polk county": {
@@ -5890,30 +5890,30 @@
   },
   "poweshiek county": {
    "2020e": {
-    "total": 10106,
-    "dem": 4301,
-    "gop": 5645
+    "total": 10124,
+    "dem": 4306,
+    "gop": 5657
    }
   },
   "ringgold county": {
    "2020e": {
-    "total": 2703,
-    "dem": 708,
-    "gop": 1964
+    "total": 2708,
+    "dem": 709,
+    "gop": 1968
    }
   },
   "sac county": {
    "2020e": {
-    "total": 5512,
-    "dem": 1383,
-    "gop": 4052
+    "total": 5527,
+    "dem": 1389,
+    "gop": 4061
    }
   },
   "scott county": {
    "2020e": {
-    "total": 92264,
-    "dem": 46890,
-    "gop": 43661
+    "total": 92324,
+    "dem": 46926,
+    "gop": 43683
    }
   },
   "shelby county": {
@@ -5946,16 +5946,16 @@
   },
   "taylor county": {
    "2020e": {
-    "total": 3237,
-    "dem": 745,
-    "gop": 2459
+    "total": 3242,
+    "dem": 746,
+    "gop": 2463
    }
   },
   "union county": {
    "2020e": {
-    "total": 6149,
-    "dem": 2049,
-    "gop": 4000
+    "total": 6171,
+    "dem": 2061,
+    "gop": 4010
    }
   },
   "van buren county": {
@@ -5967,9 +5967,9 @@
   },
   "wapello county": {
    "2020e": {
-    "total": 15595,
-    "dem": 5818,
-    "gop": 9504
+    "total": 15613,
+    "dem": 5821,
+    "gop": 9516
    }
   },
   "warren county": {
@@ -5981,9 +5981,9 @@
   },
   "washington county": {
    "2020e": {
-    "total": 11737,
-    "dem": 4558,
-    "gop": 6966
+    "total": 11745,
+    "dem": 4561,
+    "gop": 6971
    }
   },
   "wayne county": {
@@ -5995,23 +5995,23 @@
   },
   "webster county": {
    "2020e": {
-    "total": 17770,
-    "dem": 6604,
-    "gop": 10927
+    "total": 17790,
+    "dem": 6613,
+    "gop": 10938
    }
   },
   "winnebago county": {
    "2020e": {
-    "total": 5924,
-    "dem": 2123,
-    "gop": 3692
+    "total": 5951,
+    "dem": 2135,
+    "gop": 3707
    }
   },
   "winneshiek county": {
    "2020e": {
-    "total": 12034,
-    "dem": 5616,
-    "gop": 6234
+    "total": 12036,
+    "dem": 5617,
+    "gop": 6235
    }
   },
   "woodbury county": {
@@ -6023,9 +6023,9 @@
   },
   "worth county": {
    "2020e": {
-    "total": 4405,
-    "dem": 1593,
-    "gop": 2732
+    "total": 4414,
+    "dem": 1596,
+    "gop": 2738
    }
   },
   "wright county": {
@@ -8189,30 +8189,30 @@
   },
   "anne arundel county": {
    "2020e": {
-    "total": 258829,
-    "dem": 140643,
-    "gop": 113255
+    "total": 273060,
+    "dem": 150240,
+    "gop": 117534
    }
   },
   "baltimore county": {
    "2020e": {
-    "total": 302247,
-    "dem": 177865,
-    "gop": 119305
+    "total": 316908,
+    "dem": 189100,
+    "gop": 122520
    }
   },
   "baltimore city": {
    "2020e": {
-    "total": 206748,
-    "dem": 181154,
-    "gop": 22578
+    "total": 220396,
+    "dem": 193130,
+    "gop": 23872
    }
   },
   "calvert county": {
    "2020e": {
-    "total": 47463,
-    "dem": 21814,
-    "gop": 24786
+    "total": 48023,
+    "dem": 22185,
+    "gop": 24957
    }
   },
   "caroline county": {
@@ -8224,9 +8224,9 @@
   },
   "carroll county": {
    "2020e": {
-    "total": 85509,
-    "dem": 29135,
-    "gop": 54176
+    "total": 96848,
+    "dem": 35316,
+    "gop": 58883
    }
   },
   "cecil county": {
@@ -8252,9 +8252,9 @@
   },
   "frederick county": {
    "2020e": {
-    "total": 131449,
-    "dem": 69181,
-    "gop": 59502
+    "total": 138233,
+    "dem": 73491,
+    "gop": 61692
    }
   },
   "garrett county": {
@@ -8266,37 +8266,37 @@
   },
   "harford county": {
    "2020e": {
-    "total": 115176,
-    "dem": 43381,
-    "gop": 69468
+    "total": 137829,
+    "dem": 57749,
+    "gop": 77238
    }
   },
   "howard county": {
    "2020e": {
-    "total": 171790,
-    "dem": 122060,
-    "gop": 46442
+    "total": 173750,
+    "dem": 123629,
+    "gop": 46779
    }
   },
   "kent county": {
    "2020e": {
-    "total": 9729,
-    "dem": 4830,
-    "gop": 4707
+    "total": 10015,
+    "dem": 4914,
+    "gop": 4900
    }
   },
   "montgomery county": {
    "2020e": {
-    "total": 367650,
-    "dem": 286252,
-    "gop": 75472
+    "total": 385067,
+    "dem": 301283,
+    "gop": 77648
    }
   },
   "prince george's county": {
    "2020e": {
-    "total": 364722,
-    "dem": 326546,
-    "gop": 32577
+    "total": 383612,
+    "dem": 343723,
+    "gop": 33971
    }
   },
   "queen anne's county": {
@@ -8343,9 +8343,9 @@
   },
   "worcester county": {
    "2020e": {
-    "total": 23587,
-    "dem": 7898,
-    "gop": 15386
+    "total": 26511,
+    "dem": 9795,
+    "gop": 16380
    }
   }
  },
@@ -9042,9 +9042,9 @@
   },
   "anoka county": {
    "2020e": {
-    "total": 210370,
-    "dem": 100832,
-    "gop": 104851
+    "total": 210474,
+    "dem": 100886,
+    "gop": 104894
    }
   },
   "becker county": {
@@ -9084,9 +9084,9 @@
   },
   "brown county": {
    "2020e": {
-    "total": 14590,
-    "dem": 4750,
-    "gop": 9550
+    "total": 14595,
+    "dem": 4753,
+    "gop": 9552
    }
   },
   "carlton county": {
@@ -9126,9 +9126,9 @@
   },
   "clay county": {
    "2020e": {
-    "total": 32114,
-    "dem": 16345,
-    "gop": 15031
+    "total": 32138,
+    "dem": 16357,
+    "gop": 15043
    }
   },
   "clearwater county": {
@@ -9147,9 +9147,9 @@
   },
   "cottonwood county": {
    "2020e": {
-    "total": 6095,
+    "total": 6097,
     "dem": 1834,
-    "gop": 4164
+    "gop": 4165
    }
   },
   "crow wing county": {
@@ -9161,9 +9161,9 @@
   },
   "dakota county": {
    "2020e": {
-    "total": 259917,
-    "dem": 145206,
-    "gop": 109033
+    "total": 260135,
+    "dem": 145510,
+    "gop": 109183
    }
   },
   "dodge county": {
@@ -9189,9 +9189,9 @@
   },
   "fillmore county": {
    "2020e": {
-    "total": 12101,
+    "total": 12104,
     "dem": 4551,
-    "gop": 7298
+    "gop": 7301
    }
   },
   "freeborn county": {
@@ -9203,16 +9203,16 @@
   },
   "goodhue county": {
    "2020e": {
-    "total": 28563,
-    "dem": 11802,
+    "total": 28566,
+    "dem": 11805,
     "gop": 16052
    }
   },
   "grant county": {
    "2020e": {
-    "total": 3647,
-    "dem": 1299,
-    "gop": 2267
+    "total": 3650,
+    "dem": 1300,
+    "gop": 2269
    }
   },
   "hennepin county": {
@@ -9294,9 +9294,9 @@
   },
   "lake county": {
    "2020e": {
-    "total": 7181,
-    "dem": 3646,
-    "gop": 3392
+    "total": 7183,
+    "dem": 3647,
+    "gop": 3393
    }
   },
   "lake of the woods county": {
@@ -9351,8 +9351,8 @@
   "mcleod county": {
    "2020e": {
     "total": 20881,
-    "dem": 6410,
-    "gop": 13982
+    "dem": 6409,
+    "gop": 13983
    }
   },
   "meeker county": {
@@ -9378,9 +9378,9 @@
   },
   "mower county": {
    "2020e": {
-    "total": 19441,
-    "dem": 8997,
-    "gop": 10067
+    "total": 19288,
+    "dem": 8896,
+    "gop": 10016
    }
   },
   "murray county": {
@@ -9392,9 +9392,9 @@
   },
   "nicollet county": {
    "2020e": {
-    "total": 19066,
-    "dem": 9619,
-    "gop": 9017
+    "total": 19070,
+    "dem": 9622,
+    "gop": 9018
    }
   },
   "nobles county": {
@@ -9427,8 +9427,8 @@
   },
   "pennington county": {
    "2020e": {
-    "total": 7261,
-    "dem": 2566,
+    "total": 7260,
+    "dem": 2565,
     "gop": 4532
    }
   },
@@ -9455,16 +9455,16 @@
   },
   "pope county": {
    "2020e": {
-    "total": 7004,
-    "dem": 2478,
+    "total": 7002,
+    "dem": 2476,
     "gop": 4413
    }
   },
   "ramsey county": {
    "2020e": {
-    "total": 294507,
-    "dem": 211357,
-    "gop": 77323
+    "total": 294513,
+    "dem": 211362,
+    "gop": 77324
    }
   },
   "red lake county": {
@@ -9476,9 +9476,9 @@
   },
   "redwood county": {
    "2020e": {
-    "total": 8266,
-    "dem": 2356,
-    "gop": 5769
+    "total": 8264,
+    "dem": 2355,
+    "gop": 5768
    }
   },
   "renville county": {
@@ -9518,9 +9518,9 @@
   },
   "sherburne county": {
    "2020e": {
-    "total": 55456,
-    "dem": 18056,
-    "gop": 36205
+    "total": 55486,
+    "dem": 18065,
+    "gop": 36221
    }
   },
   "sibley county": {
@@ -9539,16 +9539,16 @@
   },
   "stearns county": {
    "2020e": {
-    "total": 84647,
-    "dem": 31883,
-    "gop": 50960
+    "total": 84644,
+    "dem": 31881,
+    "gop": 50959
    }
   },
   "steele county": {
    "2020e": {
-    "total": 20756,
-    "dem": 7794,
-    "gop": 12472
+    "total": 21075,
+    "dem": 7916,
+    "gop": 12656
    }
   },
   "stevens county": {
@@ -9623,8 +9623,8 @@
   },
   "winona county": {
    "2020e": {
-    "total": 27105,
-    "dem": 13330,
+    "total": 27108,
+    "dem": 13333,
     "gop": 13227
    }
   },
@@ -12104,9 +12104,9 @@
   },
   "elko county": {
    "2020e": {
-    "total": 21063,
-    "dem": 4375,
-    "gop": 16048
+    "total": 21081,
+    "dem": 4381,
+    "gop": 16057
    }
   },
   "esmeralda county": {
@@ -12174,16 +12174,16 @@
   },
   "storey county": {
    "2020e": {
-    "total": 2870,
-    "dem": 899,
-    "gop": 1905
+    "total": 2874,
+    "dem": 901,
+    "gop": 1907
    }
   },
   "washoe county": {
    "2020e": {
-    "total": 247300,
-    "dem": 125799,
-    "gop": 114396
+    "total": 247755,
+    "dem": 126060,
+    "gop": 114566
    }
   },
   "white pine county": {
@@ -12269,9 +12269,9 @@
  "New Jersey": {
   "atlantic county": {
    "2020e": {
-    "total": 114305,
-    "dem": 61076,
-    "gop": 51929
+    "total": 131509,
+    "dem": 68933,
+    "gop": 60912
    }
   },
   "bergen county": {
@@ -12283,16 +12283,16 @@
   },
   "burlington county": {
    "2020e": {
-    "total": 213679,
-    "dem": 131202,
-    "gop": 79881
+    "total": 242160,
+    "dem": 144154,
+    "gop": 94755
    }
   },
   "camden county": {
    "2020e": {
-    "total": 241108,
-    "dem": 159737,
-    "gop": 78342
+    "total": 242250,
+    "dem": 160606,
+    "gop": 78600
    }
   },
   "cape may county": {
@@ -12304,9 +12304,9 @@
   },
   "cumberland county": {
    "2020e": {
-    "total": 50082,
-    "dem": 26597,
-    "gop": 22992
+    "total": 57584,
+    "dem": 29845,
+    "gop": 27099
    }
   },
   "essex county": {
@@ -12325,9 +12325,9 @@
   },
   "hudson county": {
    "2020e": {
-    "total": 202261,
-    "dem": 150534,
-    "gop": 49554
+    "total": 213084,
+    "dem": 157349,
+    "gop": 53435
    }
   },
   "hunterdon county": {
@@ -12353,16 +12353,16 @@
   },
   "monmouth county": {
    "2020e": {
-    "total": 325898,
-    "dem": 159450,
-    "gop": 162589
+    "total": 349407,
+    "dem": 168719,
+    "gop": 176255
    }
   },
   "morris county": {
    "2020e": {
-    "total": 168447,
-    "dem": 93945,
-    "gop": 72595
+    "total": 189525,
+    "dem": 104622,
+    "gop": 82738
    }
   },
   "ocean county": {
@@ -12374,9 +12374,9 @@
   },
   "passaic county": {
    "2020e": {
-    "total": 149572,
-    "dem": 89268,
-    "gop": 58847
+    "total": 171405,
+    "dem": 100393,
+    "gop": 69191
    }
   },
   "salem county": {
@@ -12388,30 +12388,30 @@
   },
   "somerset county": {
    "2020e": {
-    "total": 160532,
-    "dem": 97301,
-    "gop": 61074
+    "total": 168802,
+    "dem": 101220,
+    "gop": 65234
    }
   },
   "sussex county": {
    "2020e": {
-    "total": 69840,
-    "dem": 29207,
-    "gop": 39427
+    "total": 76340,
+    "dem": 30875,
+    "gop": 44056
    }
   },
   "union county": {
    "2020e": {
-    "total": 150204,
-    "dem": 106913,
-    "gop": 42032
+    "total": 170236,
+    "dem": 119057,
+    "gop": 49663
    }
   },
   "warren county": {
    "2020e": {
-    "total": 50540,
-    "dem": 21554,
-    "gop": 28122
+    "total": 53113,
+    "dem": 22315,
+    "gop": 29867
    }
   }
  },
@@ -12749,9 +12749,9 @@
   },
   "erie county": {
    "2020e": {
-    "total": 382958,
-    "dem": 197979,
-    "gop": 178189
+    "total": 383952,
+    "dem": 198808,
+    "gop": 178349
    }
   },
   "essex county": {
@@ -12875,9 +12875,9 @@
   },
   "oneida county": {
    "2020e": {
-    "total": 75913,
-    "dem": 26205,
-    "gop": 48213
+    "total": 84099,
+    "dem": 30542,
+    "gop": 51950
    }
   },
   "onondaga county": {
@@ -12896,9 +12896,9 @@
   },
   "orange county": {
    "2020e": {
-    "total": 137772,
-    "dem": 61223,
-    "gop": 74703
+    "total": 139956,
+    "dem": 61868,
+    "gop": 76218
    }
   },
   "orleans county": {
@@ -13157,9 +13157,9 @@
   },
   "buncombe county": {
    "2020e": {
-    "total": 160039,
-    "dem": 95881,
-    "gop": 61983
+    "total": 160855,
+    "dem": 96383,
+    "gop": 62253
    }
   },
   "burke county": {
@@ -13185,9 +13185,9 @@
   },
   "camden county": {
    "2020e": {
-    "total": 5879,
-    "dem": 1515,
-    "gop": 4277
+    "total": 5938,
+    "dem": 1537,
+    "gop": 4312
    }
   },
   "carteret county": {
@@ -13255,16 +13255,16 @@
   },
   "craven county": {
    "2020e": {
-    "total": 52583,
-    "dem": 20977,
-    "gop": 30831
+    "total": 52826,
+    "dem": 21098,
+    "gop": 30943
    }
   },
   "cumberland county": {
    "2020e": {
-    "total": 145269,
-    "dem": 83533,
-    "gop": 59498
+    "total": 146204,
+    "dem": 84110,
+    "gop": 59808
    }
   },
   "currituck county": {
@@ -13486,16 +13486,16 @@
   },
   "martin county": {
    "2020e": {
-    "total": 12454,
-    "dem": 5876,
-    "gop": 6493
+    "total": 12527,
+    "dem": 5910,
+    "gop": 6529
    }
   },
   "mcdowell county": {
    "2020e": {
-    "total": 22891,
-    "dem": 5807,
-    "gop": 16839
+    "total": 22910,
+    "dem": 5813,
+    "gop": 16852
    }
   },
   "mecklenburg county": {
@@ -13591,9 +13591,9 @@
   },
   "person county": {
    "2020e": {
-    "total": 21737,
-    "dem": 8416,
-    "gop": 13104
+    "total": 21827,
+    "dem": 8451,
+    "gop": 13154
    }
   },
   "pitt county": {
@@ -13745,9 +13745,9 @@
   },
   "watauga county": {
    "2020e": {
-    "total": 31771,
-    "dem": 16925,
-    "gop": 14332
+    "total": 31988,
+    "dem": 17068,
+    "gop": 14395
    }
   },
   "wayne county": {
@@ -13789,9 +13789,9 @@
  "North Dakota": {
   "adams county": {
    "2020e": {
-    "total": 1266,
+    "total": 1269,
     "dem": 258,
-    "gop": 978
+    "gop": 981
    }
   },
   "barnes county": {
@@ -13803,51 +13803,51 @@
   },
   "benson county": {
    "2020e": {
-    "total": 1946,
-    "dem": 817,
-    "gop": 1090
+    "total": 1955,
+    "dem": 822,
+    "gop": 1094
    }
   },
   "billings county": {
    "2020e": {
-    "total": 632,
+    "total": 634,
     "dem": 72,
-    "gop": 539
+    "gop": 541
    }
   },
   "bottineau county": {
    "2020e": {
-    "total": 3446,
-    "dem": 819,
-    "gop": 2563
+    "total": 3461,
+    "dem": 821,
+    "gop": 2575
    }
   },
   "bowman county": {
    "2020e": {
-    "total": 1639,
-    "dem": 227,
-    "gop": 1382
+    "total": 1653,
+    "dem": 228,
+    "gop": 1395
    }
   },
   "burke county": {
    "2020e": {
-    "total": 1140,
-    "dem": 136,
-    "gop": 984
+    "total": 1151,
+    "dem": 137,
+    "gop": 994
    }
   },
   "burleigh county": {
    "2020e": {
-    "total": 50174,
-    "dem": 14226,
-    "gop": 34588
+    "total": 50460,
+    "dem": 14348,
+    "gop": 34744
    }
   },
   "cass county": {
    "2020e": {
-    "total": 85278,
-    "dem": 40219,
-    "gop": 42567
+    "total": 85425,
+    "dem": 40311,
+    "gop": 42619
    }
   },
   "cavalier county": {
@@ -13859,58 +13859,58 @@
   },
   "dickey county": {
    "2020e": {
-    "total": 2397,
-    "dem": 602,
-    "gop": 1732
+    "total": 2413,
+    "dem": 608,
+    "gop": 1742
    }
   },
   "divide county": {
    "2020e": {
-    "total": 1194,
+    "total": 1199,
     "dem": 265,
-    "gop": 899
+    "gop": 904
    }
   },
   "dunn county": {
    "2020e": {
-    "total": 2322,
-    "dem": 338,
-    "gop": 1945
+    "total": 2332,
+    "dem": 342,
+    "gop": 1951
    }
   },
   "eddy county": {
    "2020e": {
-    "total": 1255,
-    "dem": 382,
-    "gop": 851
+    "total": 1259,
+    "dem": 383,
+    "gop": 854
    }
   },
   "emmons county": {
    "2020e": {
-    "total": 1999,
+    "total": 2002,
     "dem": 237,
-    "gop": 1735
+    "gop": 1738
    }
   },
   "foster county": {
    "2020e": {
-    "total": 1739,
-    "dem": 369,
-    "gop": 1338
+    "total": 1768,
+    "dem": 373,
+    "gop": 1362
    }
   },
   "golden valley county": {
    "2020e": {
-    "total": 1022,
-    "dem": 136,
-    "gop": 870
+    "total": 1024,
+    "dem": 137,
+    "gop": 871
    }
   },
   "grand forks county": {
    "2020e": {
-    "total": 30689,
-    "dem": 12856,
-    "gop": 16963
+    "total": 30741,
+    "dem": 12880,
+    "gop": 16987
    }
   },
   "grant county": {
@@ -13922,9 +13922,9 @@
   },
   "griggs county": {
    "2020e": {
-    "total": 1247,
+    "total": 1249,
     "dem": 308,
-    "gop": 906
+    "gop": 907
    }
   },
   "hettinger county": {
@@ -13936,65 +13936,65 @@
   },
   "kidder county": {
    "2020e": {
-    "total": 1448,
+    "total": 1458,
     "dem": 221,
-    "gop": 1206
+    "gop": 1215
    }
   },
   "lamoure county": {
    "2020e": {
-    "total": 2203,
-    "dem": 526,
-    "gop": 1633
+    "total": 2216,
+    "dem": 527,
+    "gop": 1645
    }
   },
   "logan county": {
    "2020e": {
-    "total": 1062,
-    "dem": 125,
-    "gop": 923
+    "total": 1072,
+    "dem": 128,
+    "gop": 930
    }
   },
   "mchenry county": {
    "2020e": {
-    "total": 2968,
-    "dem": 559,
-    "gop": 2345
+    "total": 2996,
+    "dem": 564,
+    "gop": 2364
    }
   },
   "mcintosh county": {
    "2020e": {
-    "total": 1436,
-    "dem": 259,
-    "gop": 1147
+    "total": 1444,
+    "dem": 261,
+    "gop": 1153
    }
   },
   "mckenzie county": {
    "2020e": {
-    "total": 5399,
-    "dem": 813,
-    "gop": 4476
+    "total": 5406,
+    "dem": 814,
+    "gop": 4482
    }
   },
   "mclean county": {
    "2020e": {
-    "total": 5479,
-    "dem": 1216,
-    "gop": 4169
+    "total": 5524,
+    "dem": 1230,
+    "gop": 4198
    }
   },
   "mercer county": {
    "2020e": {
-    "total": 4655,
-    "dem": 703,
-    "gop": 3850
+    "total": 4662,
+    "dem": 704,
+    "gop": 3856
    }
   },
   "morton county": {
    "2020e": {
-    "total": 16531,
-    "dem": 3865,
-    "gop": 12234
+    "total": 16547,
+    "dem": 3872,
+    "gop": 12243
    }
   },
   "mountrail county": {
@@ -14006,72 +14006,72 @@
   },
   "nelson county": {
    "2020e": {
-    "total": 1767,
-    "dem": 585,
-    "gop": 1139
+    "total": 1770,
+    "dem": 586,
+    "gop": 1141
    }
   },
   "oliver county": {
    "2020e": {
-    "total": 1062,
-    "dem": 127,
-    "gop": 917
+    "total": 1065,
+    "dem": 129,
+    "gop": 918
    }
   },
   "pembina county": {
    "2020e": {
-    "total": 3284,
-    "dem": 783,
-    "gop": 2435
+    "total": 3312,
+    "dem": 786,
+    "gop": 2460
    }
   },
   "pierce county": {
    "2020e": {
-    "total": 2118,
+    "total": 2120,
     "dem": 497,
-    "gop": 1583
+    "gop": 1585
    }
   },
   "ramsey county": {
    "2020e": {
-    "total": 5334,
-    "dem": 1636,
-    "gop": 3570
+    "total": 5344,
+    "dem": 1639,
+    "gop": 3577
    }
   },
   "ransom county": {
    "2020e": {
-    "total": 2438,
-    "dem": 942,
-    "gop": 1411
+    "total": 2449,
+    "dem": 945,
+    "gop": 1418
    }
   },
   "renville county": {
    "2020e": {
-    "total": 1303,
-    "dem": 218,
-    "gop": 1053
+    "total": 1317,
+    "dem": 220,
+    "gop": 1065
    }
   },
   "richland county": {
    "2020e": {
-    "total": 7719,
-    "dem": 2495,
-    "gop": 5035
+    "total": 7773,
+    "dem": 2510,
+    "gop": 5072
    }
   },
   "rolette county": {
    "2020e": {
-    "total": 3787,
-    "dem": 2475,
-    "gop": 1253
+    "total": 3799,
+    "dem": 2482,
+    "gop": 1257
    }
   },
   "sargent county": {
    "2020e": {
-    "total": 2059,
-    "dem": 737,
-    "gop": 1261
+    "total": 2066,
+    "dem": 738,
+    "gop": 1266
    }
   },
   "sheridan county": {
@@ -14083,37 +14083,37 @@
   },
   "sioux county": {
    "2020e": {
-    "total": 1109,
+    "total": 1110,
     "dem": 804,
-    "gop": 257
+    "gop": 258
    }
   },
   "slope county": {
    "2020e": {
-    "total": 425,
+    "total": 426,
     "dem": 44,
-    "gop": 379
+    "gop": 380
    }
   },
   "stark county": {
    "2020e": {
-    "total": 14975,
-    "dem": 2490,
-    "gop": 12091
+    "total": 15005,
+    "dem": 2499,
+    "gop": 12110
    }
   },
   "steele county": {
    "2020e": {
-    "total": 1079,
+    "total": 1082,
     "dem": 392,
-    "gop": 649
+    "gop": 652
    }
   },
   "stutsman county": {
    "2020e": {
-    "total": 9899,
-    "dem": 2670,
-    "gop": 6981
+    "total": 9919,
+    "dem": 2676,
+    "gop": 6994
    }
   },
   "towner county": {
@@ -14125,30 +14125,30 @@
   },
   "traill county": {
    "2020e": {
-    "total": 4120,
-    "dem": 1491,
-    "gop": 2519
+    "total": 4125,
+    "dem": 1493,
+    "gop": 2522
    }
   },
   "walsh county": {
    "2020e": {
-    "total": 4731,
-    "dem": 1329,
-    "gop": 3309
+    "total": 4752,
+    "dem": 1333,
+    "gop": 3324
    }
   },
   "ward county": {
    "2020e": {
-    "total": 28026,
-    "dem": 7264,
-    "gop": 19921
+    "total": 28112,
+    "dem": 7293,
+    "gop": 19974
    }
   },
   "wells county": {
    "2020e": {
-    "total": 2365,
+    "total": 2367,
     "dem": 442,
-    "gop": 1891
+    "gop": 1893
    }
   },
   "williams county": {
@@ -15575,16 +15575,16 @@
  "Pennsylvania": {
   "adams county": {
    "2020e": {
-    "total": 55720,
-    "dem": 17919,
-    "gop": 37009
+    "total": 56410,
+    "dem": 18123,
+    "gop": 37481
    }
   },
   "allegheny county": {
    "2020e": {
-    "total": 697839,
-    "dem": 415737,
-    "gop": 274028
+    "total": 698288,
+    "dem": 415861,
+    "gop": 274348
    }
   },
   "armstrong county": {
@@ -15596,9 +15596,9 @@
   },
   "beaver county": {
    "2020e": {
-    "total": 92496,
-    "dem": 37389,
-    "gop": 53886
+    "total": 93083,
+    "dem": 37747,
+    "gop": 54108
    }
   },
   "bedford county": {
@@ -15624,9 +15624,9 @@
   },
   "bradford county": {
    "2020e": {
-    "total": 29999,
-    "dem": 7978,
-    "gop": 21514
+    "total": 30137,
+    "dem": 8044,
+    "gop": 21580
    }
   },
   "bucks county": {
@@ -15645,9 +15645,9 @@
   },
   "cambria county": {
    "2020e": {
-    "total": 70253,
-    "dem": 21614,
-    "gop": 47885
+    "total": 70597,
+    "dem": 21748,
+    "gop": 48090
    }
   },
   "cameron county": {
@@ -15666,9 +15666,9 @@
   },
   "centre county": {
    "2020e": {
-    "total": 76811,
-    "dem": 39718,
-    "gop": 36042
+    "total": 77480,
+    "dem": 40049,
+    "gop": 36366
    }
   },
   "chester county": {
@@ -15708,9 +15708,9 @@
   },
   "crawford county": {
    "2020e": {
-    "total": 41087,
-    "dem": 12584,
-    "gop": 27990
+    "total": 41125,
+    "dem": 12610,
+    "gop": 28002
    }
   },
   "cumberland county": {
@@ -15722,16 +15722,16 @@
   },
   "dauphin county": {
    "2020e": {
-    "total": 144472,
-    "dem": 77393,
-    "gop": 65148
+    "total": 144477,
+    "dem": 77395,
+    "gop": 65151
    }
   },
   "delaware county": {
    "2020e": {
-    "total": 320049,
-    "dem": 200911,
-    "gop": 116216
+    "total": 321034,
+    "dem": 201448,
+    "gop": 116656
    }
   },
   "elk county": {
@@ -15743,9 +15743,9 @@
   },
   "erie county": {
    "2020e": {
-    "total": 135346,
-    "dem": 67471,
-    "gop": 65972
+    "total": 135932,
+    "dem": 67731,
+    "gop": 66281
    }
   },
   "fayette county": {
@@ -15813,23 +15813,23 @@
   },
   "lackawanna county": {
    "2020e": {
-    "total": 113695,
-    "dem": 61124,
-    "gop": 51501
+    "total": 113700,
+    "dem": 61125,
+    "gop": 51504
    }
   },
   "lancaster county": {
    "2020e": {
-    "total": 278417,
-    "dem": 114817,
-    "gop": 159458
+    "total": 278906,
+    "dem": 114978,
+    "gop": 159783
    }
   },
   "lawrence county": {
    "2020e": {
-    "total": 45110,
-    "dem": 15557,
-    "gop": 29071
+    "total": 45558,
+    "dem": 15772,
+    "gop": 29290
    }
   },
   "lebanon county": {
@@ -15841,16 +15841,16 @@
   },
   "lehigh county": {
    "2020e": {
-    "total": 179770,
-    "dem": 95539,
-    "gop": 82134
+    "total": 179947,
+    "dem": 95683,
+    "gop": 82163
    }
   },
   "luzerne county": {
    "2020e": {
-    "total": 149103,
-    "dem": 62983,
-    "gop": 84649
+    "total": 150582,
+    "dem": 63669,
+    "gop": 85425
    }
   },
   "lycoming county": {
@@ -15883,9 +15883,9 @@
   },
   "monroe county": {
    "2020e": {
-    "total": 80398,
-    "dem": 42102,
-    "gop": 37297
+    "total": 81787,
+    "dem": 42860,
+    "gop": 37913
    }
   },
   "montgomery county": {
@@ -15911,9 +15911,9 @@
   },
   "northumberland county": {
    "2020e": {
-    "total": 41516,
-    "dem": 12440,
-    "gop": 28435
+    "total": 42335,
+    "dem": 12703,
+    "gop": 28975
    }
   },
   "perry county": {
@@ -15925,9 +15925,9 @@
   },
   "philadelphia county": {
    "2020e": {
-    "total": 702780,
-    "dem": 570418,
-    "gop": 127723
+    "total": 704412,
+    "dem": 571788,
+    "gop": 127973
    }
   },
   "pike county": {
@@ -15981,9 +15981,9 @@
   },
   "tioga county": {
    "2020e": {
-    "total": 21066,
-    "dem": 4953,
-    "gop": 15735
+    "total": 21087,
+    "dem": 4958,
+    "gop": 15750
    }
   },
   "union county": {
@@ -15995,9 +15995,9 @@
   },
   "venango county": {
    "2020e": {
-    "total": 26127,
-    "dem": 7475,
-    "gop": 18286
+    "total": 26141,
+    "dem": 7482,
+    "gop": 18293
    }
   },
   "warren county": {
@@ -16030,9 +16030,9 @@
   },
   "wyoming county": {
    "2020e": {
-    "total": 14674,
-    "dem": 4642,
-    "gop": 9819
+    "total": 14858,
+    "dem": 4704,
+    "gop": 9936
    }
   },
   "york county": {
@@ -19071,9 +19071,9 @@
   },
   "tarrant county": {
    "2020e": {
-    "total": 829701,
-    "dem": 409067,
-    "gop": 407702
+    "total": 830919,
+    "dem": 409752,
+    "gop": 408224
    }
   },
   "taylor county": {
@@ -19325,9 +19325,9 @@
   },
   "box elder county": {
    "2020e": {
-    "total": 25890,
-    "dem": 4280,
-    "gop": 20660
+    "total": 26312,
+    "dem": 4362,
+    "gop": 20984
    }
   },
   "cache county": {
@@ -19353,9 +19353,9 @@
   },
   "davis county": {
    "2020e": {
-    "total": 147774,
-    "dem": 51697,
-    "gop": 89326
+    "total": 157164,
+    "dem": 53970,
+    "gop": 95709
    }
   },
   "duchesne county": {
@@ -19395,9 +19395,9 @@
   },
   "juab county": {
    "2020e": {
-    "total": 5837,
-    "dem": 638,
-    "gop": 5069
+    "total": 5865,
+    "dem": 645,
+    "gop": 5087
    }
   },
   "kane county": {
@@ -19409,9 +19409,9 @@
   },
   "millard county": {
    "2020e": {
-    "total": 4887,
-    "dem": 529,
-    "gop": 4267
+    "total": 5872,
+    "dem": 603,
+    "gop": 5145
    }
   },
   "morgan county": {
@@ -19437,9 +19437,9 @@
   },
   "salt lake county": {
    "2020e": {
-    "total": 425956,
-    "dem": 237188,
-    "gop": 174931
+    "total": 454753,
+    "dem": 250522,
+    "gop": 188945
    }
   },
   "san juan county": {
@@ -19451,9 +19451,9 @@
   },
   "sanpete county": {
    "2020e": {
-    "total": 12039,
-    "dem": 1724,
-    "gop": 9961
+    "total": 12159,
+    "dem": 1735,
+    "gop": 10064
    }
   },
   "sevier county": {
@@ -19658,9 +19658,9 @@
   },
   "amherst county": {
    "2020e": {
-    "total": 16900,
-    "dem": 5614,
-    "gop": 11035
+    "total": 16974,
+    "dem": 5673,
+    "gop": 11050
    }
   },
   "appomattox county": {
@@ -19707,9 +19707,9 @@
   },
   "botetourt county": {
    "2020e": {
-    "total": 20898,
-    "dem": 5623,
-    "gop": 15021
+    "total": 21045,
+    "dem": 5691,
+    "gop": 15090
    }
   },
   "bristol city": {
@@ -19952,9 +19952,9 @@
   },
   "galax city": {
    "2020e": {
-    "total": 2625,
-    "dem": 775,
-    "gop": 1832
+    "total": 2629,
+    "dem": 777,
+    "gop": 1834
    }
   },
   "giles county": {
@@ -20106,9 +20106,9 @@
   },
   "lexington city": {
    "2020e": {
-    "total": 2729,
-    "dem": 1780,
-    "gop": 901
+    "total": 2745,
+    "dem": 1791,
+    "gop": 906
    }
   },
   "loudoun county": {
@@ -20155,8 +20155,8 @@
   },
   "manassas city": {
    "2020e": {
-    "total": 16796,
-    "dem": 10290,
+    "total": 16799,
+    "dem": 10293,
     "gop": 6228
    }
   },
@@ -20204,16 +20204,16 @@
   },
   "new kent county": {
    "2020e": {
-    "total": 14316,
-    "dem": 4558,
-    "gop": 9586
+    "total": 14360,
+    "dem": 4583,
+    "gop": 9605
    }
   },
   "newport news city": {
    "2020e": {
-    "total": 77581,
-    "dem": 50307,
-    "gop": 25575
+    "total": 80388,
+    "dem": 52699,
+    "gop": 26262
    }
   },
   "norfolk city": {
@@ -20281,9 +20281,9 @@
   },
   "pittsylvania county": {
    "2020e": {
-    "total": 34041,
-    "dem": 10053,
-    "gop": 23704
+    "total": 34032,
+    "dem": 10054,
+    "gop": 23694
    }
   },
   "poquoson city": {
@@ -20421,7 +20421,7 @@
   },
   "smyth county": {
    "2020e": {
-    "total": 14098,
+    "total": 14104,
     "dem": 3008,
     "gop": 10963
    }
@@ -20456,8 +20456,8 @@
   },
   "suffolk city": {
    "2020e": {
-    "total": 49213,
-    "dem": 28484,
+    "total": 49212,
+    "dem": 28483,
     "gop": 20006
    }
   },
@@ -20484,9 +20484,9 @@
   },
   "virginia beach city": {
    "2020e": {
-    "total": 225107,
+    "total": 225108,
     "dem": 116434,
-    "gop": 104505
+    "gop": 104506
    }
   },
   "warren county": {
@@ -20570,9 +20570,9 @@
   },
   "benton county": {
    "2020e": {
-    "total": 100585,
-    "dem": 37859,
-    "gop": 59588
+    "total": 100798,
+    "dem": 37953,
+    "gop": 59681
    }
   },
   "chelan county": {
@@ -20584,16 +20584,16 @@
   },
   "clallam county": {
    "2020e": {
-    "total": 43545,
-    "dem": 22535,
-    "gop": 20131
+    "total": 46979,
+    "dem": 23801,
+    "gop": 22050
    }
   },
   "clark county": {
    "2020e": {
-    "total": 270039,
-    "dem": 138612,
-    "gop": 124756
+    "total": 271285,
+    "dem": 139219,
+    "gop": 125334
    }
   },
   "columbia county": {
@@ -20605,9 +20605,9 @@
   },
   "cowlitz county": {
    "2020e": {
-    "total": 59164,
-    "dem": 23631,
-    "gop": 33976
+    "total": 59376,
+    "dem": 23709,
+    "gop": 34094
    }
   },
   "douglas county": {
@@ -20640,9 +20640,9 @@
   },
   "grant county": {
    "2020e": {
-    "total": 25502,
-    "dem": 8386,
-    "gop": 16662
+    "total": 34465,
+    "dem": 10730,
+    "gop": 23005
    }
   },
   "grays harbor county": {
@@ -20661,23 +20661,23 @@
   },
   "jefferson county": {
    "2020e": {
-    "total": 23580,
-    "dem": 16578,
-    "gop": 6531
+    "total": 23744,
+    "dem": 16641,
+    "gop": 6624
    }
   },
   "king county": {
    "2020e": {
-    "total": 1188152,
-    "dem": 897770,
-    "gop": 265020
+    "total": 1190496,
+    "dem": 899383,
+    "gop": 265672
    }
   },
   "kitsap county": {
    "2020e": {
-    "total": 155853,
-    "dem": 89373,
-    "gop": 60838
+    "total": 156434,
+    "dem": 89660,
+    "gop": 61081
    }
   },
   "kittitas county": {
@@ -20689,16 +20689,16 @@
   },
   "klickitat county": {
    "2020e": {
-    "total": 11621,
-    "dem": 5216,
-    "gop": 6203
+    "total": 12104,
+    "dem": 5375,
+    "gop": 6508
    }
   },
   "lewis county": {
    "2020e": {
-    "total": 44515,
-    "dem": 14316,
-    "gop": 29074
+    "total": 44935,
+    "dem": 14462,
+    "gop": 29318
    }
   },
   "lincoln county": {
@@ -20738,9 +20738,9 @@
   },
   "pierce county": {
    "2020e": {
-    "total": 451680,
-    "dem": 244893,
-    "gop": 193795
+    "total": 454546,
+    "dem": 246334,
+    "gop": 195085
    }
   },
   "san juan county": {
@@ -20752,30 +20752,30 @@
   },
   "skagit county": {
    "2020e": {
-    "total": 56812,
-    "dem": 30717,
-    "gop": 24862
+    "total": 61166,
+    "dem": 32798,
+    "gop": 26975
    }
   },
   "skamania county": {
    "2020e": {
-    "total": 6884,
-    "dem": 3016,
-    "gop": 3694
+    "total": 7066,
+    "dem": 3100,
+    "gop": 3783
    }
   },
   "snohomish county": {
    "2020e": {
-    "total": 426634,
-    "dem": 251625,
-    "gop": 162972
+    "total": 429683,
+    "dem": 253420,
+    "gop": 164121
    }
   },
   "spokane county": {
    "2020e": {
-    "total": 289448,
-    "dem": 133892,
-    "gop": 146805
+    "total": 289666,
+    "dem": 134007,
+    "gop": 146895
    }
   },
   "stevens county": {
@@ -20787,9 +20787,9 @@
   },
   "thurston county": {
    "2020e": {
-    "total": 155506,
-    "dem": 91245,
-    "gop": 59797
+    "total": 159188,
+    "dem": 92795,
+    "gop": 61728
    }
   },
   "wahkiakum county": {
@@ -20815,16 +20815,16 @@
   },
   "whitman county": {
    "2020e": {
-    "total": 16557,
-    "dem": 8794,
-    "gop": 7245
+    "total": 17704,
+    "dem": 9512,
+    "gop": 7639
    }
   },
   "yakima county": {
    "2020e": {
-    "total": 77630,
-    "dem": 34382,
-    "gop": 41826
+    "total": 85231,
+    "dem": 37862,
+    "gop": 45686
    }
   }
  },
