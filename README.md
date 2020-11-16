@@ -24,6 +24,7 @@ An example entry:
       },
       "zip-codes": [
         "53186",
+        "53018",
         // ...
         "53187"
       ],
@@ -97,19 +98,19 @@ An example entry:
         "2020-05-04": 20,
         "2020-05-11": 23,
         // ...
-        "2020-11-02": 125
+        "2020-11-09": 147
       },
       "covid-confirmed": {
         "2020-05-04": 367,
         "2020-05-11": 409,
         // ...
-        "2020-11-02": 14687
+        "2020-11-09": 17195
       },
       "driving": {
         "2020-01-13": 107,
         "2020-01-27": 107,
         // ...
-        "2020-11-02": 118
+        "2020-11-02": 116
       },
       "walking": {
         "2020-01-13": 104,
@@ -134,9 +135,9 @@ An example entry:
           "gop": 145519
         },
         "2020": {
-          "total": 267159,
-          "dem": 103867,
-          "gop": 159633
+          "total": 267214,
+          "dem": 103906,
+          "gop": 159649
         }
       }
     },
@@ -164,7 +165,7 @@ Please let me know if you want to use the data (it's nice to know my work is bei
 
 6. Average income comes from the BEA [here](https://apps.bea.gov/regional/downloadzip.cfm).  I don't trust the median income estimates (there are some really crazy counties...), so I only report the average income.
 
-7. Covid data comes from [this site](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/) on usafacts.org, who says their data comes from the CDC.  Data was last updated on June 20th, 2020.
+7. Covid data comes from [this site](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/) on usafacts.org, who says their data comes from the CDC.
 
 8. Presidential election data comes this [github repository](https://github.com/tonmcg/US_County_Level_Election_Results_08-16/blob/master/US_County_Level_Presidential_Results_08-16.csv) which aggregates from a variety of sources, with credit to Tony McGovern, Bill Morris, The Guardian, townhall.com, and others.  Alaskan boroughs and census areas are missing, as is Kalawao County, Hawaii.
 
