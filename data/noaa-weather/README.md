@@ -12,7 +12,7 @@ We convert these to Fahrenheights and inches respectively.
 
 # Files:
 
-NOAA's README (not included):
+NOAA's README ("noaa-readme.txt"):
 
 https://www1.ncdc.noaa.gov/pub/data/normals/1981-2010/readme.txt
 

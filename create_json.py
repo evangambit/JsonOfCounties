@@ -966,7 +966,7 @@ def add_weather(states):
 				if varname == "prcp":
 					stations[station][varname] = val / 100.0
 				elif varname == "snow":
-					stations[station][varname] = val / 10.0
+					stations[station][varname] = None if val < 0.0 else val / 10.0
 				else:
 					stations[station][varname] = val / 10.0
 

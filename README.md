@@ -171,6 +171,8 @@ If you want to use this data, most of the sources are from .gov websites.  The e
 
 10. Driving mobility data comes from Apple [here](https://www.apple.com/covid19/mobility), which they released to help analyze covid-19.  (Note that these are not absolute measures of mobility, so they are not directly comparable between counties).
 
+11. Weather data comes from the NOAA (see data/noaa-weather/README.md for details).  Temperature is given in Fahrenheight and length is given in inches.  It's not clear why some regions have more snowfall than precipitation.  This would seem to suggest that either snowfall doesn't count as "precipitation" in these measurements, or they're doing something like switching between melted and unmelted measurements.
+
 Note that this "counties.json" does NOT contain a superset of each data source.  For instance the racial/age demographic breakdown provided by "cc-est2018-alldata.csv" is extremely specific (giving race/sex break downs for every age bucket for the last 9 years!) but we don't include all of that in counties.json.
 
 Fortunately, it shouldn't be too hard for somebody with some Python experience to modify "create_json.py" to add whatever additional data they might need.
