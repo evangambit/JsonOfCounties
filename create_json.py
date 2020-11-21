@@ -933,7 +933,7 @@ def get_elections():
 
 	return states
 
-def add_weather(states):
+def get_weather(kStates):
 	"""
 	Value flags (which we ignore):
     C = complete (all 30 years used)
@@ -970,7 +970,7 @@ def add_weather(states):
 				else:
 					stations[station][varname] = val / 10.0
 
-	# Read station locations
+	# Read station locations.
 	with open(pjoin("data", "noaa-weather", "ghcnd-stations.txt"), "r") as f:
 		lines = f.readlines()
 		# Filter out stations that don't give us any data.
@@ -980,25 +980,65 @@ def add_weather(states):
 	station_locations = [(float(line[1]), float(line[2])) for line in lines]
 	station_locations = np.array(station_locations)
 
-	for state_name in states:
-		state = states[state_name]
-		for county_name in state:
-			county = state[county_name]
-			county["noaa"] = {}
-			loc = np.array([county["latitude"], county["longitude"]])
-			d = ((station_locations - loc)**2).sum(1)
-			# Iterate through stations in order of their distance until
-			# we find a value for every variable.
-			for i in np.argsort(d):
-				name = lines[i][0]
-				if name not in stations:
-					continue
-				station = stations[name]
-				for varname in station:
-					if varname not in county["noaa"]:
-						county["noaa"][varname] = station[varname]
-				if len(county["noaa"]) >= 3:
+	fips2location = {}
+	for sn in kStates:
+		for cn in kStates[sn]:
+			c = kStates[sn][cn]
+			fips2location[c['fips']] = (c['latitude'], c['longitude'])
+
+	with open(pjoin("data", "noaa-weather", "fips_to_stations.json"), "r") as f:
+		fips2stations = json.load(f)
+
+	fips2weather = {}
+	for fips in fips2stations:
+
+		temp, prcp, snow = 0, 0, 0
+		n = [0, 0, 0]
+		for station_name in fips2stations[fips]:
+			if station_name not in stations:
+				continue
+			station = stations[station_name]
+			if 'temp' in station:
+				temp += station['temp']
+				n[0] += 1
+			if 'prcp' in station:
+				prcp += station['prcp']
+				n[1] += 1
+			if station.get('snow', None) is not None:
+				snow += station['snow']
+				n[2] += 1
+
+		# Cast to numpy arrays so we can divide by zero..
+		fips2weather[fips] = {
+			"noaa": {
+				"prcp": np.array(prcp) / np.array(n[1]),
+				"snow": np.array(snow) / np.array(n[2]),
+				"temp": np.array(temp) / np.array(n[0]),
+			}
+		}
+
+		for k in fips2weather[fips]["noaa"]:
+			if math.isfinite(fips2weather[fips]["noaa"][k]):
+				continue
+			# If fips isn't in fips2location then we're not even
+			# including the county in the dataset, so we can ignore
+			# it.
+			if fips not in fips2location:
+				fips2weather[fips]["noaa"][k] = None
+				continue
+			# If we cannot find a value from a station within a
+			# county, we look for the nearest station.
+
+			loc = fips2location[fips]
+			I = np.argsort(((station_locations - np.array(loc))**2).sum(1))
+			for i in I:
+				station_name = lines[i][0]
+				station = stations[station_name]
+				if k in station:
+					fips2weather[fips]["noaa"][k] = station[k]
 					break
+
+	return fips2weather
 
 daysBeforeMonth = [
 	0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
@@ -1048,7 +1088,7 @@ if __name__ == '__main__':
 
 	merger.merge_with_fips(get_geometry())
 
-	add_weather(merger.states)
+	merger.merge_with_fips(get_weather(merger.states))
 
 	A = []
 	states = {}
