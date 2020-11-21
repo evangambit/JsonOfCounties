@@ -18,9 +18,9 @@ An example entry:
       "longitude": -88.3041411471765,
       "latitude": 43.01843887416162,
       "noaa": {
-        "prcp": 34.61,
+        "prcp": 35.03,
         "snow": 39.5,
-        "temp": 46.3
+        "temp": 46.53333333333333
       },
       "zip-codes": [
         "53186",
