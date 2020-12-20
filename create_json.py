@@ -1082,6 +1082,31 @@ def get_mobility():
 
 	return states
 
+kAllFips = set()
+with open('base.json', 'r') as f:
+	base = json.load(f)
+for state_name in base:
+	for country_name in base[state_name]:
+		kAllFips.add(base[state_name][country_name]['fips'])
+
+def get_num_police():
+	counties = {}
+	sf = shapefile.Reader(pjoin('data', 'Local_Law_Enforcement', 'Local_Law_Enforcement.shp'))
+	for i, s in enumerate(sf):
+		r = s.record
+		if r.POPULATION != -999:
+			assert r.POPULATION >= 0
+			counties[r.COUNTYFIPS] = counties.get(r.COUNTYFIPS, 0) + r.POPULATION
+	for fips in kAllFips:
+		if fips in counties:
+			counties[fips] = {
+				"num_police": counties[fips]
+			}
+		else:
+			counties[fips] = {
+				"num_police": None
+			}
+	return counties
 
 if __name__ == '__main__':
 	merger = CountyNameMerger()
@@ -1120,6 +1145,7 @@ if __name__ == '__main__':
 	merger.merge_with_fips(get_demographics())
 	merger.merge_with_fips(get_cdc_deaths())
 	merger.merge_with_fips(get_labor_force())
+	merger.merge_with_fips(get_num_police())
 
 	# Fatal police shootings are unique in that we don't have an
 	# entry for every county, because the Washington Post tracks

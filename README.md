@@ -81,6 +81,7 @@ An example entry:
           "unemployed": 7759.0
         }
       },
+      "num_police": 1011,
       "fatal_police_shootings": {
         "total-2017": 1.0,
         "unarmed-2017": 0.0,
@@ -173,6 +174,8 @@ If you want to use this data, most of the sources are from .gov websites.  The e
 
 11. Weather data comes from the NOAA (see data/noaa-weather/README.md for details).  Temperature is given in Fahrenheight and length is given in inches.  It's not clear why some regions have more snowfall than precipitation.  This would seem to suggest that either snowfall doesn't count as "precipitation" in these measurements, or they're doing something like switching between melted and unmelted measurements.
 
+12. Number of police is from [ArcGIS Hub](https://hub.arcgis.com/datasets/c8403fea013f44b8a7bb0074495beda8_0) (download the "Shapefile" directory into this repository's data/ directory).  Note that many organizations have missing numbers here.  County totals ignore these organizations, so one should expect these numbers to be underestimates.  Also there isn't (in general) a neat mapping from counties to police jurisdictions (or vice versa).  Use this data with caution.
+
 Note that this "counties.json" does NOT contain a superset of each data source.  For instance the racial/age demographic breakdown provided by "cc-est2018-alldata.csv" is extremely specific (giving race/sex break downs for every age bucket for the last 9 years!) but we don't include all of that in counties.json.
 
 Fortunately, it shouldn't be too hard for somebody with some Python experience to modify "create_json.py" to add whatever additional data they might need.
@@ -213,3 +216,4 @@ USAFacts. (2020, August 11). US Coronavirus Cases and Deaths. USAFacts.Org. http
 
 Washington Post. (2020). washingtonpost/data-police-shootings. GitHub. https://github.com/washingtonpost/data-police-shootings
 
+ArcGIS. (2020).  Local Law Enforcement Locations.  ArcGIS Hub.  https://hub.arcgis.com/datasets/c8403fea013f44b8a7bb0074495beda8_0
