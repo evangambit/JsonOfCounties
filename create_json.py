@@ -665,7 +665,7 @@ def get_labor_force():
 
 def get_fatal_police_shootings():
 	states = {}
-	for year in ['2017', '2018', '2019']:
+	for year in ['2017', '2018', '2019', '2020']:
 		for varname in [f'total-{year}', f'unarmed-{year}', f'firearmed-{year}']:
 			with open(pjoin('generated', 'police_shootings', varname + '.json'), 'r') as f:
 				shootings = json.load(f)

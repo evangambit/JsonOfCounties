@@ -414,6 +414,48 @@ kHardCode = {
 	"Gibson, LA": "Terrebonne Parish, LA",
 	"Hillyard, WA": "Spokane County, WA",
 	"Bassett, CA": "Los Angeles County, CA",
+	"Fleetwood, NC": "Ashe County, NC",
+	"Nipton, CA": "San Bernardino County, CA",
+	"Powatan Point, OH": "Belmont County, OH",
+	"Coden, AL": "Mobile County, AL",
+	"Tuscson, AZ": "Pima County, AZ",
+	"Shelby Gap, KY": "Pike County, KY",
+	"Minot, ME": "Androscoggin County, ME",
+	"Ono, CA": "Shasta County, CA",
+	"Sylvania Township, OH": "Lucas County, OH",
+	"Keithville, LA": "Caddo Parish, LA",
+	"Miami-Dade, FL": "Miami-Dade County, FL",
+	"Edison, CA": "Kern County, CA",
+	"Harrison Township, OH": "Montgomery County, OH",
+	"Elkton, FL": "St. Johns County, FL",
+	"Mufreesboro, TN": "Rutherford County, TN",
+	"Mecklenburg, VA": "Mecklenburg County, VA",
+	"WInston Salem, NC": "Forsyth County, NC",
+	"Linwood, NC": "Davidson County, NC",
+	"Hinton, VA": "Rockingham County, VA",
+	"Ouachita Parish, LA": "Ouachita Parish, LA",
+	"Caddo Parish, LA": "Bossier Parish, LA",
+	"Hubert, NC": "Onslow County, NC",
+	"Hiram, ME": "Oxford County, ME",
+	"Wayne, NJ": "Passaic County, NJ",
+	"Union Township, OH": "Clermont County, OH",
+	"Bass River, NJ": "Burlington County, NJ",
+	"Jefferson Parish, LA": "Jefferson Parish, LA",
+	"Paso Robles, CA": "San Luis Obispo County, CA",
+	"Welches, OR": "Clackamas County, OR",
+	"Smithfield Township, PA": "Monroe County, PA",
+	"Butler Township, OH":  "Montgomery County, OH",
+	"Delta Township, MI": "Eaton County, MI",
+	"Morris Township, NJ": "Morris County, NJ",
+	"James Island, SC": "Charleston County, SC",
+	"Eckford Township, MI": "Calhoun County, MI",
+	"Whitehall, LA": "Livingston Parish, LA",
+	"Whitby, WV": "Raleigh County, WV",
+	"South Los Angeles, CA": "Los Angeles County, CA",
+	"Cookson, OK": "Cherokee County, OK",
+	"Thornton, NH": "Grafton County, NH",
+	"Perdido Key, FL": "Escambia County, FL",
+	"Bewster County"
 
 	# Salvador Byassee
 	"300 block of State Line Road, TN": "Weakley County, TN",
@@ -444,7 +486,7 @@ kHardCode = {
 	"Orem, OR": "Utah County, UT",
 }
 
-for year in ['2017', '2018', '2019']:
+for year in ['2017', '2018', '2019', '2020']:
 	# Load police shootings data.
 	with open(pjoin('data', 'fatal-police-shootings-data.csv'), 'r') as f:
 		reader = csv.reader(f, delimiter=',', quotechar='"')
@@ -509,7 +551,7 @@ for year in ['2017', '2018', '2019']:
 		# cannot be found (Watuaga County, NC) which seems
 		# to be an error by the CDC.
 		for key in counties:
-			assert key[-4:-2] == ', '
+			assert key[-4:-2] == ', ', key
 			state = key[-2:].lower()
 			county = key[:-4].lower()
 
@@ -537,12 +579,14 @@ for year in ['2017', '2018', '2019']:
 		if row_idx % 50 == 0:
 			requester.save()
 
+	requester.save()
+
 	with open(pjoin('generated', 'police_shootings', f'total-{year}.json'), 'w+') as f:
-		json.dump(number_of_shootings, f)
+		json.dump(number_of_shootings, f, indent=1)
 
 	with open(pjoin('generated', 'police_shootings', f'unarmed-{year}.json'), 'w+') as f:
-		json.dump(number_of_unarmed_shootings, f)
+		json.dump(number_of_unarmed_shootings, f, indent=1)
 
 	with open(pjoin('generated', 'police_shootings', f'firearmed-{year}.json'), 'w+') as f:
-		json.dump(number_of_firearm_shootings, f)
+		json.dump(number_of_firearm_shootings, f, indent=1)
 
