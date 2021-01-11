@@ -1158,7 +1158,7 @@ if __name__ == '__main__':
 		for county in merger.states[state]:
 			if "fatal_police_shootings" not in merger.states[state][county]:
 				merger.states[state][county]["fatal_police_shootings"] = {}
-			for year in ['2018', '2019']:
+			for year in ['2017', '2018', '2019', '2020']:
 				if f"total-{year}" not in merger.states[state][county]["fatal_police_shootings"]:
 					merger.states[state][county]["fatal_police_shootings"][f"total-{year}"] = 0
 				if f"unarmed-{year}" not in merger.states[state][county]["fatal_police_shootings"]:
