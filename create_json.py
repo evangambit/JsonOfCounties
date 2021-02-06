@@ -141,11 +141,6 @@ not_states = set([
 	"Virgin Islands",
 ])
 
-# Converts '7/13/20' to '2020-07-13'
-def date_to_ymd(t):
-	m, d, y = t.split('/')
-	return f"20{y}-{pad(m, 2, c='0')}-{pad(d, 2, c='0')}"
-
 # Maps formly independent cities to the counties they
 # now belong to.  This way we can add the deaths from
 # these cities (which the CDC keeps separate, since its
@@ -780,94 +775,38 @@ def get_avg_income():
 	return states
 
 def get_covid():
-	blacklist = {
-		"Alaska": {
-			# Ordinarily we'd map this to "kusilvak census area" but,
-			# (I assume due to an oversight by either the CDC or
-			# usafacts.org) this county represented twice (once for
-			# each name).  Fortunately both death counts are zero, so
-			# we just ignore it for now.
-			"wade hampton census area": None,
-		},
-		"California": {
-			"grand princess cruise ship": None,
-		},
-	}
-
-	states = {}
+	fips2covid = {}
 
 	for varname, fn in zip(['deaths', 'confirmed'], ['covid_deaths_usafacts.csv', 'covid_confirmed_usafacts.csv']):
 		with open(pjoin('data', fn), 'r') as f:
 			reader = csv.reader(f, delimiter=',')
 			header = next(reader)
+
+			countyColumn = header.index('countyFIPS')
+			stateColumn = header.index('State')
+
 			rows = [row for row in reader]
-			for date in ['5/4/20', '5/11/20', '5/18/20', '5/25/20', '6/1/20', '6/8/20', '6/15/20', '6/22/20', '6/29/20', '7/6/20', '7/13/20', '7/20/20', '7/27/20', '8/3/20', '8/10/20', '8/17/20', '8/24/20', '8/31/20', '9/7/20', '9/14/20', '9/21/20', '9/28/20', '10/5/20', '10/12/20', '10/19/20', '10/26/20', '11/2/20', '11/9/20', '11/16/20', '11/23/20', '11/30/20', '12/7/20', '12/14/20', '12/21/20', '12/28/20', '1/4/21']:
-				column = header.index(date)
-				new_york_unallocated = 0
-				for row in rows:
-					if row[1] == 'Statewide Unallocated':
-						continue
-					county = row[1].lower()
-					state = abbreviation_to_name[row[2]]
+			for row in rows:
+				for date in header[header.index('2020-05-04')::7]:
+					column = header.index(date)
+					fips = row[countyColumn]
 
-					if state not in states:
-						states[state] = {}
-
-					# Lacking any clear/easy alternatives, we simply dump
-					# these in New York County at the end of the loop.
-					# We assert that the number of unallocated deaths is
-					# pretty small.  If it ever becomes large (relative
-					# to the New York counties) we may want to revisit
-					# our approach.
-					if county == "new york city unallocated/probable":
-						new_york_unallocated = int(row[column])
-						assert new_york_unallocated < 1500, new_york_unallocated
+					if fips == '0':
+						 # Unallocated cases make up a vanishingly small proportion of data.
 						continue
 
-					# Apparently this dataset isn't consistent between its own CSV files, so
-					# we need to hard-code some fixes...
-					if state == 'Colorado' and county == "broomfield county and city":
-						county = 'broomfield county'
-					if state == 'Virginia' and county == "matthews county":
-						county = "mathews county"
+					if len(fips) == 4:
+						fips = '0' + fips
 
+					if fips not in fips2covid:
+						fips2covid[fips] = {}
+					if f"covid-{varname}" not in fips2covid[fips]:
+						fips2covid[fips][f"covid-{varname}"] = {}
 
-					if state == 'Alaska':
-						if county == "wade hampton census area":
-							wade_hampton = int(row[column])
-						elif county == "kusilvak census area":
-							kusilvak = int(row[column])
+					assert date not in fips2covid[fips][f"covid-{varname}"], (date, fips)
+					fips2covid[fips][f"covid-{varname}"][date] = int(row[column])
 
-					if state in blacklist and county in blacklist[state]:
-						continue
-
-					if county not in states[state]:
-						states[state][county] = {}
-
-					if f"covid-{varname}" not in states[state][county]:
-						states[state][county][f"covid-{varname}"] = {}
-
-					datekey = date_to_ymd(date)
-					assert datekey not in states[state][county][f"covid-{varname}"]
-					states[state][county][f"covid-{varname}"][datekey] = int(row[column])
-
-				# We distribute "unattributed New York deaths" proportional to how the other
-				# covid deaths are distributed.
-				total = states['New York']['new york county'][f"covid-{varname}"][datekey] + states['New York']['bronx county'][f"covid-{varname}"][datekey] + states['New York']['kings county'][f"covid-{varname}"][datekey] + states['New York']['queens county'][f"covid-{varname}"][datekey] + states['New York']['richmond county'][f"covid-{varname}"][datekey]
-				if total > 0:
-					states['New York']['new york county'][f"covid-{varname}"][datekey] += new_york_unallocated * (states['New York']['new york county'][f"covid-{varname}"][datekey] / total)
-					states['New York']['bronx county'][f"covid-{varname}"][datekey] += new_york_unallocated * (states['New York']['bronx county'][f"covid-{varname}"][datekey] / total)
-					states['New York']['kings county'][f"covid-{varname}"][datekey] += new_york_unallocated * (states['New York']['kings county'][f"covid-{varname}"][datekey] / total)
-					states['New York']['queens county'][f"covid-{varname}"][datekey] += new_york_unallocated * (states['New York']['queens county'][f"covid-{varname}"][datekey] / total)
-					states['New York']['richmond county'][f"covid-{varname}"][datekey] += new_york_unallocated * (states['New York']['richmond county'][f"covid-{varname}"][datekey] / total)
-
-	# Wade Hampton and Kusilvak are the same cuonty but, for some reason, exist as two rows.
-	# Hopefuly this is just an oversight and wade_hampton deaths are simply being counted as
-	# kusilvak deaths.  But if wade_hampton deaths are ever non-zer we may want to email the
-	# CDC and ask why they have duplicate rows.
-	assert wade_hampton == 0, 'If this is ever violated, we need to revisit how we resolve these duplicate rows'
-
-	return states
+	return fips2covid
 
 def get_elections():
 	states = {}
@@ -1174,7 +1113,7 @@ if __name__ == '__main__':
 				merger.states[state][county]['police_deaths'] = 0
 
 	merger.merge(get_avg_income())
-	merger.merge(get_covid())
+	merger.merge_with_fips(get_covid())
 
 	merger.merge(get_mobility(), allow_missing=True)
 
