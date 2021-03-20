@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import bson, code, copy, csv, json, math, os, re
 
 from scipy.ndimage import filters
@@ -131,6 +133,65 @@ fips_code_to_name = {
 	"69": "Northern Mariana Islands",
 	"72": "Puerto Rico",
 	"78": "Virgin Islands",
+}
+
+state_name_to_fips_code = {
+	"Alabama": "01",
+	"Alaska": "02",
+	"Arizona": "04",
+	"Arkansas": "05",
+	"California": "06",
+	"Colorado": "08",
+	"Connecticut": "09",
+	"Delaware": "10",
+	"District of Columbia": "11",
+	"Florida": "12",
+	"Georgia": "13",
+	"Hawaii": "15",
+	"Idaho": "16",
+	"Illinois": "17",
+	"Indiana": "18",
+	"Iowa": "19",
+	"Kansas": "20",
+	"Kentucky": "21",
+	"Louisiana": "22",
+	"Maine": "23",
+	"Maryland": "24",
+	"Massachusetts": "25",
+	"Michigan": "26",
+	"Minnesota": "27",
+	"Mississippi": "28",
+	"Missouri": "29",
+	"Montana": "30",
+	"Nebraska": "31",
+	"Nevada": "32",
+	"New Hampshire": "33",
+	"New Jersey": "34",
+	"New Mexico": "35",
+	"New York": "36",
+	"North Carolina": "37",
+	"North Dakota": "38",
+	"Ohio": "39",
+	"Oklahoma": "40",
+	"Oregon": "41",
+	"Pennsylvania": "42",
+	"Rhode Island": "44",
+	"South Carolina": "45",
+	"South Dakota": "46",
+	"Tennessee": "47",
+	"Texas": "48",
+	"Utah": "49",
+	"Vermont": "50",
+	"Virginia": "51",
+	"Washington": "53",
+	"West Virginia": "54",
+	"Wisconsin": "55",
+	"Wyoming": "56",
+	"American Samoa": "60",
+	"Guam": "66",
+	"Northern Mariana Islands": "69",
+	"Puerto Rico": "72",
+	"Virgin Islands": "78",
 }
 
 not_states = set([
@@ -616,10 +677,6 @@ def get_cdc_deaths():
 					continue
 				counties[fips]["deaths"][varname] += former_independent_cities[state][county]
 
-		for state in states:
-			for county in states[state]:
-				assert varname in counties[fips]["deaths"]
-
 	return counties
 
 # Labor force data
@@ -1029,7 +1086,7 @@ for state_name in base:
 
 def get_num_police():
 	counties = {}
-	sf = shapefile.Reader(pjoin('data', 'Local_Law_Enforcement', 'Local_Law_Enforcement.shp'))
+	sf = shapefile.Reader(pjoin('data', 'Local_Law_Enforcement_Locations', 'Local_Law_Enforcement.shp'))
 	for i, s in enumerate(sf):
 		r = s.record
 		if r.POPULATION != -999:
@@ -1053,31 +1110,31 @@ if __name__ == '__main__':
 
 	merger.merge_with_fips(get_weather(merger.states))
 
-	A = []
-	states = {}
-	sf = shapefile.Reader(pjoin('data', 'SpatialJoin_CDs_to_Counties_Final.shp'))
-	for i, s in enumerate(sf):
-		if s.record.STATE_NAME not in states:
-			states[s.record.STATE_NAME] = {}
-		r = s.record
-		states[r.STATE_NAME][r.NAME] = {
-			"noaa": {
-				"males": r.MALES,
-				"females": r.FEMALES,
-				"families": r.FAMILIES,
-				"asian": r.ASIAN,
-				"black": r.BLACK,
-				"hispanic": r.HISPANIC,
-				"white": r.WHITE,
-				"mult_race": r.MULT_RACE,
-				"households": r.HOUSEHOLDS,
-				"median_age": r.MED_AGE,
-				"median_age_male": r.MED_AGE_M,
-				"median_age_female": r.MED_AGE_F,
-				"average_family_size": r.AVE_FAM_SZ,
-			}
-		}
-		A.append(r.AVE_FAM_SZ)
+	# A = []
+	# states = {}
+	# sf = shapefile.Reader(pjoin('data', 'SpatialJoin_CDs_to_Counties_Final.shp'))
+	# for i, s in enumerate(sf):
+	# 	if s.record.STATE_NAME not in states:
+	# 		states[s.record.STATE_NAME] = {}
+	# 	r = s.record
+	# 	states[r.STATE_NAME][r.NAME] = {
+	# 		"noaa": {
+	# 			"males": r.MALES,
+	# 			"females": r.FEMALES,
+	# 			"families": r.FAMILIES,
+	# 			"asian": r.ASIAN,
+	# 			"black": r.BLACK,
+	# 			"hispanic": r.HISPANIC,
+	# 			"white": r.WHITE,
+	# 			"mult_race": r.MULT_RACE,
+	# 			"households": r.HOUSEHOLDS,
+	# 			"median_age": r.MED_AGE,
+	# 			"median_age_male": r.MED_AGE_M,
+	# 			"median_age_female": r.MED_AGE_F,
+	# 			"average_family_size": r.AVE_FAM_SZ,
+	# 		}
+	# 	}
+	# 	A.append(r.AVE_FAM_SZ)
 
 	merger.merge_with_fips(get_zips())
 	merger.merge_with_fips(get_demographics())
