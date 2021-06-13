@@ -844,7 +844,7 @@ def get_covid():
 
 			rows = [row for row in reader]
 			for row in rows:
-				for date in header[header.index('2020-05-04')::7]:
+				for date in header[header.index('2020-05-04')::14]:
 					column = header.index(date)
 					fips = row[countyColumn]
 
