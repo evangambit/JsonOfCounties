@@ -182,7 +182,7 @@ If you want to use this data, most of the sources are from .gov websites.  The e
 
 12. Number of police is from [ArcGIS Hub](https://hub.arcgis.com/datasets/c8403fea013f44b8a7bb0074495beda8_0) (download the "Shapefile" directory into this repository's data/ directory).  Note that many organizations have missing numbers here.  County totals ignore these organizations, so one should expect these numbers to be underestimates.  Also there isn't (in general) a neat mapping from counties to police jurisdictions (or vice versa).  *Use this data with caution*.
 
-13. [Educational attainment](https://www.ers.usda.gov/data-products/county-level-data-sets/download-data/) is from the Census Bureau but prepared by the USDA.
+13. [Educational attainment and poverty-rates](https://www.ers.usda.gov/data-products/county-level-data-sets/download-data/) are from the Census Bureau but prepared by the USDA.
 
 Note that this "counties.json" does NOT contain a superset of each data source.  For instance the racial/age demographic breakdown provided by "cc-est2019-alldata.csv" is extremely specific (giving race/sex break downs for every age bucket for the last 9 years!) but we don't include all of that in counties.json.
 

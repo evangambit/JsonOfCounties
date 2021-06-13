@@ -405,7 +405,7 @@ class CountyNameMerger:
 
 		return M
 
-	def merge_with_fips(self, counties):
+	def merge_with_fips(self, counties, missing=set()):
 		kFipsConversions = {
 			# Shannon County renamed to Oglala Lakota County
 			"46113": "46102",
@@ -419,6 +419,8 @@ class CountyNameMerger:
 				fips = county["fips"]
 				if kFipsConversions.get(fips, None) in counties:
 					fips = kFipsConversions[fips]
+				if fips in missing:
+					continue
 				self.add_to_json(county, counties[fips])
 
 	def merge(self, states, allow_missing=False, missing={}):
@@ -831,8 +833,25 @@ def get_avg_income():
 
 	return states
 
+def get_poverty():
+	with open('data/poverty.tsv', 'r') as f:
+		reader = csv.reader(f, delimiter='\t')
+		header = next(reader)
+		rows = [row for row in reader]
+
+	fipsIdx = header.index('FIPStxt')
+	povertyIdx = header.index('PCTPOVALL_2019')
+
+	fips2poverty = {}
+	for row in rows:
+		p = row[povertyIdx]
+		p = p.replace(',', '')
+		fips2poverty[row[fipsIdx]] = {
+			'poverty-rate': float(p)
+		}
+	return fips2poverty
+
 def get_education():
-	fips2edu = {}
 	with open('data/education.tsv', 'r') as f:
 		reader = csv.reader(f, delimiter='\t')
 		header = next(reader)
@@ -844,6 +863,7 @@ def get_education():
 	someCollegeIdx = header.index("Percent of adults completing some college or associate's degree, 2015-19")
 	bachelorsIdx = header.index("Percent of adults with a bachelor's degree or higher, 2015-19")
 
+	fips2edu = {}
 	for row in rows:
 		A = {
 				'less-than-high-school': row[lessThanHighSchoolIdx],
@@ -1211,6 +1231,7 @@ if __name__ == '__main__':
 	})
 
 	merger.merge_with_fips(get_education())
+	merger.merge_with_fips(get_poverty(), missing={'15005'})
 
 	# Terrible hack for 2020
 	with open(pjoin('data', 'election2020.json'), 'r') as f:
