@@ -174,7 +174,9 @@ If you want to use this data, most of the sources are from .gov websites.  The e
 
 11. Weather data comes from the NOAA (see data/noaa-weather/README.md for details).  Temperature is given in Fahrenheight and length is given in inches.  It's not clear why some regions have more snowfall than precipitation.  This would seem to suggest that either snowfall doesn't count as "precipitation" in these measurements, or they're doing something like switching between melted and unmelted measurements.
 
-12. Number of police is from [ArcGIS Hub](https://hub.arcgis.com/datasets/c8403fea013f44b8a7bb0074495beda8_0) (download the "Shapefile" directory into this repository's data/ directory).  Note that many organizations have missing numbers here.  County totals ignore these organizations, so one should expect these numbers to be underestimates.  Also there isn't (in general) a neat mapping from counties to police jurisdictions (or vice versa).  Use this data with caution.
+12. Number of police is from [ArcGIS Hub](https://hub.arcgis.com/datasets/c8403fea013f44b8a7bb0074495beda8_0) (download the "Shapefile" directory into this repository's data/ directory).  Note that many organizations have missing numbers here.  County totals ignore these organizations, so one should expect these numbers to be underestimates.  Also there isn't (in general) a neat mapping from counties to police jurisdictions (or vice versa).  *Use this data with caution*.
+
+13. [Educational attainment](https://www.ers.usda.gov/data-products/county-level-data-sets/download-data/) is from the Census Bureau but prepared by the USDA.
 
 Note that this "counties.json" does NOT contain a superset of each data source.  For instance the racial/age demographic breakdown provided by "cc-est2019-alldata.csv" is extremely specific (giving race/sex break downs for every age bucket for the last 9 years!) but we don't include all of that in counties.json.
 
@@ -211,6 +213,8 @@ McGovern, Anthony and Morris, Bill (2016). US County Level Presidential Results.
 US Census Bureau. (2019). TIGER/Line Shapefile, 2017, nation, U.S., Current County and Equivalent National Shapefile - Data.gov. DATA.GOV. https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-county-and-equivalent-national-shapefile
 
 US Census Bureau. (2018). County Population by Characteristics: 2010-2019. The United States Census Bureau. https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-detail.html#par_textimage_1383669527
+
+U.S. Department of Agriculture. (2021). Educational attainment for the U.S., States, and counties, 1970-2019. The United States Department of Agriculture. https://www.ers.usda.gov/data-products/county-level-data-sets/download-data/
 
 USAFacts. (2020, August 11). US Coronavirus Cases and Deaths. USAFacts.Org. https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/
 

@@ -831,6 +831,32 @@ def get_avg_income():
 
 	return states
 
+def get_education():
+	fips2edu = {}
+	with open('data/education.tsv', 'r') as f:
+		reader = csv.reader(f, delimiter='\t')
+		header = next(reader)
+		rows = [row for row in reader]
+
+	fipsIdx = header.index('FIPS Code')
+	lessThanHighSchoolIdx = header.index('Percent of adults with less than a high school diploma, 2015-19')
+	highSchoolIdx = header.index('Percent of adults with a high school diploma only, 2015-19')
+	someCollegeIdx = header.index("Percent of adults completing some college or associate's degree, 2015-19")
+	bachelorsIdx = header.index("Percent of adults with a bachelor's degree or higher, 2015-19")
+
+	for row in rows:
+		fips2edu[row[fipsIdx]] = {
+			'edu': {
+				'less-than-high-school': row[lessThanHighSchoolIdx],
+				'high-school': row[highSchoolIdx],
+				'some-college': row[someCollegeIdx],
+				'bachelors+': row[bachelorsIdx]
+			}
+		}
+
+	return fips2edu
+
+
 def get_covid():
 	fips2covid = {}
 
@@ -1179,6 +1205,8 @@ if __name__ == '__main__':
 		"Alaska": set(merger.states["Alaska"].keys()),
 		"Hawaii": {"kalawao"}
 	})
+
+	merger.merge_with_fips(get_education())
 
 	# Terrible hack for 2020
 	with open(pjoin('data', 'election2020.json'), 'r') as f:
