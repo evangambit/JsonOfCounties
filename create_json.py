@@ -845,14 +845,18 @@ def get_education():
 	bachelorsIdx = header.index("Percent of adults with a bachelor's degree or higher, 2015-19")
 
 	for row in rows:
-		fips2edu[row[fipsIdx]] = {
-			'edu': {
+		A = {
 				'less-than-high-school': row[lessThanHighSchoolIdx],
 				'high-school': row[highSchoolIdx],
 				'some-college': row[someCollegeIdx],
 				'bachelors+': row[bachelorsIdx]
-			}
 		}
+		for k in A:
+			if A[k] == '':
+				A[k] = None
+			else:
+				A[k] = float(A[k])
+		fips2edu[row[fipsIdx]] = { 'edu': A }
 
 	return fips2edu
 

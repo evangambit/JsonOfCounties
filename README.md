@@ -141,6 +141,12 @@ An example entry:
           "gop": 159649
         }
       }
+      "edu": {
+        "less-than-high-school": 3.8,
+        "high-school": 22.7,
+        "some-college": 29.1,
+        "bachelors+": 44.5
+      }
     },
     // ...
   },
