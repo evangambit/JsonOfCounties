@@ -125,16 +125,7 @@ An example entry:
           "dem": 85339,
           "gop": 145152
         },
-        "2012": {
-          "total": 241084,
-          "dem": 77617,
-          "gop": 161567
-        },
-        "2016": {
-          "total": 236269,
-          "dem": 79199,
-          "gop": 145519
-        },
+        // ...
         "2020": {
           "total": 267214,
           "dem": 103906,
@@ -146,6 +137,25 @@ An example entry:
         "high-school": 22.7,
         "some-college": 29.1,
         "bachelors+": 44.5
+      }
+      "poverty-rate": 4.7,
+      "cost-of-living": {
+        "living_wage": 14.32,
+        "food_costs": 3246.0,
+        "medical_costs": 2754.0,
+        "housing_costs": 7536.0,
+        "tax_costs": 6319.0
+      },
+      "industry": {
+        "Agriculture, forestry, fishing and hunting": {
+          "payroll": 942000,
+          "employees": 32
+        },
+        // ...
+        "Industries not classified": {
+          "payroll": 197000,
+          "employees": 6
+        }
       }
     },
     // ...
@@ -184,6 +194,12 @@ If you want to use this data, most of the sources are from .gov websites.  The e
 
 13. [Educational attainment and poverty-rates](https://www.ers.usda.gov/data-products/county-level-data-sets/download-data/) are from the Census Bureau but prepared by the USDA.
 
+14. Cost of living is provided by Amy Glasmeier at https://livingwage.mit.edu/ for households with 1 adult and 0 children.  She gets her data from the Bureau of Labor Statistics.
+
+15. Country industry data ("data/County_Business_Patterns.csv") is from the Census Bureau from https://data.census.gov/cedsci/table?q=CBP2019.CB1900CBP&g=0100000US.050000&n=N0200.00&tid=CBP2019.CB1900CBP&hidePreview=true&nkd=EMPSZES~001,LFO~001 and is not included in the repo because it is large (44MB) but is available in Google Drive [here](https://drive.google.com/file/d/1QIDt6uNEARaNrQK0db0jrMsVgY27soWs/view?usp=sharing).
+
+16. County health data from [county health rankings](https://www.countyhealthrankings.org) ([credits](https://www.countyhealthrankings.org/credits))
+
 Note that this "counties.json" does NOT contain a superset of each data source.  For instance the racial/age demographic breakdown provided by "cc-est2019-alldata.csv" is extremely specific (giving race/sex break downs for every age bucket for the last 9 years!) but we don't include all of that in counties.json.
 
 Fortunately, it shouldn't be too hard for somebody with some Python experience to modify "create_json.py" to add whatever additional data they might need.
@@ -196,14 +212,22 @@ Run
 # If you change fatal-police-shootings.csv or get_county_shootings.py
 $ python get_county_shootings.py
 
+# Generates living-wage.json. Takes 1.7 hours from scratch using 0.5 qps.
+$ python generate_living_wage_data.py
+
+# Generates county-health.csv. Takes 1 minute.
+$ python generate_health_data.py
+
 $ python create_json.py
 ```
 
-*ONLY THE LAST COMMAND* is typically required.  The output of the other command is included in the repo (`generated/police_shootings`), so you shouldn't have to regenerate them.
+*ONLY THE LAST COMMAND* is typically required.  The output of the other commands are included in the repo (`generated/police_shootings` and `living-wage.json`), so you shouldn't have to regenerate them.
 
 ## APA Citations
 
 Apple. (2020, July 24). COVID‑19 - Mobility Trends Reports. COVID‑19 - Mobility Trends Reports. https://www.apple.com/covid19/mobility
+
+ArcGIS. (2020).  Local Law Enforcement Locations.  ArcGIS Hub.  https://hub.arcgis.com/datasets/c8403fea013f44b8a7bb0074495beda8_0
 
 Bureau of Economic Analysis. (2020). BEA : Regional Economic Accounts: Download. BEA : Regional Economic Accounts. https://apps.bea.gov/regional/downloadzip.cfm
 Covid cases/deaths:
@@ -214,16 +238,20 @@ Centers for Disease Control and Prevention. (2016). Compressed Mortality, 1999-2
 
 Colley, N. (2020). US Zipcode to County State to FIPS Look Up. Data.World. https://data.world/niccolley/us-zipcode-to-county-state
 
+County Health Rankings & Roadmaps. (2021).  University of Wisconsin Population Health Institute  https://www.countyhealthrankings.org/about-us
+
+Glasmeier, Amy K. Living Wage Calculator. 2020. Massachusetts Institute of Technology. livingwage.mit.edu. Please describe any changes or transformations that were made to the data.
+
 McGovern, Anthony and Morris, Bill (2016). US County Level Presidential Results. Retrieved from: https://github.com/tonmcg/US_County_Level_Election_Results_08-16
 
 US Census Bureau. (2019). TIGER/Line Shapefile, 2017, nation, U.S., Current County and Equivalent National Shapefile - Data.gov. DATA.GOV. https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-county-and-equivalent-national-shapefile
 
 US Census Bureau. (2018). County Population by Characteristics: 2010-2019. The United States Census Bureau. https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-detail.html#par_textimage_1383669527
 
+US Census Bureau. (2019). CBP2019.CB1900CBP_data_with_overlays_2021-06-25T123104.csv.  The US Census Bureau. https://data.census.gov/cedsci/table?q=CBP2019.CB1900CBP&g=0100000US.050000&n=N0200.00&tid=CBP2019.CB1900CBP&hidePreview=true&nkd=EMPSZES~001,LFO~001
+
 U.S. Department of Agriculture. (2021). Educational attainment for the U.S., States, and counties, 1970-2019. The United States Department of Agriculture. https://www.ers.usda.gov/data-products/county-level-data-sets/download-data/
 
 USAFacts. (2020, August 11). US Coronavirus Cases and Deaths. USAFacts.Org. https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/
 
 Washington Post. (2020). washingtonpost/data-police-shootings. GitHub. https://github.com/washingtonpost/data-police-shootings
-
-ArcGIS. (2020).  Local Law Enforcement Locations.  ArcGIS Hub.  https://hub.arcgis.com/datasets/c8403fea013f44b8a7bb0074495beda8_0

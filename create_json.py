@@ -1153,6 +1153,65 @@ def get_num_police():
 			}
 	return counties
 
+def get_expenses():
+	def dollar2float(x):
+		return float(x.replace('$', '').replace(',', ''))
+	with open(pjoin('generated', 'living-wage.json'), 'r') as f:
+		J = json.load(f)
+	r = {}
+	for fips in J:
+		j = J[fips]
+		r[fips] = {
+			"cost-of-living": {
+				"living_wage": dollar2float(j['livingWage-1-adult']),
+				"food_costs": dollar2float(j['expenses']['food-1-adult']),
+				"medical_costs": dollar2float(j['expenses']['medical-1-adult']),
+				"housing_costs": dollar2float(j['expenses']['housing-1-adult']),
+				"tax_costs": dollar2float(j['expenses']['taxes-1-adult']),
+			}
+		}
+	return r
+
+def get_industry():
+	with open(pjoin('data', 'County_Business_Patterns.csv'), 'r') as f:
+		reader = csv.reader(f, delimiter=',')
+		header = next(reader)
+		rows = [row for row in reader][1:]
+	r = {}
+	for row in rows:
+		fips = row[0].split('US')[1]
+		sector = row[5]
+		if sector == 'Total for all sectors':
+			continue
+		if row[9] != 'All establishments':
+			continue
+		payroll = int(row[12]) * 1000
+		numEmployees = int(row[16])
+		if fips not in r:
+			r[fips] = {'industry': {}}
+		r[fips]['industry'][sector] = {
+			'payroll': payroll,
+			'employees': numEmployees
+		}
+	return r
+
+
+def get_health():
+	with open(pjoin('generated', 'county-health.csv'), 'r') as f:
+		reader = csv.reader(f, delimiter=',')
+		header = next(reader)
+		rows = [row for row in reader][1:]
+	r = {}
+	for row in rows:
+		fips = row[0]
+		h = {}
+		for i in range(1, len(row)):
+			h[header[i]] = float(row[i])
+		r[fips] = {
+			'health': h
+		}
+	return r
+
 if __name__ == '__main__':
 	merger = CountyNameMerger()
 
@@ -1251,6 +1310,14 @@ if __name__ == '__main__':
 			e20 = c['2020e']
 			del c['2020e']
 			c['elections']['2020'] = e20
+
+	merger.merge_with_fips(get_expenses())
+	merger.merge_with_fips(get_industry(), missing={
+		'48269', '15005', '31007', '31117', '48301', '48033', '32009', '30069'
+	})
+
+	# Washington DC missing
+	merger.merge_with_fips(get_health(), missing={'11001'})
 
 	with open('counties.json', 'w+') as f:
 		json.dump(merger.states, f, indent=2)
