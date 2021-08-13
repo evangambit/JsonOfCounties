@@ -685,7 +685,7 @@ def get_cdc_deaths():
 # https://www.bls.gov/lau/#cntyaa
 def get_labor_force():
 	counties = {}
-	for year in ['2004', '2008', '2012', '2016']:
+	for year in ['2004', '2008', '2012', '2016', '2020']:
 		with open(pjoin('data', 'bls', year + '.txt'), 'r') as f:
 			lines = f.readlines()
 			for line in lines[6:]:
@@ -693,6 +693,8 @@ def get_labor_force():
 				if len(line) == 0:
 					break
 				laus_code, state_fips_code, county_fips_code, county_name, year, labor_force, employed, unemployed, unemployment_rate = re.sub(r"  +", "  ", line).split("  ")
+				if state_fips_code == '72':  # PR
+					continue
 				fips = state_fips_code + county_fips_code
 
 				if fips not in counties:
