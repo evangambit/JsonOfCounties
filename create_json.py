@@ -685,7 +685,7 @@ def get_cdc_deaths():
 # https://www.bls.gov/lau/#cntyaa
 def get_labor_force():
 	counties = {}
-	for year in ['2004', '2008', '2012', '2016']:
+	for year in ['2004', '2008', '2012', '2016', '2020']:
 		with open(pjoin('data', 'bls', year + '.txt'), 'r') as f:
 			lines = f.readlines()
 			for line in lines[6:]:
@@ -693,6 +693,8 @@ def get_labor_force():
 				if len(line) == 0:
 					break
 				laus_code, state_fips_code, county_fips_code, county_name, year, labor_force, employed, unemployed, unemployment_rate = re.sub(r"  +", "  ", line).split("  ")
+				if state_fips_code == '72':  # PR
+					continue
 				fips = state_fips_code + county_fips_code
 
 				if fips not in counties:
@@ -1001,20 +1003,33 @@ def get_weather(kStates):
 			("prcp", "ann-prcp-normal.txt"),
 			("snow", "ann-snow-normal.txt"),
 			("temp", "ann-tavg-normal.txt"),
+			("altitude", "ghcnd-stations.txt"),
 		]:
 		with open(pjoin("data", "noaa-weather", fn), "r") as f:
 			for line in f.readlines():
-				station, val = re.split(r" +", line.strip())
-				assert val[-1] in "CSRPQ", repr(val)
-				val = float(val[:-1])
-				if station not in stations:
-					stations[station] = {}
-				if varname == "prcp":
-					stations[station][varname] = val / 100.0
-				elif varname == "snow":
-					stations[station][varname] = None if val < 0.0 else val / 10.0
+				if fn != 'ghcnd-stations.txt':
+					station, val = re.split(r" +", line.strip())
+					assert val[-1] in "CSRPQ", repr(val)
+					val = float(val[:-1])
+					if station not in stations:
+						stations[station] = {}
+					if varname == "prcp":
+						stations[station][varname] = val / 100.0
+					elif varname == "snow":
+						stations[station][varname] = None if val < 0.0 else val / 10.0
+					else:
+						stations[station][varname] = val / 10.0
 				else:
-					stations[station][varname] = val / 10.0
+					line = re.split(' +', line.strip())[:4]
+					station, longitude, latitude, altitude = line
+					if altitude == '-999.9':  # skip null value
+						continue
+					longitude = float(longitude)
+					latitude = float(latitude)
+					altitude = float(altitude)
+					if station not in stations:
+						stations[station] = {}
+					stations[station][varname] = altitude
 
 	# Read station locations.
 	with open(pjoin("data", "noaa-weather", "ghcnd-stations.txt"), "r") as f:
@@ -1038,33 +1053,43 @@ def get_weather(kStates):
 	fips2weather = {}
 	for fips in fips2stations:
 
-		temp, prcp, snow = 0, 0, 0
-		n = [0, 0, 0]
+		temp, prcp, snow, altitude = [], [], [], []
 		for station_name in fips2stations[fips]:
 			if station_name not in stations:
 				continue
 			station = stations[station_name]
 			if 'temp' in station:
-				temp += station['temp']
-				n[0] += 1
+				temp.append(station['temp'])
 			if 'prcp' in station:
-				prcp += station['prcp']
-				n[1] += 1
+				prcp.append(station['prcp'])
 			if station.get('snow', None) is not None:
-				snow += station['snow']
-				n[2] += 1
+				snow.append(station['snow'])
+			if 'altitude' in station:
+				altitude.append(station['altitude'])
 
-		# Cast to numpy arrays so we can divide by zero..
+		noaa = {}
+		if len(prcp) > 0:
+			noaa['prcp'] = sum(prcp) / len(prcp)
+		else:
+			noaa['prcp'] = None
+		if len(snow) > 0:
+			noaa['snow'] = sum(snow) / len(snow)
+		else:
+			noaa['snow'] = None
+		if len(temp) > 0:
+			noaa['temp'] = sum(temp) / len(temp)
+		else:
+			noaa['temp'] = None
+		if len(altitude) > 0:
+			noaa['altitude'] = sum(altitude) / len(altitude)
+		else:
+			noaa['altitude'] = None
 		fips2weather[fips] = {
-			"noaa": {
-				"prcp": np.array(prcp) / np.array(n[1]),
-				"snow": np.array(snow) / np.array(n[2]),
-				"temp": np.array(temp) / np.array(n[0]),
-			}
+			"noaa": noaa
 		}
 
 		for k in fips2weather[fips]["noaa"]:
-			if math.isfinite(fips2weather[fips]["noaa"][k]):
+			if fips2weather[fips]["noaa"][k] is not None:
 				continue
 			# If fips isn't in fips2location then we're not even
 			# including the county in the dataset, so we can ignore
