@@ -881,7 +881,6 @@ def get_education():
 
 	return fips2edu
 
-
 def get_covid():
 	fips2covid = {}
 
@@ -895,7 +894,7 @@ def get_covid():
 
 			rows = [row for row in reader]
 			for row in rows:
-				for date in header[header.index('2020-05-04')::14]:
+				for date in [date for date in header if re.match(r"\d{4}-\d\d-01", date)]:
 					column = header.index(date)
 					fips = row[countyColumn]
 
@@ -913,6 +912,21 @@ def get_covid():
 
 					assert date not in fips2covid[fips][f"covid-{varname}"], (date, fips)
 					fips2covid[fips][f"covid-{varname}"][date] = int(row[column])
+
+	with open(pjoin('data', 'COVID-19_Vaccinations_in_the_United_States_County.csv'), 'r') as f:
+		reader = csv.reader(f, delimiter=',')
+		header = next(reader)
+		rows = [row for row in reader]
+
+	for row in rows[::-1]:
+		fips = row[1]
+		if not re.match(r"^\d\d/01/2021$", row[0]):
+			continue
+		if fips not in fips2covid:
+			continue
+		if 'covid-vaccination' not in fips2covid[fips]:
+			fips2covid[fips]['covid-vaccination'] = {}
+		fips2covid[fips]["covid-vaccination"][row[0]] = float(row[5])
 
 	return fips2covid
 
