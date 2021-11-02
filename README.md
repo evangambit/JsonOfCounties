@@ -198,7 +198,9 @@ If you want to use this data, most of the sources are from .gov websites.  The e
 
 15. Country industry data ("data/County_Business_Patterns.csv") is from the Census Bureau from https://data.census.gov/cedsci/table?q=CBP2019.CB1900CBP&g=0100000US.050000&n=N0200.00&tid=CBP2019.CB1900CBP&hidePreview=true&nkd=EMPSZES~001,LFO~001 and is not included in the repo because it is large (44MB) but is available in Google Drive [here](https://drive.google.com/file/d/1QIDt6uNEARaNrQK0db0jrMsVgY27soWs/view?usp=sharing).
 
-16. County health data from [county health rankings](https://www.countyhealthrankings.org) ([credits](https://www.countyhealthrankings.org/credits))
+16. County health data from [County Health Rankings](https://www.countyhealthrankings.org) ([credits](https://www.countyhealthrankings.org/credits))
+
+17. Life expectancy from the [Institute for Health Metrics and Evaluation](http://ghdx.healthdata.org/us-data) which I've copied to [this google sheet](https://docs.google.com/spreadsheets/d/14Z6waBMXiKBTRjYkCHo_HsIaXpwjVgfU/edit?usp=sharing&ouid=112327010154857432489&rtpof=true&sd=true)
 
 Note that this "counties.json" does NOT contain a superset of each data source.  For instance the racial/age demographic breakdown provided by "cc-est2019-alldata.csv" is extremely specific (giving race/sex break downs for every age bucket for the last 9 years!) but we don't include all of that in counties.json.
 
@@ -242,6 +244,8 @@ County Health Rankings & Roadmaps. (2021).  University of Wisconsin Population H
 
 Glasmeier, Amy K. Living Wage Calculator. 2020. Massachusetts Institute of Technology. livingwage.mit.edu. Please describe any changes or transformations that were made to the data.
 
+Institute for Health Metrics and Evaluation.  (2014).  United States Life Expectancy and Age-specific Mortality Risk by County. http://ghdx.healthdata.org/us-data
+
 McGovern, Anthony and Morris, Bill (2016). US County Level Presidential Results. Retrieved from: https://github.com/tonmcg/US_County_Level_Election_Results_08-16
 
 US Census Bureau. (2019). TIGER/Line Shapefile, 2017, nation, U.S., Current County and Equivalent National Shapefile - Data.gov. DATA.GOV. https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-county-and-equivalent-national-shapefile
@@ -255,3 +259,4 @@ U.S. Department of Agriculture. (2021). Educational attainment for the U.S., Sta
 USAFacts. (2020, August 11). US Coronavirus Cases and Deaths. USAFacts.Org. https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/
 
 Washington Post. (2020). washingtonpost/data-police-shootings. GitHub. https://github.com/washingtonpost/data-police-shootings
+
