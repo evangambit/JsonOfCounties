@@ -3,7 +3,7 @@
 import bson, code, copy, csv, json, math, os, re
 
 from scipy.ndimage import filters
-# import shapefile
+import shapefile
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,9 +12,8 @@ import os
 
 pjoin = os.path.join
 
-# pip install Shapely
-# from shapely import geometry
-# from shapely.geometry import Point
+from shapely import geometry
+from shapely.geometry import Point
 
 def pad(t, n, c=' '):
 	t = str(t)
@@ -1267,31 +1266,31 @@ if __name__ == '__main__':
 
 	merger.merge_with_fips(get_weather(merger.states))
 
-	A = []
-	states = {}
-	sf = shapefile.Reader(pjoin('data', 'SpatialJoin_CDs_to_Counties_Final.shp'))
-	for i, s in enumerate(sf):
-		if s.record.STATE_NAME not in states:
-			states[s.record.STATE_NAME] = {}
-		r = s.record
-		states[r.STATE_NAME][r.NAME] = {
-			"noaa": {
-				"males": r.MALES,
-				"females": r.FEMALES,
-				"families": r.FAMILIES,
-				"asian": r.ASIAN,
-				"black": r.BLACK,
-				"hispanic": r.HISPANIC,
-				"white": r.WHITE,
-				"mult_race": r.MULT_RACE,
-				"households": r.HOUSEHOLDS,
-				"median_age": r.MED_AGE,
-				"median_age_male": r.MED_AGE_M,
-				"median_age_female": r.MED_AGE_F,
-				"average_family_size": r.AVE_FAM_SZ,
-			}
-		}
-		A.append(r.AVE_FAM_SZ)
+	# A = []
+	# states = {}
+	# sf = shapefile.Reader(pjoin('data', 'SpatialJoin_CDs_to_Counties_Final.shp'))
+	# for i, s in enumerate(sf):
+	# 	if s.record.STATE_NAME not in states:
+	# 		states[s.record.STATE_NAME] = {}
+	# 	r = s.record
+	# 	states[r.STATE_NAME][r.NAME] = {
+	# 		"noaa": {
+	# 			"males": r.MALES,
+	# 			"females": r.FEMALES,
+	# 			"families": r.FAMILIES,
+	# 			"asian": r.ASIAN,
+	# 			"black": r.BLACK,
+	# 			"hispanic": r.HISPANIC,
+	# 			"white": r.WHITE,
+	# 			"mult_race": r.MULT_RACE,
+	# 			"households": r.HOUSEHOLDS,
+	# 			"median_age": r.MED_AGE,
+	# 			"median_age_male": r.MED_AGE_M,
+	# 			"median_age_female": r.MED_AGE_F,
+	# 			"average_family_size": r.AVE_FAM_SZ,
+	# 		}
+	# 	}
+	# 	A.append(r.AVE_FAM_SZ)
 
 	merger.merge_with_fips(get_zips())
 	merger.merge_with_fips(get_demographics())
