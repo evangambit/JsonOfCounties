@@ -473,14 +473,14 @@ def get_geometry():
 		center = poly.convex_hull.centroid
 
 		counties[fips] = {
-			"land_area": s.record.ALAND / 1e6,
-			"area": (s.record.ALAND + s.record.AWATER) / 1e6,
+			"land_area (km^2)": s.record.ALAND / 1e6,
+			"area (km^2)": (s.record.ALAND + s.record.AWATER) / 1e6,
 
 			# NOTE: we don't undo the "- 360" transformation
 			# above, since most use cases probably *prefer*
 			# not having to deal with the wrapping behavior.
-			"longitude": center.x,
-			"latitude": center.y,
+			"longitude (deg)": center.x,
+			"latitude (deg)": center.y,
 		}
 
 	return counties
@@ -626,7 +626,13 @@ def get_demographics():
 
 def get_cdc_deaths():
 	counties = {}
-	for varname, fn in zip(['suicides', 'firearm suicides', 'homicides', 'vehicle'], ["Compressed Mortality, 1999-2016 (all suicides).txt", "Compressed Mortality, 1999-2016 (firearm suicides).txt", "Compressed Mortality (assaults), 1999-2016.txt", "Compressed Mortality (land vehicle deaths; ICD-10 codes V01-V89), 1999-2016.txt"]):
+	fns = [
+		"Compressed Mortality, 1999-2019 (all suicides).txt",
+		"Compressed Mortality, 1999-2019 (firearm suicides).txt",
+		"Compressed Mortality (assaults), 1999-2019.txt",
+		"Compressed Mortality (land vehicle deaths; ICD-10 codes V01-V89), 1999-2019.txt"
+	]
+	for varname, fn in zip(['suicides', 'firearm suicides', 'homicides', 'vehicle'], fns):
 		with open(pjoin('data', 'CDC', fn), 'r') as f:
 			reader = csv.reader(f, delimiter='\t', quotechar='"')
 			rows = [row for row in reader]
@@ -1058,7 +1064,7 @@ def get_weather(kStates):
 	for sn in kStates:
 		for cn in kStates[sn]:
 			c = kStates[sn][cn]
-			fips2location[c['fips']] = (c['latitude'], c['longitude'])
+			fips2location[c['fips']] = (c['latitude (deg)'], c['longitude (deg)'])
 
 	with open(pjoin("data", "noaa-weather", "fips_to_stations.json"), "r") as f:
 		fips2stations = json.load(f)
@@ -1386,4 +1392,22 @@ if __name__ == '__main__':
 
 	with open('counties.bson', 'wb+') as f:
 		f.write(bson.dumps(merger.states))
+
+	# def get_columns(j):
+	# 	r = []
+	# 	for k in j:
+	# 		v = j[k]
+	# 		if type(v) is dict:
+	# 			r += [f'{k}.{x}' for x in get_columns(v)]
+	# 		elif type(v) is list:
+	# 			continue
+	# 		else:
+	# 			r.append(k)
+	# 	return r
+	# columns = get_columns(merger.states[sn][cn])
+
+	# with open('counties.csv') as f:
+	# 	writer = csv.writer(f)
+	# 	writer.writerow(columns)
+
 
