@@ -172,7 +172,7 @@ If you want to use this data, most of the sources are from .gov websites.  The e
 
 2. Population and demographics comes from the Census Bureau from a 2018 table ([here](https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-detail.html#par_textimage_1383669527)) (you need to re-encode it as utf-8).  This "United States" csv file is NOT included, as it is 154 MB, but can be downloaded from Google Drive [here](https://drive.google.com/file/d/11k-YAy4SM36jbXYUy5pylgo0mE-ZKudZ/view?usp=sharing).
 
-3. Deaths, suicides, and homicides come from the [CDC's website](https://wonder.cdc.gov/cmf-icd10.html), where you can request the totals for each county.  We manually requested totals for all deaths, suicides, firearm suicides, and homicides.  Adding other causes of deaths is easy if you can give us the [ICD-10 Codes](https://wonder.cdc.gov/wonder/help/cmf.html#ICD-10%20Codes) you're interested in.  This is the source of the vast majority of missing data (marked as null in the JSON), since the CDC suppresses data from counties when there are fewer than 10 cases.  Adult obesity rates for each state also comes from the CDC [here](https://www.cdc.gov/obesity/data/prevalence-maps.html#race), though New Jersey is missing so it's obesity rate comes from [here](https://www-doh.state.nj.us/doh-shad/indicator/complete_profile/Obese.html?ListCategoryFirst=x#:~:text=The%20age%2Dadjusted%20prevalence%20of%20obesity%20among%20New%20Jersey%20adults,to%2030.6%25%20for%20U.S.%20adults.).
+3. Deaths, suicides, and homicides come from the [CDC's website](https://wonder.cdc.gov/mcd.html), where you can request the totals for each county.  We manually requested totals for all deaths, suicides, firearm suicides, and homicides.  Adding other causes of deaths is easy if you can give us the [ICD-10 Codes](https://wonder.cdc.gov/wonder/help/cmf.html#ICD-10%20Codes) you're interested in.  This is the source of the vast majority of missing data (marked as null in the JSON), since the CDC suppresses data from counties when there are fewer than 10 cases.  Adult obesity rates for each state also comes from the CDC [here](https://www.cdc.gov/obesity/data/prevalence-maps.html#race), though New Jersey is missing so it's obesity rate comes from [here](https://www-doh.state.nj.us/doh-shad/indicator/complete_profile/Obese.html?ListCategoryFirst=x#:~:text=The%20age%2Dadjusted%20prevalence%20of%20obesity%20among%20New%20Jersey%20adults,to%2030.6%25%20for%20U.S.%20adults.).
 
 4. Labor statistics comes from [here](https://www.bls.gov/lau/#cntyaa) (the BLS).
 
@@ -236,7 +236,7 @@ Covid cases/deaths:
 
 Bureau of Labor Statistics. (2019). Local Area Unemployment Statistics Home Page. Local Area Unemployment Statistics. https://www.bls.gov/lau/#cntyaa
 
-Centers for Disease Control and Prevention. (2016). Compressed Mortality, 1999-2016 Request. Centers for Disease Control and Prevention (CDC). https://wonder.cdc.gov/cmf-icd10.html
+Centers for Disease Control and Prevention. (2016). Compressed Mortality, 1999-2016 Request. Centers for Disease Control and Prevention (CDC). https://wonder.cdc.gov/mcd.html
 
 Colley, N. (2020). US Zipcode to County State to FIPS Look Up. Data.World. https://data.world/niccolley/us-zipcode-to-county-state
 
