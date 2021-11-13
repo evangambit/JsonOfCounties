@@ -164,8 +164,6 @@ An example entry:
 }
 ```
 
-If you want to use this data, most of the sources are from .gov websites.  The exceptions are fatal police shooting data (from Washington Post), election data (from a variety of sources, see the [repo's readme](https://github.com/tonmcg/US_County_Level_Election_Results_08-16) for more info), and the driving/mobiity data (from Apple).
-
 ## Sources
 
 1. State geometry (location, area, etc.) comes from data.gov, specifically [here](https://catalog.data.gov/dataset/tiger-line-shapefile-2017-nation-u-s-current-county-and-equivalent-national-shapefile) (download "Shapefile Zip File").  This data is NOT included in the repository because it is 122 MB; you may download it from the source, or from Google Drive [here](https://drive.google.com/file/d/1RvdPYAx3l0wJeGwNEfDnFOZafthqS4_b/view?usp=sharing).  Regardless of where you download it from, save the corresponding directory inside the "data" directory.
