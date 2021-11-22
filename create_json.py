@@ -1023,21 +1023,33 @@ def get_weather(kStates):
 			("snow", "ann-snow-normal.txt"),
 			("temp", "ann-tavg-normal.txt"),
 			("altitude", "ghcnd-stations.txt"),
+			("monthy-temp", "mly-tavg-normal.txt")
 		]:
 		with open(pjoin("data", "noaa-weather", fn), "r") as f:
 			for line in f.readlines():
 				if fn != 'ghcnd-stations.txt':
-					station, val = re.split(r" +", line.strip())
-					assert val[-1] in "CSRPQ", repr(val)
-					val = float(val[:-1])
+					cells = re.split(r"\s+", line.strip())
+					station = cells[0]
+					vals = cells[1:]
+					for val in vals:
+						assert val[-1] in "CSRPQ", repr(val)
+					val0 = float(vals[0][:-1])
 					if station not in stations:
 						stations[station] = {}
 					if varname == "prcp":
-						stations[station][varname] = val / 100.0
+						stations[station][varname] = val0 / 100.0
 					elif varname == "snow":
-						stations[station][varname] = None if val < 0.0 else val / 10.0
+						stations[station][varname] = None if val0 < 0.0 else val0 / 10.0
+					elif varname == "temp":
+						stations[station][varname] = val0 / 10.0
+					elif varname == "monthy-temp":
+						assert len(vals) == 12, repr(vals)
+						stations[station]['temp-jan'] = float(vals[0][:-1]) / 10.0
+						stations[station]['temp-apr'] = float(vals[3][:-1]) / 10.0
+						stations[station]['temp-jul'] = float(vals[6][:-1]) / 10.0
+						stations[station]['temp-nov'] = float(vals[9][:-1]) / 10.0
 					else:
-						stations[station][varname] = val / 10.0
+						assert False
 				else:
 					line = re.split(' +', line.strip())[:4]
 					station, longitude, latitude, altitude = line
@@ -1069,52 +1081,45 @@ def get_weather(kStates):
 	with open(pjoin("data", "noaa-weather", "fips_to_stations.json"), "r") as f:
 		fips2stations = json.load(f)
 
+	kAllVarnames = [
+		'prcp', 'snow', 'temp', 'altitude', 'temp-jan', 'temp-apr', 'temp-jul', 'temp-nov'
+	]
+
 	fips2weather = {}
 	for fips in fips2stations:
+		if fips[:2] == '72':  # Ignore Puerto Rico
+			continue
 
-		temp, prcp, snow, altitude = [], [], [], []
+		validVals = {}
+		for vname in kAllVarnames:
+			validVals[vname] = []
 		for station_name in fips2stations[fips]:
 			if station_name not in stations:
 				continue
 			station = stations[station_name]
-			if 'temp' in station:
-				temp.append(station['temp'])
-			if 'prcp' in station:
-				prcp.append(station['prcp'])
-			if station.get('snow', None) is not None:
-				snow.append(station['snow'])
-			if 'altitude' in station:
-				altitude.append(station['altitude'])
+			for varname in station:
+				if station[varname] is None:
+					continue
+				validVals[varname].append(station[varname])
 
 		noaa = {}
-		if len(prcp) > 0:
-			noaa['prcp'] = sum(prcp) / len(prcp)
-		else:
-			noaa['prcp'] = None
-		if len(snow) > 0:
-			noaa['snow'] = sum(snow) / len(snow)
-		else:
-			noaa['snow'] = None
-		if len(temp) > 0:
-			noaa['temp'] = sum(temp) / len(temp)
-		else:
-			noaa['temp'] = None
-		if len(altitude) > 0:
-			noaa['altitude'] = sum(altitude) / len(altitude)
-		else:
-			noaa['altitude'] = None
-		fips2weather[fips] = {
-			"noaa": noaa
-		}
+		for varname in validVals:
+			if len(validVals[varname]) == 0:
+				noaa[varname] = None
+			else:
+				noaa[varname] = sum(validVals[varname]) / len(validVals[varname])
 
-		for k in fips2weather[fips]["noaa"]:
-			if fips2weather[fips]["noaa"][k] is not None:
+		if fips == '02270':  # Wade Hampton Area renamed
+			fips = '02158'
+		for k in noaa:
+			if noaa[k] is not None:
 				continue
 			# If fips isn't in fips2location then we're not even
 			# including the county in the dataset, so we can ignore
 			# it.
 			if fips not in fips2location:
-				fips2weather[fips]["noaa"][k] = None
+				print('yyy', fips)
+				noaa[k] = None
 				continue
 			# If we cannot find a value from a station within a
 			# county, we look for the nearest station.
@@ -1124,9 +1129,18 @@ def get_weather(kStates):
 			for i in I:
 				station_name = lines[i][0]
 				station = stations[station_name]
-				if k in station:
-					fips2weather[fips]["noaa"][k] = station[k]
+				if k in station and station[k] is not None:
+					noaa[k] = station[k]
 					break
+
+		for k in noaa:
+			if k not in noaa or noaa[k] is None:
+				print(fips)
+			noaa[k] = round(noaa[k] * 10) / 10
+
+		fips2weather[fips] = {
+			"noaa": noaa
+		}
 
 	return fips2weather
 

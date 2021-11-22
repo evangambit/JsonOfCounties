@@ -31,3 +31,8 @@ ftp://ftp.ncdc.noaa.gov/pub/data/normals/1981-2010/products/precipitation/ann-pr
 Avg temperature:
 
 ftp://ftp.ncdc.noaa.gov/pub/data/normals/1981-2010/products/temperature/ann-tavg-normal.txt
+
+Monthly Average Temperature:
+
+ftp://ftp.ncdc.noaa.gov/pub/data/normals/1981-2010/products/temperature/mly-tavg-normal.txt
+
