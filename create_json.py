@@ -1047,7 +1047,7 @@ def get_weather(kStates):
 						stations[station]['temp-jan'] = float(vals[0][:-1]) / 10.0
 						stations[station]['temp-apr'] = float(vals[3][:-1]) / 10.0
 						stations[station]['temp-jul'] = float(vals[6][:-1]) / 10.0
-						stations[station]['temp-nov'] = float(vals[9][:-1]) / 10.0
+						stations[station]['temp-oct'] = float(vals[9][:-1]) / 10.0
 					else:
 						assert False
 				else:
@@ -1082,7 +1082,7 @@ def get_weather(kStates):
 		fips2stations = json.load(f)
 
 	kAllVarnames = [
-		'prcp', 'snow', 'temp', 'altitude', 'temp-jan', 'temp-apr', 'temp-jul', 'temp-nov'
+		'prcp', 'snow', 'temp', 'altitude', 'temp-jan', 'temp-apr', 'temp-jul', 'temp-oct'
 	]
 
 	fips2weather = {}
