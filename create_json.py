@@ -690,7 +690,8 @@ def get_cdc_deaths():
 # https://www.bls.gov/lau/#cntyaa
 def get_labor_force():
 	counties = {}
-	for year in ['2004', '2008', '2012', '2016', '2020']:
+	years = ['2004', '2008', '2012', '2016', '2020']
+	for year in years:
 		with open(pjoin('data', 'bls', year + '.txt'), 'r') as f:
 			lines = f.readlines()
 			for line in lines[6:]:
@@ -714,13 +715,15 @@ def get_labor_force():
 				counties[fips]['bls'][year] = c
 
 	# Missing kalawao county
-	assert "15005" not in counties
-	counties["15005"] = {
-		"labor_force": None,
-		"employed": None,
-		"unemployed": None,
-		"unemployment_rate": None
-	}
+	assert '15005' not in counties
+	counties['15005'] = { 'bls': {} }
+	for year in years:
+		counties['15005']['bls'][year] = {
+			'labor_force': None,
+			'employed': None,
+			'unemployed': None,
+			'unemployment_rate': None,
+		}
 
 	return counties
 
@@ -1149,42 +1152,6 @@ daysBeforeMonth = [
 ]
 daysBeforeMonth = np.cumsum(daysBeforeMonth)
 
-def get_mobility():
-	with open(pjoin('data', 'applemobilitytrends-2021-01-09.csv'), 'r') as f:
-		reader = csv.reader(f, delimiter=',')
-		header = next(reader)
-		rows = [row for row in reader]
-	rows = [r for r in rows if r[5] == 'United States' and r[0] == 'county']
-	rows = [[r[2], r[1], r[4]] + r[6:] for r in rows]
-
-	X = header[6:]
-
-	states = {}
-	for row in rows:
-		mode, county, state = row[:3]
-		if state in ['Puerto Rico', 'Guam', 'Virgin Islands']:
-			continue
-		r = row[3:]
-		Y = []
-		for i in range(len(r)):
-			if len(r[i]) > 0:
-				Y.append(float(r[i]))
-			elif len(r[i-1]) > 0:
-				Y.append(float(r[i - 1]))
-			else:
-				Y.append(float(r[i + 1]))
-		if state not in states:
-			states[state] = {}
-		if county not in states[state]:
-			states[state][county] = {}
-		if mode not in states[state][county]:
-			states[state][county][mode] = {}
-		Y = filters.uniform_filter(Y, 14)
-		for x, y in zip(X[::14], Y[::14]):
-			states[state][county][mode][x] = round(int(y))
-
-	return states
-
 kAllFips = set()
 with open('base.json', 'r') as f:
 	base = json.load(f)
@@ -1363,8 +1330,6 @@ if __name__ == '__main__':
 	merger.merge(get_avg_income())
 	merger.merge_with_fips(get_covid())
 
-	merger.merge(get_mobility(), allow_missing=True)
-
 	# We're missing election data for Alaska and Kalawao County, HI
 	merger.merge(get_elections(), missing={
 		"Alaska": set(merger.states["Alaska"].keys()),
@@ -1407,21 +1372,35 @@ if __name__ == '__main__':
 	with open('counties.bson', 'wb+') as f:
 		f.write(bson.dumps(merger.states))
 
-	# def get_columns(j):
-	# 	r = []
-	# 	for k in j:
-	# 		v = j[k]
-	# 		if type(v) is dict:
-	# 			r += [f'{k}.{x}' for x in get_columns(v)]
-	# 		elif type(v) is list:
-	# 			continue
-	# 		else:
-	# 			r.append(k)
-	# 	return r
-	# columns = get_columns(merger.states[sn][cn])
+	# Write as CSV
+	def flatten_json(j):
+		r = []
+		for k in j:
+			v = j[k]
+			if type(v) is dict:
+				r += [(f'{k}.{k2}', v) for k2, v in flatten_json(v)]
+			elif type(v) is list:
+				r.append((k, ' '.join(v)))
+			else:
+				r.append((k, v))
+		return r
 
-	# with open('counties.csv') as f:
-	# 	writer = csv.writer(f)
-	# 	writer.writerow(columns)
+	with open('counties.json', 'r') as f:
+		counties = json.load(f)
+
+	rows = []
+	for stateName in counties:
+		state = counties[stateName]
+		for countyName in state:
+			county = state[countyName]
+			if 'industry' in county:
+				del county['industry']
+			rows.append(flatten_json(county))
+
+	with open('counties.csv', 'w+') as f:
+		writer = csv.writer(f)
+		writer.writerow([x[0] for x in rows[0]])
+		for row in rows:
+			writer.writerow([x[1] for x in row])
 
 
