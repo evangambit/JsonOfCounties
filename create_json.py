@@ -19,7 +19,7 @@ def pad(t, n, c=' '):
 	t = str(t)
 	return max(n - len(t), 0) * c + t
 
-abbreviation_to_name = {
+state_abbreviation_to_name = {
 	"AL": "Alabama",
 	"AK": "Alaska",
 	"AZ": "Arizona",
@@ -74,6 +74,10 @@ abbreviation_to_name = {
 	"WI": "Wisconsin",
 	"WY": "Wyoming",
 }
+
+state_name_to_abbreviation = {}
+for k in state_abbreviation_to_name:
+	state_name_to_abbreviation[state_abbreviation_to_name[k]] = k
 
 fips_code_to_name = {
 	"01": "Alabama",
@@ -596,28 +600,28 @@ def get_demographics():
 				# We assume this is the first row we see.
 				assert fips not in counties
 				counties[fips] = {}
-				counties[fips]['race_demographics'] = {}
-				counties[fips]['age_demographics'] = {}
+				counties[fips]['race'] = {}
+				counties[fips]['age'] = {}
 
 				counties[fips]['male'] = int(row[8])
 				counties[fips]['female'] = int(row[9])
 
 				counties[fips]['population'] = total
 
-				counties[fips]['race_demographics']['non_hispanic_white_alone_male'] = int(row[34]) / total
-				counties[fips]['race_demographics']['non_hispanic_white_alone_female'] = int(row[35]) / total
+				counties[fips]['race']['non_hispanic_white_alone_male'] = int(row[34]) / total
+				counties[fips]['race']['non_hispanic_white_alone_female'] = int(row[35]) / total
 
-				counties[fips]['race_demographics']['black_alone_male'] = int(row[12]) / total
-				counties[fips]['race_demographics']['black_alone_female'] = int(row[13]) / total
+				counties[fips]['race']['black_alone_male'] = int(row[12]) / total
+				counties[fips]['race']['black_alone_female'] = int(row[13]) / total
 
-				counties[fips]['race_demographics']['asian_alone_male'] = int(row[16]) / total
-				counties[fips]['race_demographics']['asian_alone_female'] = int(row[17]) / total
+				counties[fips]['race']['asian_alone_male'] = int(row[16]) / total
+				counties[fips]['race']['asian_alone_female'] = int(row[17]) / total
 
-				counties[fips]['race_demographics']['hispanic_male'] = int(row[56]) / total
-				counties[fips]['race_demographics']['hispanic_female'] = int(row[57]) / total
+				counties[fips]['race']['hispanic_male'] = int(row[56]) / total
+				counties[fips]['race']['hispanic_female'] = int(row[57]) / total
 
 			else:
-				counties[fips]['age_demographics'][age_code_to_group[int(row[6])]] = int(row[7]) / counties[fips]['population']
+				counties[fips]['age'][age_code_to_group[int(row[6])]] = int(row[7]) / counties[fips]['population']
 
 	for fip in counties:
 		counties[fip]['population'] = populations[fip]
@@ -643,7 +647,7 @@ def get_cdc_deaths():
 		for row in rows:
 			_, county, fips, deaths, _, _ = row
 			county = county.lower()
-			state = abbreviation_to_name[county.split(', ')[-1].upper()]
+			state = state_abbreviation_to_name[county.split(', ')[-1].upper()]
 			county = ', '.join(county.split(', ')[:-1])
 
 			# These counties changed their names recently, and rows with
@@ -735,7 +739,7 @@ def get_fatal_police_shootings():
 				shootings = json.load(f)
 
 				for k in shootings:
-					state_name = abbreviation_to_name[k[-2:].upper()]
+					state_name = state_abbreviation_to_name[k[-2:].upper()]
 					if state_name not in states:
 						states[state_name] = {}
 					state = states[state_name]
@@ -762,7 +766,7 @@ def get_police_deaths():
 		cause = lines[i + 2]
 		F[cause] = F.get(cause, 0) + 1
 		location = lines[i + 3]
-		state = abbreviation_to_name[location[-2:]]
+		state = state_abbreviation_to_name[location[-2:]]
 		county = location[:-4].lower()
 		if state not in states:
 			states[state] = {}
@@ -799,7 +803,7 @@ def get_avg_income():
 					loc = loc[:-1]
 				assert loc[-4:-2] == ', '
 				county = loc[:-4].lower()
-				state = abbreviation_to_name[loc[-2:]]
+				state = state_abbreviation_to_name[loc[-2:]]
 
 				if state not in states:
 					states[state] = {}
@@ -952,7 +956,7 @@ def get_elections():
 			# American Samoa, Northern Mariana Islands, Puerto Rico
 			if state in ['AS', 'MP', 'PR']:
 				continue
-			fips_to_county[code] = (county.lower(), abbreviation_to_name[state])
+			fips_to_county[code] = (county.lower(), state_abbreviation_to_name[state])
 
 	with open(pjoin('data', 'US_County_Level_Presidential_Results_08-16.csv'), 'r') as f:
 		reader = csv.reader(f, delimiter=',')
@@ -1159,25 +1163,6 @@ for state_name in base:
 	for country_name in base[state_name]:
 		kAllFips.add(base[state_name][country_name]['fips'])
 
-def get_num_police():
-	counties = {}
-	sf = shapefile.Reader(pjoin('data', 'Local_Law_Enforcement_Locations', 'Local_Law_Enforcement.shp'))
-	for i, s in enumerate(sf):
-		r = s.record
-		if r.POPULATION != -999:
-			assert r.POPULATION >= 0
-			counties[r.COUNTYFIPS] = counties.get(r.COUNTYFIPS, 0) + r.POPULATION
-	for fips in kAllFips:
-		if fips in counties:
-			counties[fips] = {
-				"num_police": counties[fips]
-			}
-		else:
-			counties[fips] = {
-				"num_police": None
-			}
-	return counties
-
 def get_expenses():
 	def dollar2float(x):
 		return float(x.replace('$', '').replace(',', ''))
@@ -1243,7 +1228,7 @@ def get_life_expectancy():
 		header = next(reader)
 		header = next(reader)
 		rows = [row for row in reader]
-	states = list(abbreviation_to_name.values())
+	states = list(state_abbreviation_to_name.values())
 	x = header.index('Life expectancy, 2014*')
 
 	r = {}
@@ -1297,7 +1282,6 @@ if __name__ == '__main__':
 	merger.merge_with_fips(get_demographics())
 	merger.merge_with_fips(get_cdc_deaths())
 	merger.merge_with_fips(get_labor_force())
-	merger.merge_with_fips(get_num_police())
 	merger.merge_with_fips(get_life_expectancy())
 
 	# Fatal police shootings are unique in that we don't have an
@@ -1366,11 +1350,21 @@ if __name__ == '__main__':
 	# Washington DC missing
 	merger.merge_with_fips(get_health(), missing={'11001'})
 
-	with open('counties.json', 'w+') as f:
-		json.dump(merger.states, f, indent=2)
+	# Convert from { "Alabama": { "clay county": { "fips": "01027" } } } to [ { "fips": "01027", name": "clay county", "state": "AL" } ]
+	counties = []
+	for stateName in merger.states:
+		state = merger.states[stateName]
+		for countyName in state:
+			county = state[countyName]
+			fips = county['fips']
+			assert 'name' not in county
+			county['name'] = countyName
+			assert 'state' not in county
+			county['state'] = state_name_to_abbreviation[stateName]
+			counties.append(county)
 
-	with open('counties.bson', 'wb+') as f:
-		f.write(bson.dumps(merger.states))
+	with open('counties.json', 'w+') as f:
+		json.dump(counties, f)
 
 	# Write as CSV
 	def flatten_json(j):
@@ -1389,18 +1383,48 @@ if __name__ == '__main__':
 		counties = json.load(f)
 
 	rows = []
-	for stateName in counties:
-		state = counties[stateName]
-		for countyName in state:
-			county = state[countyName]
-			if 'industry' in county:
-				del county['industry']
-			rows.append(flatten_json(county))
+	fips = []
+	header = set()
+	for county in counties:
+		if 'industry' in county:
+			del county['industry']
+		rows.append(flatten_json(county))
+		fips.append(county['fips'])
+		if county['population']['2019'] > 1_000_000:
+			for name, value in rows[-1]:
+				header.add(name)
+
+	header = list(header)
+	header.sort()
 
 	with open('counties.csv', 'w+') as f:
 		writer = csv.writer(f)
-		writer.writerow([x[0] for x in rows[0]])
-		for row in rows:
-			writer.writerow([x[1] for x in row])
+		writer.writerow(header)
+		for row, fip in zip(rows, fips):
+			A = []
+			row.sort()
+			assert len(header) >= len(row)
+			i = 0
+			for colname in header:
+				if row[i][0] == colname:
+					if row[i][1] is None:
+						A.append('')
+					elif type(row[i][1]) is float:
+						sign = 1 if row[i][1] > 0 else 0
+						val = abs(row[i][1])
+						if val < 1e-10:
+							A.append(0.0)
+						elif math.isnan(val):
+							A.append('')
+						else:
+							exp = int(math.log(val, 10))
+							A.append('%.3f' % (val / (10**exp)) + 'e' + str(exp))
+					else:
+						A.append(row[i][1])
+					i += 1
+				else:
+					A.append('')
+			assert len(A) == len(header)
+			writer.writerow(A)
 
 
