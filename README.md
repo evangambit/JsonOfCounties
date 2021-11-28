@@ -7,161 +7,158 @@ While most of this repository is dedicated to providing the data and code that I
 An example entry:
 
 ```JavaScript
-{
+[
   // ...
-  "Wisconsin": {
-    // ...
-    "waukesha county": {
-      "fips": "55133",
-      "land_area": 1423.675192,
-      "area": 1503.52665,
-      "longitude": -88.3041411471765,
-      "latitude": 43.01843887416162,
-      "noaa": {
-        "prcp": 35.03,
-        "snow": 39.5,
-        "temp": 46.53333333333333
+  {
+    "state": "WI",
+    "name": "waukesha county",
+    "fips": "55133",
+    "land_area": 1423.675192,
+    "area": 1503.52665,
+    "longitude": -88.3041411471765,
+    "latitude": 43.01843887416162,
+    "noaa": {
+      "prcp": 35.03,
+      "snow": 39.5,
+      "temp": 46.53333333333333
+    },
+    "zip-codes": [
+      "53186",
+      "53018",
+      // ...
+      "53187"
+    ],
+    "race": {
+      "non_hispanic_white_alone_male": 0.4318527058520824,
+      "non_hispanic_white_alone_female": 0.44800568038436606,
+      "black_alone_male": 0.009233098629879416,
+      "black_alone_female": 0.008310283573892003,
+      "asian_alone_male": 0.01858247690488325,
+      "asian_alone_female": 0.01985413089624392,
+      "hispanic_male": 0.024772512481506588,
+      "hispanic_female": 0.02434450442604862
+    },
+    "age": {
+      "0-4": 0.05157868173518919,
+      "5-9": 0.05712546821112425,
+      // ...
+      "80-84": 0.022882349739484113,
+      "85+": 0.0260045819128249
+    },
+    "male": 198880,
+    "female": 205318,
+    "population": {
+      "2010": 390028,
+      "2011": 390837,
+      // ...
+      "2019": 404198
+    },
+    "deaths": {
+      "suicides": 722,
+      "firearm suicides": 341,
+      "homicides": 65,
+      "vehicle": 301
+    },
+    "bls": {
+      "2004": {
+        "labor_force": 212347.0,
+        "employed": 203341.0,
+        "unemployed": 9006.0
       },
-      "zip-codes": [
-        "53186",
-        "53018",
-        // ...
-        "53187"
-      ],
-      "race_demographics": {
-        "non_hispanic_white_alone_male": 0.4318527058520824,
-        "non_hispanic_white_alone_female": 0.44800568038436606,
-        "black_alone_male": 0.009233098629879416,
-        "black_alone_female": 0.008310283573892003,
-        "asian_alone_male": 0.01858247690488325,
-        "asian_alone_female": 0.01985413089624392,
-        "hispanic_male": 0.024772512481506588,
-        "hispanic_female": 0.02434450442604862
+      "2008": {
+        "labor_force": 214460.0,
+        "employed": 205879.0,
+        "unemployed": 8581.0
       },
-      "age_demographics": {
-        "0-4": 0.05157868173518919,
-        "5-9": 0.05712546821112425,
-        // ...
-        "80-84": 0.022882349739484113,
-        "85+": 0.0260045819128249
+      "2012": {
+        "labor_force": 217605.0,
+        "employed": 205086.0,
+        "unemployed": 12519.0
       },
-      "male": 198880,
-      "female": 205318,
-      "population": {
-        "2010": 390028,
-        "2011": 390837,
-        // ...
-        "2019": 404198
-      },
-      "deaths": {
-        "suicides": 722,
-        "firearm suicides": 341,
-        "homicides": 65,
-        "vehicle": 301
-      },
-      "bls": {
-        "2004": {
-          "labor_force": 212347.0,
-          "employed": 203341.0,
-          "unemployed": 9006.0
-        },
-        "2008": {
-          "labor_force": 214460.0,
-          "employed": 205879.0,
-          "unemployed": 8581.0
-        },
-        "2012": {
-          "labor_force": 217605.0,
-          "employed": 205086.0,
-          "unemployed": 12519.0
-        },
-        "2016": {
-          "labor_force": 225184.0,
-          "employed": 217425.0,
-          "unemployed": 7759.0
-        }
-      },
-      "num_police": 1011,
-      "fatal_police_shootings": {
-        "total-2017": 1.0,
-        "unarmed-2017": 0.0,
-        "firearmed-2017": 1.0,
-        "total-2018": 0.0,
-        "unarmed-2018": 0.0,
-        "firearmed-2018": 0.0,
-        "total-2019": 1.0,
-        "unarmed-2019": 0.0,
-        "firearmed-2019": 0.0
-      },
-      "police_deaths": 0,
-      "avg_income": 72650,
-      "covid-deaths": {
-        "2020-05-04": 20,
-        "2020-05-11": 23,
-        // ...
-        "2021-01-04": 344
-      },
-      "covid-confirmed": {
-        "2020-05-04": 367,
-        "2020-05-11": 409,
-        // ...
-        "2021-01-04": 37600
-      },
-      "driving": {
-        "2020-01-13": 107,
-        "2020-01-27": 107,
-        // ...
-        "2020-12-28": 100
-      },
-      "walking": {
-        "2020-01-13": 104,
-        "2020-01-27": 108,
-        // ...
-        "2020-12-28": 141
-      },
-      "elections": {
-        "2008": {
-          "total": 232897,
-          "dem": 85339,
-          "gop": 145152
-        },
-        // ...
-        "2020": {
-          "total": 267214,
-          "dem": 103906,
-          "gop": 159649
-        }
-      }
-      "edu": {
-        "less-than-high-school": 3.8,
-        "high-school": 22.7,
-        "some-college": 29.1,
-        "bachelors+": 44.5
-      }
-      "poverty-rate": 4.7,
-      "cost-of-living": {
-        "living_wage": 14.32,
-        "food_costs": 3246.0,
-        "medical_costs": 2754.0,
-        "housing_costs": 7536.0,
-        "tax_costs": 6319.0
-      },
-      "industry": {
-        "Agriculture, forestry, fishing and hunting": {
-          "payroll": 942000,
-          "employees": 32
-        },
-        // ...
-        "Industries not classified": {
-          "payroll": 197000,
-          "employees": 6
-        }
+      "2016": {
+        "labor_force": 225184.0,
+        "employed": 217425.0,
+        "unemployed": 7759.0
       }
     },
-    // ...
+    "fatal_police_shootings": {
+      "total-2017": 1.0,
+      "unarmed-2017": 0.0,
+      "firearmed-2017": 1.0,
+      "total-2018": 0.0,
+      "unarmed-2018": 0.0,
+      "firearmed-2018": 0.0,
+      "total-2019": 1.0,
+      "unarmed-2019": 0.0,
+      "firearmed-2019": 0.0
+    },
+    "police_deaths": 0,
+    "avg_income": 72650,
+    "covid-deaths": {
+      "2020-05-04": 20,
+      "2020-05-11": 23,
+      // ...
+      "2021-01-04": 344
+    },
+    "covid-confirmed": {
+      "2020-05-04": 367,
+      "2020-05-11": 409,
+      // ...
+      "2021-01-04": 37600
+    },
+    "driving": {
+      "2020-01-13": 107,
+      "2020-01-27": 107,
+      // ...
+      "2020-12-28": 100
+    },
+    "walking": {
+      "2020-01-13": 104,
+      "2020-01-27": 108,
+      // ...
+      "2020-12-28": 141
+    },
+    "elections": {
+      "2008": {
+        "total": 232897,
+        "dem": 85339,
+        "gop": 145152
+      },
+      // ...
+      "2020": {
+        "total": 267214,
+        "dem": 103906,
+        "gop": 159649
+      }
+    }
+    "edu": {
+      "less-than-high-school": 3.8,
+      "high-school": 22.7,
+      "some-college": 29.1,
+      "bachelors+": 44.5
+    }
+    "poverty-rate": 4.7,
+    "cost-of-living": {
+      "living_wage": 14.32,
+      "food_costs": 3246.0,
+      "medical_costs": 2754.0,
+      "housing_costs": 7536.0,
+      "tax_costs": 6319.0
+    },
+    "industry": {
+      "Agriculture, forestry, fishing and hunting": {
+        "payroll": 942000,
+        "employees": 32
+      },
+      // ...
+      "Industries not classified": {
+        "payroll": 197000,
+        "employees": 6
+      }
+    }
   },
   // ...
-}
+]
 ```
 
 ## Sources
@@ -188,17 +185,15 @@ An example entry:
 
 11. Weather data comes from the NOAA (see data/noaa-weather/README.md for details).  Temperature is given in Fahrenheight and length is given in inches.  It's not clear why some regions have more snowfall than precipitation.  This would seem to suggest that either snowfall doesn't count as "precipitation" in these measurements, or they're doing something like switching between melted and unmelted measurements. Altitude is the average altitude of a weather station.  This is clearly not the same as the average altitude of the county (which I don't think is available – the USGS doesn't provide it at least) but should hopefully serve as a crude proxy.
 
-12. Number of police is from [ArcGIS Hub](https://hub.arcgis.com/datasets/c8403fea013f44b8a7bb0074495beda8_0) (download the "Shapefile" directory into this repository's data/ directory).  Note that many organizations have missing numbers here.  County totals ignore these organizations, so one should expect these numbers to be underestimates.  Also there isn't (in general) a neat mapping from counties to police jurisdictions (or vice versa).  *Use this data with caution*.
+12. [Educational attainment and poverty-rates](https://www.ers.usda.gov/data-products/county-level-data-sets/download-data/) are from the Census Bureau but prepared by the USDA.
 
-13. [Educational attainment and poverty-rates](https://www.ers.usda.gov/data-products/county-level-data-sets/download-data/) are from the Census Bureau but prepared by the USDA.
+13. Cost of living is provided by Amy Glasmeier at https://livingwage.mit.edu/ for households with 1 adult and 0 children.  She gets her data from the Bureau of Labor Statistics.
 
-14. Cost of living is provided by Amy Glasmeier at https://livingwage.mit.edu/ for households with 1 adult and 0 children.  She gets her data from the Bureau of Labor Statistics.
+14. Country industry data ("data/County_Business_Patterns.csv") is from the Census Bureau from https://data.census.gov/cedsci/table?q=CBP2019.CB1900CBP&g=0100000US.050000&n=N0200.00&tid=CBP2019.CB1900CBP&hidePreview=true&nkd=EMPSZES~001,LFO~001 and is not included in the repo because it is large (44MB) but is available in Google Drive [here](https://drive.google.com/file/d/1QIDt6uNEARaNrQK0db0jrMsVgY27soWs/view?usp=sharing).
 
-15. Country industry data ("data/County_Business_Patterns.csv") is from the Census Bureau from https://data.census.gov/cedsci/table?q=CBP2019.CB1900CBP&g=0100000US.050000&n=N0200.00&tid=CBP2019.CB1900CBP&hidePreview=true&nkd=EMPSZES~001,LFO~001 and is not included in the repo because it is large (44MB) but is available in Google Drive [here](https://drive.google.com/file/d/1QIDt6uNEARaNrQK0db0jrMsVgY27soWs/view?usp=sharing).
+15. County health data from [County Health Rankings](https://www.countyhealthrankings.org) ([credits](https://www.countyhealthrankings.org/credits))
 
-16. County health data from [County Health Rankings](https://www.countyhealthrankings.org) ([credits](https://www.countyhealthrankings.org/credits))
-
-17. Life expectancy from the [Institute for Health Metrics and Evaluation](http://ghdx.healthdata.org/us-data) which I've copied to [this google sheet](https://docs.google.com/spreadsheets/d/14Z6waBMXiKBTRjYkCHo_HsIaXpwjVgfU/edit?usp=sharing&ouid=112327010154857432489&rtpof=true&sd=true)
+16. Life expectancy from the [Institute for Health Metrics and Evaluation](http://ghdx.healthdata.org/us-data) which I've copied to [this google sheet](https://docs.google.com/spreadsheets/d/14Z6waBMXiKBTRjYkCHo_HsIaXpwjVgfU/edit?usp=sharing&ouid=112327010154857432489&rtpof=true&sd=true)
 
 Note that this "counties.json" does NOT contain a superset of each data source.  For instance the racial/age demographic breakdown provided by "cc-est2019-alldata.csv" is extremely specific (giving race/sex break downs for every age bucket for the last 9 years!) but we don't include all of that in counties.json.
 
@@ -226,8 +221,6 @@ $ python create_json.py
 ## APA Citations
 
 Apple. (2020, July 24). COVID‑19 - Mobility Trends Reports. COVID‑19 - Mobility Trends Reports. https://www.apple.com/covid19/mobility
-
-ArcGIS. (2020).  Local Law Enforcement Locations.  ArcGIS Hub.  https://hub.arcgis.com/datasets/c8403fea013f44b8a7bb0074495beda8_0
 
 Bureau of Economic Analysis. (2020). BEA : Regional Economic Accounts: Download. BEA : Regional Economic Accounts. https://apps.bea.gov/regional/downloadzip.cfm
 Covid cases/deaths:
