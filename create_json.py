@@ -1364,7 +1364,7 @@ if __name__ == '__main__':
 			counties.append(county)
 
 	with open('counties.json', 'w+') as f:
-		json.dump(counties, f)
+		json.dump(counties, f, indent=1)
 
 	# Write as CSV
 	def flatten_json(j):
