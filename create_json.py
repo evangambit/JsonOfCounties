@@ -1371,7 +1371,7 @@ if __name__ == '__main__':
 	# Convert from JSON to CSV. Thanks to ejohnson-amerilife for the code.
 	df_county = pd.read_json('counties.json').dropna()
 	columns_with_dicts=[
-	    'age', 'noaa', 'population',
+	    'age', 'race', 'noaa', 'population',
 	    'deaths', 'bls', 'fatal_police_shootings', 
 	    'elections', 'edu', 'cost-of-living', 'industry', 'health'
 	]
