@@ -15,6 +15,8 @@ pjoin = os.path.join
 from shapely import geometry
 from shapely.geometry import Point
 
+import pandas as pd
+
 def pad(t, n, c=' '):
 	t = str(t)
 	return max(n - len(t), 0) * c + t
@@ -1366,65 +1368,15 @@ if __name__ == '__main__':
 	with open('counties.json', 'w+') as f:
 		json.dump(counties, f, indent=1)
 
-	# Write as CSV
-	def flatten_json(j):
-		r = []
-		for k in j:
-			v = j[k]
-			if type(v) is dict:
-				r += [(f'{k}.{k2}', v) for k2, v in flatten_json(v)]
-			elif type(v) is list:
-				r.append((k, ' '.join(v)))
-			else:
-				r.append((k, v))
-		return r
-
-	with open('counties.json', 'r') as f:
-		counties = json.load(f)
-
-	rows = []
-	fips = []
-	header = set()
-	for county in counties:
-		if 'industry' in county:
-			del county['industry']
-		rows.append(flatten_json(county))
-		fips.append(county['fips'])
-		if county['population']['2019'] > 1_000_000:
-			for name, value in rows[-1]:
-				header.add(name)
-
-	header = list(header)
-	header.sort()
-
-	with open('counties.csv', 'w+') as f:
-		writer = csv.writer(f)
-		writer.writerow(header)
-		for row, fip in zip(rows, fips):
-			A = []
-			row.sort()
-			assert len(header) >= len(row)
-			i = 0
-			for colname in header:
-				if row[i][0] == colname:
-					if row[i][1] is None:
-						A.append('')
-					elif type(row[i][1]) is float:
-						sign = 1 if row[i][1] > 0 else 0
-						val = abs(row[i][1])
-						if val < 1e-10:
-							A.append(0.0)
-						elif math.isnan(val):
-							A.append('')
-						else:
-							exp = int(math.log(val, 10))
-							A.append('%.3f' % (val / (10**exp)) + 'e' + str(exp))
-					else:
-						A.append(row[i][1])
-					i += 1
-				else:
-					A.append('')
-			assert len(A) == len(header)
-			writer.writerow(A)
-
-
+	# Convert from JSON to CSV. Thanks to ejohnson-amerilife for the code.
+	df_county = pd.read_json('counties.json').dropna()
+	columns_with_dicts=[
+	    'age', 'noaa', 'population',
+	    'deaths', 'bls', 'fatal_police_shootings', 
+	    'elections', 'edu', 'cost-of-living', 'industry', 'health'
+	]
+	for col in columns_with_dicts:
+	    df_county = df_county.join(pd.json_normalize(df_county[col]).add_prefix(f'{col}.')).drop(
+	        columns=[col]
+	    )
+	df_county.to_csv('counties.csv', index=False)
