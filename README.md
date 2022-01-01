@@ -10,9 +10,9 @@ An example entry:
 [
   // ...
   {
-    "state": "WI",
     "name": "waukesha county",
     "fips": "55133",
+    "state": "WI",
     "land_area": 1423.675192,
     "area": 1503.52665,
     "longitude": -88.3041411471765,

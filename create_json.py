@@ -17,6 +17,17 @@ from shapely.geometry import Point
 
 import pandas as pd
 
+def flatten_json(j, r = None, prefix = [], delimiter = '/'):
+	if r is None:
+		r = {}
+	for k in j:
+		assert delimiter not in k, k
+		if type(j[k]) is dict:
+			flatten_json(j[k], r, prefix + [k])
+		else:
+			r[delimiter.join(prefix + [k])] = j[k]
+	return r
+
 def pad(t, n, c=' '):
 	t = str(t)
 	return max(n - len(t), 0) * c + t
@@ -720,17 +731,6 @@ def get_labor_force():
 				# c['unemployment_rate'] = float(unemployment_rate)
 				counties[fips]['bls'][year] = c
 
-	# Missing kalawao county
-	assert '15005' not in counties
-	counties['15005'] = { 'bls': {} }
-	for year in years:
-		counties['15005']['bls'][year] = {
-			'labor_force': None,
-			'employed': None,
-			'unemployed': None,
-			'unemployment_rate': None,
-		}
-
 	return counties
 
 def get_fatal_police_shootings():
@@ -933,6 +933,10 @@ def get_covid():
 		header = next(reader)
 		rows = [row for row in reader]
 
+	def fix_vac_date(date):
+		month, day, year = date.split('/')
+		return '-'.join([year, month, day])
+
 	for row in rows[::-1]:
 		fips = row[1]
 		if not re.match(r"^\d\d/01/2021$", row[0]):
@@ -941,7 +945,7 @@ def get_covid():
 			continue
 		if 'covid-vaccination' not in fips2covid[fips]:
 			fips2covid[fips]['covid-vaccination'] = {}
-		fips2covid[fips]["covid-vaccination"][row[0]] = float(row[5])
+		fips2covid[fips]["covid-vaccination"][fix_vac_date(row[0])] = float(row[5])
 
 	return fips2covid
 
@@ -1283,7 +1287,7 @@ if __name__ == '__main__':
 	merger.merge_with_fips(get_zips())
 	merger.merge_with_fips(get_demographics())
 	merger.merge_with_fips(get_cdc_deaths())
-	merger.merge_with_fips(get_labor_force())
+	merger.merge_with_fips(get_labor_force(), missing=set(["02201", "02232", "02280", "02105", "02195", "02198", "02230", "02275", "15005"]))
 	merger.merge_with_fips(get_life_expectancy())
 
 	# Fatal police shootings are unique in that we don't have an
@@ -1365,18 +1369,20 @@ if __name__ == '__main__':
 			county['state'] = state_name_to_abbreviation[stateName]
 			counties.append(county)
 
+	# Create new dictionary for each county so that important keys (name, fips, etc.) are at the front.
+	for i, county in enumerate(counties):
+		c = {}
+		for k in ['name', 'fips', 'state']:
+			c[k] = county[k]
+		for k in county:
+			c[k] = county[k]
+		counties[i] = c
+
 	with open('counties.json', 'w+') as f:
 		json.dump(counties, f, indent=1)
 
-	# Convert from JSON to CSV. Thanks to ejohnson-amerilife for the code.
-	df_county = pd.read_json('counties.json').dropna()
-	columns_with_dicts=[
-	    'age', 'race', 'noaa', 'population',
-	    'deaths', 'bls', 'fatal_police_shootings', 
-	    'elections', 'edu', 'cost-of-living', 'industry', 'health'
-	]
-	for col in columns_with_dicts:
-	    df_county = df_county.join(pd.json_normalize(df_county[col]).add_prefix(f'{col}.')).drop(
-	        columns=[col]
-	    )
-	df_county.to_csv('counties.csv', index=False)
+	with open('counties.json', 'r') as f:
+		counties = json.load(f)
+
+	df = pd.json_normalize([flatten_json(county) for county in counties])
+	df.to_csv('counties.csv', index=False)
