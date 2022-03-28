@@ -130,13 +130,13 @@ An example entry:
         "dem": 103906,
         "gop": 159649
       }
-    }
+    },
     "edu": {
       "less-than-high-school": 3.8,
       "high-school": 22.7,
       "some-college": 29.1,
       "bachelors+": 44.5
-    }
+    },
     "poverty-rate": 4.7,
     "cost-of-living": {
       "living_wage": 14.32,
