@@ -130,7 +130,7 @@ An example entry:
         "dem": 103906,
         "gop": 159649
       }
-    }
+    },
     "edu": {
       "less-than-high-school": 3.8,
       "high-school": 22.7,
