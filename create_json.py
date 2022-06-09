@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import bson, code, copy, csv, json, math, os, re
+import copy, csv, json, math, os, re
 
 from scipy.ndimage import filters
 import shapefile
@@ -674,7 +674,7 @@ def get_cdc_deaths():
 			elif deaths == 'Missing':
 				deaths = -1
 			else:
-				deaths = int(deaths)
+				deaths = int(deaths) / 21.0
 
 			if state in former_independent_cities_to_counties and county in former_independent_cities_to_counties[state]:
 				county = former_independent_cities_to_counties[state][county]
