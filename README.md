@@ -54,10 +54,10 @@ An example entry:
       "2019": 404198
     },
     "deaths": {
-      "suicides": 722,
-      "firearm suicides": 341,
-      "homicides": 65,
-      "vehicle": 301
+      "suicides": 42.29,
+      "firearm suicides": 20.14,
+      "homicides": 3.95,
+      "vehicle": 31.90
     },
     "bls": {
       "2004": {
