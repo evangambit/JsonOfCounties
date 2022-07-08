@@ -136,7 +136,7 @@ An example entry:
       "high-school": 22.7,
       "some-college": 29.1,
       "bachelors+": 44.5
-    }
+    },
     "poverty-rate": 4.7,
     "cost-of-living": {
       "living_wage": 14.32,
